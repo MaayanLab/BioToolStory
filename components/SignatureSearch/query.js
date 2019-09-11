@@ -15,7 +15,7 @@ export async function query_overlap(props) {
   const { response } = await fetch_data({ endpoint: '/listdata' })
 
   const enriched_results = (await Promise.all(
-      response.repositories.filter((repo) => repo.datatype === 'geneset_library').map((repo) =>
+      response.repositories.filter((repo) => repo.datatype === 'gene_set').map((repo) =>
         fetch_data({
           endpoint: '/enrich/overlap',
           body: {
