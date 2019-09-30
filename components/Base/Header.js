@@ -65,7 +65,7 @@ export default withRouter((props) => {
               whiteSpace: 'nowrap',
             }}
           >
-            &nbsp;&nbsp; <img src={`${process.env.PREFIX}/static/favicon.ico`} width={22} />&nbsp; {props.ui_values.LandingText.header || 'Signature Commons'}
+            &nbsp;&nbsp; B<img src={`${process.env.PREFIX}/static/favicon.ico`} width={22} />ools
           </Link>
           <Link
             to="/"
@@ -74,7 +74,7 @@ export default withRouter((props) => {
               whiteSpace: 'nowrap',
             }}
           >
-            &nbsp;&nbsp; <img src={`${process.env.PREFIX}/static/favicon.ico`} width={22} />&nbsp; Signature Commons
+            &nbsp;&nbsp;  B<img src={`${process.env.PREFIX}/static/favicon.ico`} width={22} />ools
           </Link>
           <a href="#" data-target="mobile-menu" className="sidenav-trigger"><i className="material-icons">menu</i></a>
           <Nav id="nav-mobile" className="right hide-on-med-and-down" {...props} />

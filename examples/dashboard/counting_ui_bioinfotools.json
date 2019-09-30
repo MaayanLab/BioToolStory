@@ -20,7 +20,7 @@
     "Pie_Count": true
   },
   {
-    "Field_Name": "Pubmed",
+    "Field_Name": "pubmed",
     "Preferred_Name": "PMIDs",
     "Preferred_Name_Singular": "PMID",
     "Type": "string",
@@ -29,19 +29,10 @@
     "Meta_Count": true
   },
   {
-    "Field_Name": "authors",
-    "Preferred_Name": "Authors",
-    "Preferred_Name_Singular": "Author",
-    "Type": "object",
-    "MDI_Icon": "mdi-fountain-pen-tip",
-    "Table": "libraries",
-    "Meta_Count": true
-  },
-  {
     "Field_Name": "libraries",
     "Type": "table",
     "Preferred_Name": "Tools",
-    "MDI_Icon": "mdi-tools",
+    "MDI_Icon": "mdi-toolbox",
     "Table_Count": true,
     "Visible_On_Landing": true,
     "Visible_On_Admin": true
