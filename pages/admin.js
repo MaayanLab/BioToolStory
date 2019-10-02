@@ -110,7 +110,13 @@ export default class Admin extends React.Component {
     const { table_counts, ui_values: ui_val } = await get_counts(Object.keys(resources).length, ui_values)
     const { meta_counts } = await get_metacounts(ui_val)
     const { pie_fields_and_stats } = await get_pie_stats(ui_val)
-    const signature_keys = await get_signature_keys()
+    let signature_keys = {}
+    const { response } = await fetch_meta({
+      endpoint: `/signatures/count`,
+    })
+    if (response.count > 0){
+      signature_keys = await get_signature_keys()
+    }
     const { barcounts } = await get_barcounts(ui_val)
     const library_fields = await fetch_fields('libraries')
     const entity_fields = await fetch_fields('entities')
