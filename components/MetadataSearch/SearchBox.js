@@ -35,9 +35,9 @@ const Info = (props) => {
             </Typography>
             <Typography variant="overline" gutterBottom>
               <Chip
-                label={'Imatinib'}
+                label={'visualization'}
                 onDelete={() => {}}
-              /> -Stat3
+              /> -alignment
             </Typography>
           </div>
         </li>
@@ -51,9 +51,9 @@ const Info = (props) => {
             </Typography>
             <Typography variant="overline" gutterBottom>
               <Chip
-                label={'Imatinib'}
+                label={'visualization'}
                 onDelete={() => {}}
-              /> or Stat3
+              /> or alignment
             </Typography>
           </div>
         </li>
@@ -67,9 +67,9 @@ const Info = (props) => {
             </Typography>
             <Typography variant="overline" gutterBottom>
               <Chip
-                label={'Disease: neuropathy'}
+                label={'Status: up'}
                 onDelete={() => {}}
-              /> {'PMID: 12345'}
+              /> {'Publication_year: 2017'}
             </Typography>
           </div>
         </li>

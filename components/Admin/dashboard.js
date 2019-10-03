@@ -60,28 +60,14 @@ export const Selections = withStyles(landingStyle)(function({ classes, record = 
   )
 })
 
-export const PieChart = withStyles(landingStyle)(function({ classes, record = {}, ...props }) {
-  const stats = Object.entries(props.stats).map(function(entry) {
-    return ({ 'label': entry[0], 'value': entry[1] })
-  })
-  const slice = props.slice || 14
-  stats.sort((a, b) => parseFloat(b.value) - parseFloat(a.value))
-  const included = stats.slice(0, slice)
-  const included_sum = sum(included, 'value')
-  const other = sum(stats.slice(slice), 'value')
-  const other_sum = included_sum > other || included_sum < included.length * 10 ? other : included_sum * 1.5
-  const others = [{ 'label': 'others', 'value': other_sum }]
-  const data = other_sum > 0 ? included.concat(others) : included
-  let true_values = included.map((entry) => (
-    { label: entry.label, value: entry.value }
-  ))
-  true_values = true_values.concat({ label: 'others', value: other })
-
-  data.sort((a, b) => parseFloat(b.value) - parseFloat(a.value))
-  true_values.sort((a, b) => parseFloat(b.value) - parseFloat(a.value))
+export const PieChart = withStyles(landingStyle)(function({ classes, record = {}, stats, ...props }) {
+  // const stats = Object.entries(props.stats).map(function(entry) {
+  //   return ({ 'label': entry[0], 'value': entry[1] })
+  // })
+  stats.sort((a, b) => parseFloat(b.counts) - parseFloat(a.counts))
   return (
     <div><DonutChart
-      data={data}
+      data={stats}
       {...props}/></div>
 
   )

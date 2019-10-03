@@ -16,7 +16,7 @@ import ReactWordcloud from 'react-wordcloud'
 import { FindReplace,
   FileFind,
   NearMe,
-  Earth } from 'mdi-material-ui'
+  Web } from 'mdi-material-ui'
 
 import GenesetSearchBox from '../SignatureSearch/GenesetSearchBox'
 
@@ -51,7 +51,7 @@ export const BottomLinks = ({ classes, width, ...props }) => {
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="subheading">
-                    Metadata Search
+                    Tools Search
                 </Typography>
               </Grid>
             </Grid>
@@ -110,7 +110,7 @@ export const BottomLinks = ({ classes, width, ...props }) => {
             <Grid item xs={12}>
               <Link to="/API">
                 <Button className={`${classes.cardIcon} ${classes.GrayCardHeader}`}>
-                  <Earth className={classes.icon} />
+                  <Web className={classes.icon} />
                 </Button>
               </Link>
             </Grid>
@@ -216,7 +216,7 @@ export const SearchCard = ({ classes, width, ...props }) => {
               <ToggleButtonGroup value={props.searchType} exclusive onChange={props.handleChange}>
                 <ToggleButton value="metadata">
                   <FileFind />
-                  Metadata Search
+                  Tools Search
                 </ToggleButton>
                 <ToggleButton value="signature">
                   <FindReplace />
@@ -301,7 +301,7 @@ export const ListItemLink = (props) => (
 
 function getCallback(callback) {
   return function(word) {
-    location.href = `#/MetadataSearch?q=${word.text}`
+    location.href = `#/ToolsSearch?q=${word.text}`
   }
 }
 

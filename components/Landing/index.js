@@ -34,6 +34,7 @@ export default withStyles(landingStyle)(class LandingPage extends React.Componen
 
 
   render = () => {
+    console.log(this.props.barcounts[this.props.ui_values.bar_chart_solo.Field_Name])
     return (
       <div>
         <Grid container
@@ -65,37 +66,39 @@ export default withStyles(landingStyle)(class LandingPage extends React.Componen
             <Grid container
               spacing={24}
               alignItems={'center'}>
-              { this.props.resource_signatures === undefined ? null :
-                <Grid item xs={12} sm={Object.keys(this.props.barcounts).length === 0 || this.props.barcounts === undefined ? true : 6}>
-                  <ChartCard cardheight={300} pie_stats={this.props.resource_signatures} resources color={'Blue'} ui_values={this.props.ui_values}/>
-                  <div className={this.props.classes.centered}>
-                    <Typography variant="caption">
-                      {this.props.ui_values.LandingText.resource_pie_caption || 'Signatures per Resource'}
-                    </Typography>
-                  </div>
-                </Grid>
+              {
+                Object.entries(this.props.pie_fields_and_stats).map(([key,value])=>(
+                  <Grid item xs={12} sm>
+                    <ChartCard cardheight={300} pie_stats={value.stats} resources color={'Blue'} ui_values={this.props.ui_values}/>
+                    <div className={this.props.classes.centered}>
+                      <Typography variant="overline">
+                        Tool {value.Preferred_Name}
+                      </Typography>
+                    </div>
+                  </Grid>
+                ))
               }
               { Object.keys(this.props.barcounts).length === 0 || this.props.barcounts === undefined ? null :
-                <Grid item xs={12} sm={this.props.resource_signatures === undefined ? true : 6}>
-                  { this.props.ui_values.bar_chart !== undefined ? (
+                <Grid item xs={12}>
+                  { this.props.ui_values.bar_chart_solo !== undefined ? (
                     <div className={this.props.classes.centered}>
-                      {this.props.barcounts[this.props.ui_values.bar_chart.Field_Name] !== undefined ? (
-                      <BarChart meta_counts={this.props.barcounts[this.props.ui_values.bar_chart.Field_Name]}
+                      {this.props.barcounts[this.props.ui_values.bar_chart_solo.Field_Name] !== undefined ? (
+                      <BarChart meta_counts={this.props.barcounts[this.props.ui_values.bar_chart_solo.Field_Name].stats}
                         ui_values={this.props.ui_values}/>) : (
                       null
                       )}
-                      <Typography variant="caption">
-                        {this.props.ui_values.bar_chart.Caption}
+                      <Typography variant="overline">
+                        {this.props.ui_values.bar_chart_solo.Caption}
                       </Typography>
                     </div>
                   ) : (
                     <div className={this.props.classes.centered}>
                       {this.props.barcounts[Object.keys(this.props.barcounts)[0]] !== undefined ?
-                      <BarChart meta_counts={this.props.barcounts[Object.keys(this.props.barcounts)[0]]}
+                      <BarChart meta_counts={this.props.barcounts[Object.keys(this.props.barcounts)[0]].stats}
                         ui_values={this.props.ui_values}/> :
                         null
                       }
-                      <Typography variant="caption">
+                      <Typography variant="overline">
                         Bar Chart
                       </Typography>
                     </div>
@@ -111,7 +114,7 @@ export default withStyles(landingStyle)(class LandingPage extends React.Componen
               <CountsDiv {...this.props}/>
             </Grid>
           }
-          { Object.keys(this.props.pie_fields_and_stats).length === 0 ? null :
+          { Object.keys(this.props.barcounts).length === 0 ? null :
             <Grid item xs={12} className={this.props.classes.stretched}>
               <Grid container
                 spacing={24}
@@ -121,16 +124,18 @@ export default withStyles(landingStyle)(class LandingPage extends React.Componen
                     <span className={this.props.classes.vertical20}>{this.props.ui_values.LandingText.text_3 || 'Examine metadata:'}</span>
                     <Selections
                       value={this.props.selected_field}
-                      values={Object.keys(this.props.pie_fields_and_stats).sort()}
+                      values={Object.keys(this.props.barcounts).filter(i=>i!==this.props.ui_values.bar_chart_solo.Field_Name).sort()}
                       onChange={(e) => this.props.handleSelectField(e)}
                     />
                   </div>
                 </Grid>
                 <Grid item xs md={this.props.ui_values.deactivate_wordcloud ? 12 : 6}>
                   <div className={this.props.classes.centered}>
-                    <ChartCard cardheight={300} pie_stats={this.props.pie_stats} slice={this.props.pie_slice} color={'Blue'} ui_values={this.props.ui_values}/>
-                    <Typography variant="caption">
-                      {`${this.props.pie_table} per ${this.props.pie_preferred_name}`}
+                    <BarChart meta_counts={this.props.bar_stats}
+                        ui_values={this.props.ui_values}
+                    />
+                    <Typography variant="overline">
+                      {`Top ${this.props.bar_preferred_name}`}
                     </Typography>
                   </div>
                 </Grid>
@@ -138,7 +143,7 @@ export default withStyles(landingStyle)(class LandingPage extends React.Componen
                   <Grid item xs md={6}>
                     <div className={this.props.classes.centered}>
                       <WordCloud classes={this.props.classes} stats={this.props.pie_stats}/>
-                      <Typography variant="caption">
+                      <Typography variant="overline">
                         Top {this.props.pie_preferred_name} terms
                       </Typography>
                     </div>

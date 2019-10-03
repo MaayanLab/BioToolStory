@@ -7,14 +7,14 @@ export function Nav(props) {
     <ul {...rest}>
       {ui_values.nav.metadata_search ?
         <li
-          className={rest.location.pathname === '/MetadataSearch' ? 'active' : ''}
+          className={rest.location.pathname === '/ToolsSearch' ? 'active' : ''}
         >
-          <Link to={rest.location.pathname === '/MetadataSearch' ? '/MetadataSearch' : '/'}
+          <Link to={rest.location.pathname === '/ToolsSearch' ? '/ToolsSearch' : '/'}
             onClick={(e) => {
               handleChange(e, 'metadata', true)
             }}
           >
-            Metadata Search
+            Tools Search
           </Link>
         </li> : null
       }
@@ -65,7 +65,7 @@ export default withRouter((props) => {
               whiteSpace: 'nowrap',
             }}
           >
-            &nbsp;&nbsp; B<img src={`${process.env.PREFIX}/static/favicon.ico`} width="30" />ools
+            &nbsp;&nbsp; b<img src={`${process.env.PREFIX}/static/favicon.ico`} width="30" />ools
           </Link>
           <Link
             to="/"
@@ -74,7 +74,7 @@ export default withRouter((props) => {
               whiteSpace: 'nowrap',
             }}
           >
-            &nbsp;&nbsp;  B<img src={`${process.env.PREFIX}/static/favicon.ico`} width="30" />ools
+            &nbsp;&nbsp;  b<img src={`${process.env.PREFIX}/static/favicon.ico`} width="30" />ools
           </Link>
           <a href="#" data-target="mobile-menu" className="sidenav-trigger"><i className="material-icons">menu</i></a>
           <Nav id="nav-mobile" className="right hide-on-med-and-down" {...props} />

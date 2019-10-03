@@ -8,7 +8,6 @@ import Landing from '../Landing'
 import MetadataSearch from '../MetadataSearch'
 import Resources from '../Resources'
 import SignatureSearch from '../SignatureSearch'
-import Collection from '../Collection'
 import Upload from '../Upload'
 import NProgress from 'nprogress'
 import { fetch_meta_post } from '../../util/fetch/meta'
@@ -106,8 +105,8 @@ export default class Home extends React.PureComponent {
     super(props)
     this.state = {
       cart: Set(),
-      pie_stats: null,
-      selected_field: Object.keys(props.pie_fields_and_stats)[0],
+      bar_stats: null,
+      selected_field: Object.keys(props.barcounts).filter(i=>i!==props.ui_values.bar_chart_solo.Field_Name)[0],
       searchType: props.ui_values.nav.metadata_search ? 'metadata' : 'signature',
       metadata_search: {
         controller: undefined,
@@ -136,7 +135,7 @@ export default class Home extends React.PureComponent {
     M.AutoInit()
     // const elems = document.querySelectorAll('.sidenav');
     // const instances = M.Sidenav.init(elems, {edge:"right"});
-    if (this.state.pie_stats === null) {
+    if (this.state.bar_stats === null) {
       this.fetch_stats(this.state.selected_field)
     }
     const signatures_table_stats = this.props.table_counts.filter((item) => item.table === 'signatures')
@@ -173,12 +172,12 @@ export default class Home extends React.PureComponent {
     if (this.state.metadata_search.search_status === 'Matched' &&
       prevState.metadata_search.search_status !== this.state.metadata_search.search_status) {
       const query = get_formated_query(this.state.metadata_search.currentSearchArray)
-      this.props.history.push(`/MetadataSearch${query}`)
+      this.props.history.push(`/ToolsSearch${query}`)
     }
     if (prevState.metadata_search.search_status === 'Initializing' &&
       this.state.metadata_search.search_status === '') {
       const query = get_formated_query(this.state.metadata_search.currentSearchArray)
-      this.props.history.push(`/MetadataSearch${query}`)
+      this.props.history.push(`/ToolsSearch${query}`)
     }
   }
 
@@ -622,14 +621,14 @@ export default class Home extends React.PureComponent {
 
   fetch_stats = async (selected_field) => {
     this.setState({
-      pie_stats: this.props.pie_fields_and_stats[selected_field] ?
-        this.props.pie_fields_and_stats[selected_field].stats : {},
-      pie_table: this.props.pie_fields_and_stats[selected_field] ?
-        this.props.pie_fields_and_stats[selected_field].table : '',
-      pie_slice: this.props.pie_fields_and_stats[selected_field] ?
-        this.props.pie_fields_and_stats[selected_field].slice : 14,
-      pie_preferred_name: this.props.pie_fields_and_stats[selected_field] ?
-        this.props.pie_fields_and_stats[selected_field].Preferred_Name : '',
+      bar_stats: this.props.barcounts[selected_field] ?
+        this.props.barcounts[selected_field].stats : {},
+      bar_table: this.props.barcounts[selected_field] ?
+        this.props.barcounts[selected_field].table : '',
+      bar_slice: this.props.barcounts[selected_field] ?
+        this.props.barcounts[selected_field].slice : 14,
+      bar_preferred_name: this.props.barcounts[selected_field] ?
+        this.props.barcounts[selected_field].Preferred_Name : '',
     })
   }
 
@@ -637,7 +636,7 @@ export default class Home extends React.PureComponent {
     const field = e.target.value
     this.setState({
       selected_field: field,
-      pie_stats: null,
+      bar_stats: null,
     }, () => {
       this.fetch_stats(this.state.selected_field)
     })
@@ -709,12 +708,7 @@ export default class Home extends React.PureComponent {
     />
   )
 
-  collection = (props) => (
-    <Collection
-      ui_values={this.props.ui_values}
-      {...props}
-    />
-  )
+
 
   render = () => {
     const CartActions = this.CartActions
@@ -755,7 +749,7 @@ export default class Home extends React.PureComponent {
           }
           {this.props.ui_values.nav.metadata_search ?
             <Route
-              path="/MetadataSearch"
+              path="/ToolsSearch"
               component={this.metadata_search}
             /> : null
           }
@@ -765,10 +759,6 @@ export default class Home extends React.PureComponent {
               component={this.resources}
             /> : null
           }
-          <Route
-            path="/Library"
-            component={this.collection}
-          />
           <Route
             path="/API"
             component={this.api}

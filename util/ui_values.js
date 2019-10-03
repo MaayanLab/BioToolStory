@@ -56,7 +56,8 @@ export const UIValues = {
           },
         deactivate_download: values.deactivate_download !== undefined ? values.deactivate_download : false,
         deactivate_wordcloud: values.deactivate_wordcloud !== undefined ? values.deactivate_wordcloud : false,
-        bar_chart: values.bar_chart,
+        bar_chart_solo: values.bar_chart_solo,
+        pie_chart_solo: values.pie_chart_solo,
         bar_chart_style: values.bar_chart_style ||
           {
             ResponsiveContainer: {
@@ -93,7 +94,7 @@ export const UIValues = {
           },
           Chart: {
             width: 420,
-            height: 420,
+            height: 300,
           },
           Pie: {
             fill: '#75bef5',

@@ -156,6 +156,8 @@ export async function get_pie_stats(ui_values) {
         depth: 2,
         filter: {
           fields: [entry.meta.Field_Name],
+
+          limit: 25,
         },
       },
     })
@@ -168,11 +170,12 @@ export async function get_pie_stats(ui_values) {
     return mapping
   }, {})
   const pie_stats = piefields.map((item) => {
+    const stats = Object.entries(meta_stats[item.meta.Field_Name]).map(([name, counts])=>({name, counts}))
     return {
       key: item.meta.Preferred_Name || item.meta.Field_Name,
       Preferred_Name: item.meta.Preferred_Name_Singular || item.meta.Preferred_Name || item.meta.Field_Name,
       table: item.meta.Table,
-      stats: meta_stats[item.meta.Field_Name],
+      stats: stats,
       slice: item.meta.Slice || 14,
     }
   })
@@ -203,6 +206,7 @@ export async function get_barcounts(ui_values) {
         depth: 2,
         filter: {
           fields: [item.meta.Field_Name],
+          limit: 25
         },
       },
     })
@@ -223,12 +227,17 @@ export async function get_barcounts(ui_values) {
       }
       return accumulator
     }, {}) // TODO: Fix this as schema
-    return { field: item.meta.Field_Name, stats: stats }
+    return { meta: item.meta, stats: stats }
   })
 
   const meta = await Promise.all(meta_promise)
   const barcounts = meta.reduce((accumulator, item) => {
-    accumulator[item.field] = Object.keys(item.stats).map((key) => ({ name: key, counts: item.stats[key] }))
+    accumulator[item.meta.Preferred_Name || item.meta.Field_Name] = {
+      key: item.meta.Preferred_Name || item.meta.Field_Name,
+      Preferred_Name: item.meta.Preferred_Name || item.meta.Field_Name,
+      table: item.meta.Table,
+      stats: Object.entries(item.stats).map(([name,counts]) => ({ name, counts })),
+    }
     return accumulator
   }, {})
   return { barcounts }

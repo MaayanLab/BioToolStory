@@ -21,7 +21,7 @@ const ActiveShape = (props) => {
 
   return (
     <g>
-      <Text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill} width={50} fontSize={10} {...props.pie_chart_style.Text_Label}>{payload.label}</Text>
+      <Text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill} width={50} fontSize={10} {...props.pie_chart_style.Text_Label}>{payload.name}</Text>
       <Sector
         cx={cx}
         cy={cy}
@@ -75,9 +75,9 @@ export default class DonutChart extends PureComponent {
     const resource_path = ui_values.preferred_name['Resources'] || 'Resources'
     if (disabled === undefined) {
       if (resources) {
-        location.href = `#/${resource_path}/${entry.label.replace(/ /g, '_')}`
+        location.href = `#/${resource_path}/${entry.name.replace(/ /g, '_')}`
       } else {
-        location.href = `#/MetadataSearch?q=${entry.label}`
+        location.href = `#/ToolsSearch?q=${entry.name}`
       }
     }
   };
@@ -87,7 +87,7 @@ export default class DonutChart extends PureComponent {
     return (
       <Chart {...pie_chart_style.Chart}>
         <Pie
-          dataKey="value"
+          dataKey="counts"
           activeIndex={this.state.activeIndex}
           activeShape={this.activeShape}
           data={this.props.data}
