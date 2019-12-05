@@ -1,0 +1,35 @@
+{
+    "$id": "https://raw.githubusercontent.com/jeevangelista/signature-commons-schema/master/meta/library/btools.json",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Metadata describing a journal",
+    "allOf": [
+      {
+        "$ref": "/dcic/signature-commons-schema/v5/core/meta.json"
+      },
+      {
+        "properties": {
+          "name": {
+            "description": "Name of the journal",
+            "type": "string"
+          },
+          "homepage": {
+            "description": "homepage url of the journal",
+            "type": "string",
+            "format": "uri"
+          },
+          "description": {
+            "description": "description of the journal",
+            "type": "string"
+          },
+          "icon": {
+            "description": "Path to the favicon",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "type": "object"
+      }
+    ]
+  }
