@@ -1,0 +1,83 @@
+{
+  "match": {
+    "${$validator}": "/@?dcic/signature-commons-schema/(v[0-9]+/)?core/signature.json"
+  },
+  "properties": {
+    "Image": {
+      "visibility": 1,
+      "type": "img",
+      "src": "${library.meta.icon}",
+      "alt": "${meta.tool_name}",
+      "text": "${meta.tool_name}",
+      "hyperlink": "${meta.tool_homepage_url}",
+      "priority": 1,
+      "icon": true,
+      "name": true
+    },
+    "Pubmed": {
+      "visibility": 1,
+      "type": "text",
+      "text": "${meta.publications.sort((a,b)=>a.pub_year-b.pub_year)[0].pmid}",
+      "hyperlink": "https://www.ncbi.nlm.nih.gov/pubmed/${meta.publications.sort((a,b)=>a.pub_year-b.pub_year)[0].pmid}",
+      "display": true,
+      "priority": 2
+    },
+    "Last Author": {
+      "visibility": 1,
+      "type": "text",
+      "text": "${meta.publications.sort((a,b)=>a.pub_year-b.pub_year)[0].last_author}",
+      "MDI_Icon": "mdi-desktop-tower-monitor",
+      "priority": 4,
+      "clickable": true
+    },
+    "Institution": {
+      "visibility": 1,
+      "type": "text",
+      "text": "${meta.publications.sort((a,b)=>a.pub_year-b.pub_year)[0].institution}",
+      "MDI_Icon": "mdi-certificate",
+      "priority": 5,
+      "clickable": true
+    },
+    "Pubmed Citations": {
+      "visibility": 1,
+      "type": "text",
+      "text": "${meta.total_pubmed_citations}",
+      "Field_Name": "meta.total_pubmed_citations",
+      "MDI_Icon": "mdi-book-open-page-variant",
+      "priority": 10,
+      "score": true
+    },
+    "Twitter Mentions": {
+      "visibility": 1,
+      "type": "text",
+      "text": "${meta.cited_by_tweeters_count}",
+      "Field_Name": "meta.cited_by_tweeters_count",
+      "MDI_Icon": "mdi-twitter",
+      "priority": 10,
+      "score": true
+    },
+    "Attention Score": {
+      "visibility": 1,
+      "type": "text",
+      "text": "${meta.attention_score}",
+      "Field_Name": "meta.attention_score",
+      "MDI_Icon": "mdi-forum-outline",
+      "priority": 10,
+      "score": true
+    },
+    "Publication year": {
+      "visibility": 1,
+      "type": "text",
+      "text": "${meta.publications.sort((a,b)=>a.pub_year-b.pub_year)[0].pub_year}",
+      "MDI_Icon": "mdi-calendar",
+      "priority": 6
+    },
+    "Status": {
+      "visibility": 1,
+      "type": "text",
+      "text": "${meta.up_down}",
+      "MDI_Icon": "mdi-web",
+      "priority": 7
+    }
+  }
+} 

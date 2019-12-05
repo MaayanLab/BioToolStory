@@ -47,6 +47,9 @@
           "alt": "mssm"
         }
       ],
+      "font_families": [
+        "https://fonts.googleapis.com/css?family=Ubuntu&display=swap"
+      ],
       "theme_mod": {
         "palette": {
           "primary": {
@@ -59,6 +62,9 @@
             "main": "#9E6F6D",
             "contrastText": "#FFF"
           }
+        },
+        "typography": {
+          "fontFamily": "Ubuntu, sans-serif"
         }
       },
       "github": "https://github.com/MaayanLab/btools-ui",
