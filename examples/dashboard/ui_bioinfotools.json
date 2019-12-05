@@ -39,7 +39,7 @@
         }
       },
       "order_default": {
-        "libraries": "meta.total_pubmed_citations"
+        "signatures": "meta.total_pubmed_citations"
       },
       "footer_links": [
         {
