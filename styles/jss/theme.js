@@ -82,6 +82,10 @@ export const landingStyle = (theme) => ({
     background:
       'linear-gradient(45deg, ' + Grays[0] + ', ' + Grays[1] + ')',
   },
+  landingCard: {
+    background: theme.palette.primary.main,
+    paddingBottom: 30,
+  },
   stretched: {
     width: '80%',
   },
@@ -158,6 +162,21 @@ export const landingStyle = (theme) => ({
   },
   GrayCardHeader,
   BlueCardHeader,
+  container: {
+    margin: '0 auto',
+    maxWidth: '1280px',
+    width: '90%',
+  },
+  ['@media only screen and (min-width: 601px)']: {
+    container: {
+      width: '85%',
+    },
+  },
+  ['@media only screen and (min-width: 1360px)']: {
+    container: {
+      width: '70%',
+    },
+  },
 })
 
 export const extraComponentStyle = (theme) => ({
