@@ -182,7 +182,7 @@ export const InfoCard = ({ data, schemas, ui_values, classes, search, ...props }
                       <Tooltip title={tag.value}
                         key={tag.value}
                         placement="bottom">
-                        <Chip className={classes.chip} key={tag.label}
+                        <Chip className={classes.chip} key={tag.label} style={tag.color!==undefined ? {background: tag.color}: {}}
                           avatar={<Icon className={`${classes.icon} mdi ${tag.icon || default_tag_icon} mdi-18px`} />}
                           label={<Highlight
                             Component={(props) => <span {...props} className={classes.chipLabel}>{props.children}</span>}

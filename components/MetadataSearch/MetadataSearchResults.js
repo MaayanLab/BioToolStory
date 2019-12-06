@@ -12,11 +12,14 @@ export const value_by_type = {
   'text': ({ label, prop, data }) => {
     const val = makeTemplate(prop.text, data)
     let hyperlink
+    let color
     if (prop.hyperlink !== undefined) hyperlink = makeTemplate(prop.hyperlink, data)
+    if (prop.color !== undefined) color = makeTemplate(prop.color, data)
+    if (color!==undefined) console.log(color)
     if (val === 'undefined') {
       return null
     } else {
-      return { text: val, hyperlink, label }
+      return { text: val, hyperlink, label, color }
     }
   },
   'img': ({ label, prop, data }) => {
@@ -69,12 +72,12 @@ export const get_card_data = (data, schemas, highlight = undefined) => {
               label,
               value: val.text,
               field_name: prop.Field_Name,
-              icon: prop.MDI_Icon || 'mdi-star',
+              icon: prop.MDI_Icon !== undefined ? makeTemplate(prop.MDI_Icon, data) : 'mdi-star',
             }
             sort_tags[prop.Field_Name] = {
               label,
               field_name: prop.Field_Name,
-              icon: prop.MDI_Icon || 'mdi-star',
+              icon: prop.MDI_Icon !== undefined ? makeTemplate(prop.MDI_Icon, data) : 'mdi-star',
             }
           }
         }
@@ -83,7 +86,8 @@ export const get_card_data = (data, schemas, highlight = undefined) => {
             tags = [...tags, {
               label,
               value: val.text,
-              icon: prop.MDI_Icon || 'mdi-arrow-top-right-thick',
+              color: val.color,
+              icon: prop.MDI_Icon !== undefined ? makeTemplate(prop.MDI_Icon, data) :'mdi-arrow-top-right-thick',
               priority: prop.priority,
               clickable: prop.clickable
             }]
