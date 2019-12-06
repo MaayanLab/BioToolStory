@@ -3,17 +3,18 @@
     "landing": true,
     "content": {
       "favicon": {
-        "icon": "/static/btools.ico",
-        "width": 40,
+        "src": "/static/btools.ico",
+        "alt": "btools",
         "style": {
-          "marginBottom": 0
+          "marginBottom": 0,
+          "width": 40
         }
       },
       "header_left": "B",
       "header_right": "ls",
       "metadata_placeholder": "Search over thousands of tools",
       "text_1": "Explore an extensive collection of bioinformatics tools",
-      "text_4": "Explore BTools now",
+      "text_4": " ",
       "preferred_name_singular": {
         "libraries": "Tool",
         "resources": "Journal"
@@ -44,7 +45,23 @@
       "footer_links": [
         {
           "src": "/static/maayanlab.png",
-          "alt": "mssm"
+          "alt": "maayan",
+          "href": "http://labs.icahn.mssm.edu/maayanlab/",
+          "containerProps": {
+            "style": {
+              "width": 100
+            }
+          },
+          "imageProps": {
+            "style": {
+              "width": 100
+            }
+          }
+        },
+        {
+          "src": "/static/centerbioinfo_light.png",
+          "alt": "mssm",
+          "href": "https://icahn.mssm.edu/research/bioinformatics"
         }
       ],
       "font_families": [
@@ -53,15 +70,18 @@
       "theme_mod": {
         "palette": {
           "primary": {
-            "main": "#43B14B"
+            "main": "#3d550c"
           },
           "secondary": {
-            "main": "#9E6F6D"
+            "main": "#ecf87f"
           },
           "default": {
-            "main": "#9E6F6D",
+            "main": "#3d550c",
             "contrastText": "#FFF"
           }
+        },
+        "chipColors": {
+          "default": { "backgroundColor": "#ecf87f", "color": "#000" }
         },
         "typography": {
           "fontFamily": "Ubuntu, sans-serif"
@@ -93,12 +113,15 @@
           }
         },
         "Bar": {
-          "fill": "#43b14b"
+          "fill": "#3d550c"
         }
       },
       "pie_chart_style": {
         "Pie": {
-          "fill":  "#43b14b"
+          "fill":  "#3d550c"
+        },
+        "Text_Label": {
+          "fontSize": 14
         }
       },
       "text_2": "Search across various fields",

@@ -23,7 +23,7 @@
     "Preferred_Name": "Last Authors",
     "Preferred_Name_Singular": "Last Author",
     "Type": "string",
-    "MDI_Icon": "mdi-desktop-tower-monitor",
+    "MDI_Icon": "mdi-face-woman",
     "Table": "signatures",
     "Bar_Count": true,
     "Meta_Count": true
@@ -52,7 +52,7 @@
     "Field_Name": "meta.tool_name",
     "Order_By": "meta.cited_by_tweeters_count",
     "Preferred_Name": "Twitter Citations",
-    "Preferred_Name_Singular": "Twitter Mentions",
+    "Preferred_Name_Singular": "Tweets",
     "Type": "string",
     "MDI_Icon": "mdi-twitter",
     "Table": "signatures",
@@ -93,7 +93,6 @@
     "Type": "string",
     "MDI_Icon": "mdi-file-document",
     "Table": "signatures",
-    "Meta_Count": true,
     "Pie_Count": true
   },
   {

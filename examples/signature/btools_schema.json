@@ -76,8 +76,9 @@
       "visibility": 1,
       "type": "text",
       "text": "${meta.up_down}",
-      "MDI_Icon": "mdi-web",
-      "priority": 7
+      "color": "${meta.up_down==='up' ? '#b1d8b7':'#d8b2b1'}",
+      "MDI_Icon": "${meta.up_down==='up' ? 'mdi-cloud-check':'mdi-cloud-alert'}",
+      "priority": 1
     }
   }
 } 
