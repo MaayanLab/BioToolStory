@@ -18,8 +18,11 @@ const default_values = {
     resource_pie_caption: 'Signatures per Resource',
     search_terms: ['MCF10A', 'Imatinib', 'ZNF830', 'STAT3', 'Neuropathy'],
     favicon: {
-      icon: "/static/favicon.ico",
-      width: 22
+      src: "/static/favicon.ico",
+      alt: "sigcom",
+      style: {
+        width: 22
+      }
     },
     nav: {
       MetadataSearch: {
