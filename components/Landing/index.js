@@ -218,171 +218,179 @@ class LandingPage extends React.Component {
   render = () => {
     return (
       <div>
-        <Grid container
-          spacing={24}
-          alignItems={'center'}>
-          <Grid item xs={12} className={this.props.classes.stretched}>
-            <Switch>
-              <Route
-                exact path="/"
-                component={(props) => <Redirect to={`${this.props.nav.MetadataSearch.endpoint || '/MetadataSearch'}`} />}// {this.landing}
-              />
-              <Route
-                path="/:searchType"
-                component={(props) => this.searchCard(props)}
-              />
-              <Route component={(props) => {
-                return <Redirect to='/not-found' />
-              }} />
-            </Switch>
-          </Grid>
-          { this.props.table_counts.length === 0 ? null :
+        <div>
+          <Grid container
+            spacing={24}
+            alignItems={'center'}>
             <Grid item xs={12} className={this.props.classes.stretched}>
-              <StatDiv {...this.props}/>
+              <Switch>
+                <Route
+                  exact path="/"
+                  component={(props) => <Redirect to={`${this.props.nav.MetadataSearch.endpoint || '/MetadataSearch'}`} />}// {this.landing}
+                />
+                <Route
+                  path="/:searchType"
+                  component={(props) => this.searchCard(props)}
+                />
+                <Route component={(props) => {
+                  return <Redirect to='/not-found' />
+                }} />
+              </Switch>
             </Grid>
-          }
-          { this.props.resource_signature_counts.length > 0 && this.state.total_sig_per_resource > 0 ?
-            <Grid item xs={12} md={Object.keys(this.props.piecounts).length === 0 || this.state.pie_stats.stats.length === 0 ? 12 : 6}
-              className={this.props.classes.stretched}>
-              <Grid container
-                alignItems={'center'}>
-                <Grid item xs>
-                  <div className={this.props.classes.centered}>
-                    <ChartCard cardheight={300} pie_stats={this.props.resource_signature_counts} color={'Blue'} ui_values={this.props.ui_values}/>
-                  </div>
-                </Grid>
-                <Grid item xs={12}>
-                  <div className={this.props.classes.centered}>
-                    <span className={this.props.classes.vertical20}>{this.props.ui_values.resource_pie_caption || 'Signatures per Resource'}</span>
-                  </div>
+          </Grid>
+        </div>
+        <div className={this.props.classes.container} style={{marginTop: 30}}>
+          <Grid container
+            spacing={24}
+            alignItems={'center'}>
+            { this.props.table_counts.length === 0 ? null :
+              <Grid item xs={12} className={this.props.classes.stretched}>
+                <StatDiv {...this.props}/>
+              </Grid>
+            }
+            { this.props.resource_signature_counts.length > 0 && this.state.total_sig_per_resource > 0 ?
+              <Grid item xs={12} md={Object.keys(this.props.piecounts).length === 0 || this.state.pie_stats.stats.length === 0 ? 12 : 6}
+                className={this.props.classes.stretched}>
+                <Grid container
+                  alignItems={'center'}>
+                  <Grid item xs>
+                    <div className={this.props.classes.centered}>
+                      <ChartCard cardheight={300} pie_stats={this.props.resource_signature_counts} color={'Blue'} ui_values={this.props.ui_values}/>
+                    </div>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <div className={this.props.classes.centered}>
+                      <span className={this.props.classes.vertical20}>{this.props.ui_values.resource_pie_caption || 'Signatures per Resource'}</span>
+                    </div>
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-            : null
-          }
-          { this.pie_charts_stats() }
-          { Object.keys(this.props.meta_counts).length === 0 ? null :
-            <Grid item xs={12} className={this.props.classes.stretched}>
-              <CountsDiv {...this.props}/>
-            </Grid>
-          }
-          { Object.keys(this.props.wordcounts).length === 0 || this.state.word_stats.stats.length === 0 ? null :
-            <Grid item xs={12} className={this.props.classes.stretched}>
-              <Grid container
-                spacing={24}
-                alignItems={'center'}>
-                <Grid item xs md={12}>
-                  <div className={this.props.classes.centered}>
-                    <WordCloud classes={this.props.classes} searchTable={this.state.word_stats.table} stats={this.state.word_stats.stats}/>
-                  </div>
-                </Grid>
+              : null
+            }
+            { this.pie_charts_stats() }
+            { Object.keys(this.props.meta_counts).length === 0 ? null :
+              <Grid item xs={12} className={this.props.classes.stretched}>
+                <CountsDiv {...this.props}/>
+              </Grid>
+            }
+            { Object.keys(this.props.wordcounts).length === 0 || this.state.word_stats.stats.length === 0 ? null :
+              <Grid item xs={12} className={this.props.classes.stretched}>
+                <Grid container
+                  spacing={24}
+                  alignItems={'center'}>
+                  <Grid item xs md={12}>
+                    <div className={this.props.classes.centered}>
+                      <WordCloud classes={this.props.classes} searchTable={this.state.word_stats.table} stats={this.state.word_stats.stats}/>
+                    </div>
+                  </Grid>
 
-                <Grid item xs={12}>
-                  <div className={this.props.classes.centered}>
-                    <span className={this.props.classes.vertical20}>Top</span>
-                    <Selections
-                      value={this.state.selected_word}
-                      values={Object.keys(this.props.wordcounts).sort()}
-                      onChange={(e) => this.handleSelectWord(e)}
-                    />
-                  </div>
-                </Grid>
-              </Grid>
-            </Grid>
-          }
-          { Object.keys(this.props.barcounts).length === 0 || this.state.bar_stats.stats.length ===0 ? null :
-            <Grid item xs={12}
-              className={this.props.classes.stretched}>
-              <Grid container
-                alignItems={'center'}>
-                <Grid item xs={12}>
-                  <div className={this.props.classes.centered}>
-                    <BarChart meta_counts={this.state.bar_stats.stats}
-                      ui_values={this.props.ui_values}
-                      XAxis
-                    />
-                  </div>
-                </Grid>
-                <Grid item xs={12}>
-                  <div className={this.props.classes.centered}>
-                    {Object.keys(this.props.barcounts).length === 1 ?
-                    <span>{this.state.selected_bar}</span> :
-                    <React.Fragment>
-                      <span>{'Top ' }</span>
+                  <Grid item xs={12}>
+                    <div className={this.props.classes.centered}>
+                      <span className={this.props.classes.vertical20}>Top</span>
                       <Selections
-                        value={this.state.selected_bar}
-                        values={Object.keys(this.props.barcounts).sort()}
-                        onChange={(e) => this.handleSelectBar(e)}
+                        value={this.state.selected_word}
+                        values={Object.keys(this.props.wordcounts).sort()}
+                        onChange={(e) => this.handleSelectWord(e)}
                       />
-                    </React.Fragment>
-                    }
-                  </div>
+                    </div>
+                  </Grid>
                 </Grid>
               </Grid>
+            }
+            { Object.keys(this.props.barcounts).length === 0 || this.state.bar_stats.stats.length ===0 ? null :
+              <Grid item xs={12}
+                className={this.props.classes.stretched}>
+                <Grid container
+                  alignItems={'center'}>
+                  <Grid item xs={12}>
+                    <div className={this.props.classes.centered}>
+                      <BarChart meta_counts={this.state.bar_stats.stats}
+                        ui_values={this.props.ui_values}
+                        XAxis
+                      />
+                    </div>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <div className={this.props.classes.centered}>
+                      {Object.keys(this.props.barcounts).length === 1 ?
+                      <span>{this.state.selected_bar}</span> :
+                      <React.Fragment>
+                        <span>{'Top ' }</span>
+                        <Selections
+                          value={this.state.selected_bar}
+                          values={Object.keys(this.props.barcounts).sort()}
+                          onChange={(e) => this.handleSelectBar(e)}
+                        />
+                      </React.Fragment>
+                      }
+                    </div>
+                  </Grid>
+                </Grid>
+              </Grid>
+            }
+            { Object.keys(this.props.histograms).length === 0 || this.state.histogram.stats.length ===0 ? null :
+                  <Grid item xs={12} className={this.props.classes.stretched}>
+                    <Grid container
+                      spacing={24}
+                      alignItems={'center'}>
+                      <Grid item xs>
+                        <div className={this.props.classes.centered}>
+                          <BarChart meta_counts={this.state.histogram.stats}
+                            ui_values={this.props.ui_values}
+                            YAxis
+                          />
+                          <Typography variant="overline">
+                            {`${this.state.histogram.Preferred_Name} Histogram`}
+                          </Typography>
+                        </div>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <div className={this.props.classes.centered}>
+                          <span className={this.props.classes.vertical20}>{'Examine histograms:'}</span>
+                          <Selections
+                            value={this.state.selected_histogram}
+                            values={Object.keys(this.props.histograms).sort()}
+                            onChange={(e) => this.handleSelectHistogram(e)}
+                          />
+                        </div>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+            }
+            { Object.keys(this.props.barscores).length === 0 || this.state.barscore.stats.length ===0 ? null :
+                  <Grid item xs={12} className={this.props.classes.stretched}>
+                    <Grid container
+                      spacing={24}
+                      alignItems={'center'}>
+                      <Grid item xs>
+                        <div className={this.props.classes.centered}>
+                          <BarChart meta_counts={this.state.barscore.stats}
+                            ui_values={this.props.ui_values}
+                            XAxis
+                          />
+                        </div>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <div className={this.props.classes.centered}>
+                          <span className={this.props.classes.vertical20}>{'Top'}</span>
+                          <Selections
+                            value={this.state.selected_barscore}
+                            values={Object.keys(this.props.barscores).sort()}
+                            onChange={(e) => this.handleSelectBarScore(e)}
+                          />
+                        </div>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+            }
+            <Grid item xs={12}>
+              <BottomLinks
+                {...this.props} />
             </Grid>
-          }
-          { Object.keys(this.props.histograms).length === 0 || this.state.histogram.stats.length ===0 ? null :
-                <Grid item xs={12} className={this.props.classes.stretched}>
-                  <Grid container
-                    spacing={24}
-                    alignItems={'center'}>
-                    <Grid item xs>
-                      <div className={this.props.classes.centered}>
-                        <BarChart meta_counts={this.state.histogram.stats}
-                          ui_values={this.props.ui_values}
-                          YAxis
-                        />
-                        <Typography variant="overline">
-                          {`${this.state.histogram.Preferred_Name} Histogram`}
-                        </Typography>
-                      </div>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <div className={this.props.classes.centered}>
-                        <span className={this.props.classes.vertical20}>{'Examine histograms:'}</span>
-                        <Selections
-                          value={this.state.selected_histogram}
-                          values={Object.keys(this.props.histograms).sort()}
-                          onChange={(e) => this.handleSelectHistogram(e)}
-                        />
-                      </div>
-                    </Grid>
-                  </Grid>
-                </Grid>
-          }
-          { Object.keys(this.props.barscores).length === 0 || this.state.barscore.stats.length ===0 ? null :
-                <Grid item xs={12} className={this.props.classes.stretched}>
-                  <Grid container
-                    spacing={24}
-                    alignItems={'center'}>
-                    <Grid item xs>
-                      <div className={this.props.classes.centered}>
-                        <BarChart meta_counts={this.state.barscore.stats}
-                          ui_values={this.props.ui_values}
-                          XAxis
-                        />
-                      </div>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <div className={this.props.classes.centered}>
-                        <span className={this.props.classes.vertical20}>{'Top'}</span>
-                        <Selections
-                          value={this.state.selected_barscore}
-                          values={Object.keys(this.props.barscores).sort()}
-                          onChange={(e) => this.handleSelectBarScore(e)}
-                        />
-                      </div>
-                    </Grid>
-                  </Grid>
-                </Grid>
-          }
-          <Grid item xs={12}>
-            <BottomLinks
-              {...this.props} />
+            <Grid item xs={12}>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-          </Grid>
-        </Grid>
+        </div>
       </div>
     )
   }

@@ -3,8 +3,7 @@ import dynamic from 'next/dynamic'
 import { Link } from 'react-router-dom'
 
 import Grid from '@material-ui/core/Grid'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
+import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import ListItem from '@material-ui/core/ListItem'
 import Button from '@material-ui/core/Button'
@@ -26,9 +25,6 @@ const meta_default_icon = 'mdi-creation'
 
 export const BottomLinks = ({ classes, width, theme, ...props }) => {
   const background = Color(theme.palette.default.main)
-  console.log(background)
-  console.log(theme.palette.default.main)
-  console.log(background.isDark())
   return (
     <Grid container
       spacing={24}
@@ -211,85 +207,73 @@ export const SearchCard = ({ classes, width, ...props }) => {
   const { SignatureSearch, MetadataSearch } = props.ui_values.nav
   if (SignatureSearch && SignatureSearch.active && MetadataSearch && MetadataSearch.active) {
     return (
-      <Card className={`${classes.paddedCard} ${classes.topCard}`}>
-        <CardContent>
-          <Grid container
-            spacing={24}
-            direction={'column'}
-            align="center"
-            justify="center">
-            <Grid item xs={12}>
-              <Typography variant="button" align={'center'} style={{ fontSize: 30, color: '#FFF' }}>
-                <span className="mdi mdi-cloud-search mdi-36px"/>
-                &nbsp;&nbsp;
-                {props.match.params.searchType.replace(/([a-z])([A-Z])/g, '$1 $2')}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              { MetadataSearch && props.match.params.searchType == MetadataSearch.endpoint.substring(1) ?
-                <MetadataSearchBox
-                  id='MetadataSearch'
-                  {...props}
-                /> :
-                <SearchBoxWrapper
-                  {...props}
-                />
-              }
-            </Grid>
+      <Paper square elevation={0} className={classes.landingCard}>
+        <Grid container
+          spacing={24}
+          direction={'column'}
+          align="center"
+          justify="center">
+          <Grid item xs={12}>
+            <Typography variant="button" align={'center'} style={{ fontSize: 100, color: '#FFF' }}>
+              {props.ui_values.header_left}<img {...props.ui_values.favicon} src={`${process.env.PREFIX}/static/btools.png`} style={{width: 100}} />{props.ui_values.header_right}
+            </Typography>
           </Grid>
-        </CardContent>
-      </Card>
-    )
-  } else if (SignatureSearch && SignatureSearch.active) {
-    return (
-      <Card className={`${classes.paddedCard} ${classes.topCard}`}>
-        <CardContent>
-          <Grid container
-            spacing={24}
-            direction={'column'}
-            align="center"
-            justify="center">
-            <Grid item xs={12}>
-              <Typography variant="button" align={'center'} style={{ fontSize: 30, color: '#FFF' }}>
-                <span className="mdi mdi-cloud-search mdi-36px"/>
-                &nbsp;&nbsp;
-                {props.match.params.searchType.replace(/([a-z])([A-Z])/g, '$1 $2')}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <SearchBoxWrapper
-                {...props}
-              />
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-    )
-  } else if (MetadataSearch && MetadataSearch.active) {
-    return (
-      <Card className={`${classes.paddedCard} ${classes.topCard}`}>
-        <CardContent>
-          <Grid container
-            spacing={24}
-            direction={'column'}
-            align="center"
-            justify="center">
-            <Grid item xs={12}>
-              <Typography variant="button" align={'center'} style={{ fontSize: 30, color: '#FFF' }}>
-                <span className="mdi mdi-cloud-search mdi-36px"/>
-                &nbsp;&nbsp;
-                {props.match.params.searchType.replace(/([a-z])([A-Z])/g, '$1 $2')}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
+          <Grid item xs={12}>
+            { MetadataSearch && props.match.params.searchType == MetadataSearch.endpoint.substring(1) ?
               <MetadataSearchBox
                 id='MetadataSearch'
                 {...props}
+              /> :
+              <SearchBoxWrapper
+                {...props}
               />
-            </Grid>
+            }
           </Grid>
-        </CardContent>
-      </Card>
+        </Grid>
+      </Paper>
+    )
+  } else if (SignatureSearch && SignatureSearch.active) {
+    return (
+      <Paper square elevation={0} className={classes.landingCard}>
+        <Grid container
+          spacing={24}
+          direction={'column'}
+          align="center"
+          justify="center">
+          <Grid item xs={12}>
+            <Typography variant="button" align={'center'} style={{ fontSize: 100, color: '#FFF' }}>
+            {props.ui_values.header_left}<img {...props.ui_values.favicon} src={`${process.env.PREFIX}/static/btools.png`} style={{width: 100}} />{props.ui_values.header_right}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <SearchBoxWrapper
+              {...props}
+            />
+          </Grid>
+        </Grid>
+      </Paper>
+    )
+  } else if (MetadataSearch && MetadataSearch.active) {
+    return (
+      <Paper square elevation={0} className={classes.landingCard}>
+        <Grid container
+          spacing={24}
+          direction={'column'}
+          align="center"
+          justify="center">
+          <Grid item xs={12}>
+            <Typography variant="button" align={'center'} style={{ fontSize: 100, color: '#FFF' }}>
+            {props.ui_values.header_left}<img {...props.ui_values.favicon} src={`${process.env.PREFIX}/static/btools.png`} style={{width: 100}} />{props.ui_values.header_right}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <MetadataSearchBox
+              id='MetadataSearch'
+              {...props}
+            />
+          </Grid>
+        </Grid>
+      </Paper>
     )
   } else {
     return null

@@ -4,6 +4,8 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import dynamic from 'next/dynamic'
 import { connect } from 'react-redux'
 import { MuiThemeProvider } from '@material-ui/core'
+import { styles } from '../../styles/jss/theme.js'
+import { withStyles } from '@material-ui/core/styles'
 
 import Base from '../../components/Base'
 import Landing from '../Landing'
@@ -44,9 +46,11 @@ class Home extends React.PureComponent {
 
 
   resources = (props) => (
-    <Resources
-      {...props}
-    />
+    <div className={this.props.classes.container} style={{marginTop: 30}}>
+      <Resources
+        {...props}
+      />
+    </div>
   )
 
   // upload = (props) => (
@@ -82,15 +86,19 @@ class Home extends React.PureComponent {
   }
 
   metadata_search = (props) => (
-    <MetadataSearch
-      {...props}
-    />
+    <div className={this.props.classes.container} style={{marginTop: 30}}>
+      <MetadataSearch
+        {...props}
+      />
+    </div>
   )
 
   signature_search = (props) => (
-    <SignatureSearch
-      {...props}
-    />
+    <div className={this.props.classes.container} style={{marginTop: 30}}>
+      <SignatureSearch
+        {...props}
+      />
+    </div>
   )
 
   pages = (props) => {
@@ -111,14 +119,6 @@ class Home extends React.PureComponent {
           github_issues={this.props.ui_values.github_issues}
           ui_values={this.props.ui_values}
         >
-          <style jsx>{`
-          #Home {
-            background-image: url('${process.env.PREFIX}/static/images/arrowbackground.png');
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            background-position: left bottom;
-          }
-          `}</style>
           <Switch>
             {this.props.ui_values.nav.MetadataSearch.active ?
               <Route
@@ -198,4 +198,4 @@ class Home extends React.PureComponent {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Home))
