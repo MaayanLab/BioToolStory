@@ -51,58 +51,50 @@ class ResourcePage extends React.Component {
   async componentDidMount() {
     const res = this.props.match.params.resource.replace(/_/g, ' ')
     let resource
-    if (isUUID(res + '')) {
-      // uuid fetch resource
-      const { response } = await fetch_meta({
-        endpoint: `/resources/${res}`,
-      })
-      resource = response
-      const { response: libraries } = await fetch_meta_post({
-        endpoint: `/libraries/find`,
-        body: {
-          filter: {
-            where: {
-              resource: res,
-            },
-          },
-        },
-      })
-      resource.libraries = libraries
-    } else {
-      resource = this.props.resources[res]
-      const { response: libraries } = await fetch_meta_post({
-        endpoint: `/libraries/find`,
-        body: {
-          filter: {
-            where: {
-              resource: resource.id,
-            },
-          },
-        },
-      })
-      resource.libraries = libraries
-    }
-
-    const start = this.state.page * this.state.perPage
-    const end = (this.state.page + 1) * this.state.perPage
-    let children = []
-    if (resource !== null && !resource.is_library) {
-      children = resource.libraries.slice(start, end)
-    }
-    const collection = children.map((data) => get_card_data(data, this.props.schemas))
-
-    this.setState({
-      resource,
-      collection,
+    const { response: count } = await fetch_meta({
+      endpoint: `/resources/count`,
     })
-  }
-
-  async componentDidUpdate(prevProps) {
-    const res = this.props.match.params.resource.replace(/_/g, ' ')
-    const prevRes = prevProps.match.params.resource.replace(/_/g, ' ')
-    if (res != prevRes) {
-      let resource
-
+    if (count.count === 0){
+      // use libraries
+      if (isUUID(res + '')) {
+        // uuid fetch resource
+        const { response } = await fetch_meta({
+          endpoint: `/libraries/${res}`,
+        })
+        resource = response
+        const { response: libraries } = await fetch_meta_post({
+          endpoint: `/signatures/find`,
+          body: {
+            filter: {
+              where: {
+                library: res,
+              },
+            },
+          },
+        })
+        resource.libraries = libraries.map(lib=>{
+          lib["library"] = resource
+          return lib
+        })
+      } else {
+        resource = this.props.resources[res]
+        const { response: libraries } = await fetch_meta_post({
+          endpoint: `/signatures/find`,
+          body: {
+            filter: {
+              where: {
+                library: resource.id,
+              },
+            },
+          },
+        })
+        resource.libraries = libraries.map(lib=>{
+          lib["library"] = resource
+          return lib
+        })
+      }
+    }else {
+      // use resources
       if (isUUID(res + '')) {
         // uuid fetch resource
         const { response } = await fetch_meta({
@@ -134,14 +126,114 @@ class ResourcePage extends React.Component {
         })
         resource.libraries = libraries
       }
+    }
+    
+
+    const start = this.state.page * this.state.perPage
+    const end = (this.state.page + 1) * this.state.perPage
+    let children = []
+    if (resource !== null) {
+      children = resource.libraries.slice(start, end)
+    }
+    const collection = children.map((data) => get_card_data(data, this.props.schemas))
+
+    this.setState({
+      resource,
+      collection,
+    })
+  }
+
+  async componentDidUpdate(prevProps) {
+    const res = this.props.match.params.resource.replace(/_/g, ' ')
+    const prevRes = prevProps.match.params.resource.replace(/_/g, ' ')
+    if (res != prevRes) {
+      let resource
+      const { response: count } = await fetch_meta({
+        endpoint: `/resources/count`,
+      })
+      if (count.count === 0){
+        // use libraries
+        if (isUUID(res + '')) {
+          // uuid fetch resource
+          const { response } = await fetch_meta({
+            endpoint: `/libraries/${res}`,
+          })
+          resource = response
+          const { response: libraries } = await fetch_meta_post({
+            endpoint: `/signatures/find`,
+            body: {
+              filter: {
+                where: {
+                  library: res,
+                },
+              },
+            },
+          })
+          resource.libraries = libraries.map(lib=>{
+            lib["library"] = resource
+            return lib
+          })
+        } else {
+          resource = this.props.resources[res]
+          const { response: libraries } = await fetch_meta_post({
+            endpoint: `/signatures/find`,
+            body: {
+              filter: {
+                where: {
+                  library: resource.id,
+                },
+              },
+            },
+          })
+          resource.libraries = libraries.map(lib=>{
+            lib["library"] = resource
+            return lib
+          })
+        }
+      }else {
+        // use resources
+        if (isUUID(res + '')) {
+          // uuid fetch resource
+          const { response } = await fetch_meta({
+            endpoint: `/resources/${res}`,
+          })
+          resource = response
+          const { response: libraries } = await fetch_meta_post({
+            endpoint: `/libraries/find`,
+            body: {
+              filter: {
+                where: {
+                  resource: res,
+                },
+              },
+            },
+          })
+          resource.libraries = libraries
+        } else {
+          resource = this.props.resources[res]
+          const { response: libraries } = await fetch_meta_post({
+            endpoint: `/libraries/find`,
+            body: {
+              filter: {
+                where: {
+                  resource: resource.id,
+                },
+              },
+            },
+          })
+          resource.libraries = libraries
+        }
+      }
+      
+  
       const start = this.state.page * this.state.perPage
       const end = (this.state.page + 1) * this.state.perPage
       let children = []
-      if (resource !== null && !resource.is_library) {
+      if (resource !== null) {
         children = resource.libraries.slice(start, end)
       }
       const collection = children.map((data) => get_card_data(data, this.props.schemas))
-
+  
       this.setState({
         resource,
         collection,
@@ -210,7 +302,7 @@ class ResourcePage extends React.Component {
       },
     })
   }
-  
+
   render() {
     if (this.state.resource === null) {
       return <CircularProgress />

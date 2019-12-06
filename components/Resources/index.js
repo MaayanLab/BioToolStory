@@ -28,9 +28,16 @@ class Resources extends React.PureComponent {
 
   componentDidMount = async () => {
     const schemas = await get_schemas()
-    const { response } = await fetch_meta({
+    const { response: r } = await fetch_meta({
       endpoint: `/resources`,
     })
+    let response = r
+    if (r.length===0){
+      const { response: rlib } = await fetch_meta({
+        endpoint: `/libraries`,
+      })
+      response = rlib
+    }
     const schema = await findMatchedSchema(response[0], schemas)
     const name_props = Object.values(schema.properties).filter((prop) => prop.name)
     const name_prop = name_props.length > 0 ? name_props[0].text : '${id}'
@@ -62,7 +69,6 @@ class Resources extends React.PureComponent {
   )
 
   resource_page = (props) => {
-    console.log(this.state.resources)
     return (<ResourcePage
       cart={this.props.cart}
       {...props}
