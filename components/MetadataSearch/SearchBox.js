@@ -26,9 +26,9 @@ const Info = (props) => {
             </Typography>
             <Typography variant="overline" gutterBottom>
               <Chip
-                label={'Imatinib'}
+                label={'Enrichr'}
                 onDelete={() => {}}
-              /> -Stat3
+              /> -Gene Ontology
             </Typography>
           </div>
         </li>
@@ -42,9 +42,9 @@ const Info = (props) => {
             </Typography>
             <Typography variant="overline" gutterBottom>
               <Chip
-                label={'Imatinib'}
+                label={'Enrichr'}
                 onDelete={() => {}}
-              /> or Stat3
+              /> or Gene Ontology
             </Typography>
           </div>
         </li>
@@ -58,9 +58,9 @@ const Info = (props) => {
             </Typography>
             <Typography variant="overline" gutterBottom>
               <Chip
-                label={'Disease: neuropathy'}
+                label={'Status: up'}
                 onDelete={() => {}}
-              /> {'PMID: 12345'}
+              /> {'tool_name: Enrichr'}
             </Typography>
           </div>
         </li>
@@ -177,7 +177,7 @@ export class SearchBox extends React.Component {
               </Grid>
               <Grid item xs={12} style={{ textAlign: 'center' }}>
                 <Button variant="contained"
-                  color="primary"
+                  color="secondary"
                   style={{ marginTop: 5 }}
                   onClick={() =>
                     this.props.searchFunction(this.props.search)
@@ -220,7 +220,7 @@ export class SearchBox extends React.Component {
                 <Input renderChips={this.renderChips} {...this.props} />
                 <span>&nbsp;&nbsp;</span>
                 <Button variant="contained"
-                  color="primary"
+                  color="secondary"
                   onClick={() =>
                     this.props.searchFunction(this.props.search)
                   }>
