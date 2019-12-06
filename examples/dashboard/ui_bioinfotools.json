@@ -3,7 +3,7 @@
     "landing": true,
     "content": {
       "favicon": {
-        "src": "/static/btools.ico",
+        "src": "/static/btools.png",
         "alt": "btools",
         "style": {
           "marginBottom": 0,
