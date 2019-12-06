@@ -115,14 +115,17 @@ class Header extends React.Component {
         <AppBar position="static" color="primary">
           <Toolbar>
             <Hidden smDown>
-              <Typography variant="h4" color="inherit" className={classes.grow}>
+              {[this.props.ui_values.nav.MetadataSearch.endpoint, this.props.ui_values.nav.SignatureSearch.endpoint].indexOf(this.props.location.pathname) > -1 ?
+                <div className={classes.grow}/>:
+                <Typography variant="h4" color="inherit" className={classes.grow}>
                   <Link
                     to="/"
                     className={classes.header}
                   >
-                  {this.props.ui_values.header_left || ''}<img src={`${process.env.PREFIX}${this.props.ui_values.favicon.icon}`} width={this.props.ui_values.favicon.width} />{this.props.ui_values.header_right || ' Signature Commons'}
+                  {this.props.ui_values.header_left || ''}<img {...this.props.ui_values.favicon} src={`${process.env.PREFIX}${this.props.ui_values.favicon.src}`} />{this.props.ui_values.header_right || ' Signature Commons'}
                   </Link>
                 </Typography>
+              }
                 <Nav classes={classes} {...rest}/>
               </Hidden>
               <Hidden mdUp>
@@ -134,7 +137,7 @@ class Header extends React.Component {
                   to="/"
                   className={classes.header}
                 >
-                {this.props.ui_values.header_left || ''}<img src={`${process.env.PREFIX}${this.props.ui_values.favicon.icon}`} width={this.props.ui_values.favicon.width} />&nbsp; {this.props.ui_values.header_right || 'Signature Commons'}
+                {this.props.ui_values.header_left || ''}<img {...this.props.ui_values.favicon} src={`${process.env.PREFIX}${this.props.ui_values.favicon.src}`} />&nbsp; {this.props.ui_values.header_right || 'Signature Commons'}
                 </Link>
               </Typography>
               <SwipeableDrawer

@@ -91,6 +91,8 @@ function Footer(props) {
         <Grid item>
             <FooterLink classes={classes} 
               src={powered_src}
+              containerProps={{style: {width: 150, background:"inherit"}}}
+              imageProps={{style: {width: 150}}}
               alt="sigcom" />
           </Grid>
       </Grid>

@@ -45,21 +45,20 @@ export default connect(mapStateToProps)(withStyles(styles)(class Base extends Re
       <div className="root">
         <Head>
           <meta charSet="utf-8" />
-          <link rel="shortcut icon" href={`${process.env.PREFIX}${this.props.ui_values.favicon.icon}`} />
+          <title>BTools: Bioinformatics Tool Search</title>
+          <link rel="shortcut icon" href={`${process.env.PREFIX}${this.props.ui_values.favicon.src}`} />
           <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
           {this.props.ui_values.font_families.map((family, ind)=>(
             <link href={family} key={ind} rel="stylesheet" type="text/css"/>
           ))}
-          <link href="https://cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css" rel="stylesheet" />
+          <link href="https://cdn.materialdesignicons.com/4.5.95/css/materialdesignicons.min.css" rel="stylesheet" />
           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
           <script async defer src="https://buttons.github.io/buttons.js"></script>
         </Head>
         <Header location={this.props.location}/>
-        <main>
-          <div className={classes.container}>
-            {this.props.children}
-          </div>
-        </main>
+        <div>
+          {this.props.children}
+        </div>
         <Footer/>
       </div>
     )
