@@ -39,19 +39,23 @@ export default class ScorePopper extends React.Component {
           onClick={this.handleClick}
           style={{ width: 50 }}
         >
-          <Typography style={{
+          <span style={{
             fontSize: 15,
             width: 100,
             textAlign: 'left',
-          }}
-          variant="subtitle2">
+          }}>
             <Icon className={`${classes.menuIcon} mdi mdi-18px ${scores[sorted].icon || 'mdi-trophy-award'}`} />
                 &nbsp;
             <Typography style={{ fontSize: 10, display: 'block', width: 20, overflow: 'visible' }} variant="caption" display="block">
               {`${scores[sorted].label}:`}
             </Typography>
-            {scores[sorted].value}
-          </Typography>
+            <Typography
+              noWrap
+              style={{width: 70}}
+              variant="subtitle2">
+              {scores[sorted].value}
+            </Typography>
+          </span>
         </Button>
         <Menu
           id="simple-menu"
