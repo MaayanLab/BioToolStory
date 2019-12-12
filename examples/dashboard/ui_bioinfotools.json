@@ -4,14 +4,20 @@
     "content": {
       "favicon": {
         "src": "/static/btools.png",
-        "alt": "btools",
-        "style": {
-          "marginBottom": 0,
-          "width": 40
-        }
+        "alt": "BTools",
+        "title": "BTools: Bioinformatics Tool Search"
       },
-      "header_left": "B",
-      "header_right": "ls",
+      "header_info": {
+          "icon": {
+              "src": "/static/btools.png",
+              "alt": "BTools",
+              "style": {
+                "width": 100
+              }
+          },
+          "header_left": "B",
+          "header_right": "ls"
+      },
       "metadata_placeholder": "Search over thousands of tools",
       "text_1": "Explore an extensive collection of bioinformatics tools",
       "text_4": " ",

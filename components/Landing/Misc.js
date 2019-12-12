@@ -215,7 +215,7 @@ export const SearchCard = ({ classes, width, ...props }) => {
           justify="center">
           <Grid item xs={12}>
             <Typography variant="button" align={'center'} style={{ fontSize: 100, color: '#FFF' }}>
-              {props.ui_values.header_left}<img {...props.ui_values.favicon} src={`${process.env.PREFIX}/static/btools.png`} style={{width: 100}} />{props.ui_values.header_right}
+              {props.ui_values.header_info.header_left}<img {...props.ui_values.header_info.icon} src={`${process.env.PREFIX}${props.ui_values.header_info.icon.src}`} />{props.ui_values.header_info.header_right}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -242,7 +242,7 @@ export const SearchCard = ({ classes, width, ...props }) => {
           justify="center">
           <Grid item xs={12}>
             <Typography variant="button" align={'center'} style={{ fontSize: 100, color: '#FFF' }}>
-            {props.ui_values.header_left}<img {...props.ui_values.favicon} src={`${process.env.PREFIX}/static/btools.png`} style={{width: 100}} />{props.ui_values.header_right}
+            {props.ui_values.header_info.header_left}<img {...props.ui_values.header_info.icon} src={`${process.env.PREFIX}${props.ui_values.header_info.icon.src}`} />{props.ui_values.header_info.header_right}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -263,7 +263,7 @@ export const SearchCard = ({ classes, width, ...props }) => {
           justify="center">
           <Grid item xs={12}>
             <Typography variant="button" align={'center'} style={{ fontSize: 100, color: '#FFF' }}>
-            {props.ui_values.header_left}<img {...props.ui_values.favicon} src={`${process.env.PREFIX}/static/btools.png`} style={{width: 100}} />{props.ui_values.header_right}
+            {props.ui_values.header_info.header_left}<img {...props.ui_values.header_info.icon} src={`${process.env.PREFIX}${props.ui_values.header_info.icon.src}`} />{props.ui_values.header_info.header_right}
             </Typography>
           </Grid>
           <Grid item xs={12}>
