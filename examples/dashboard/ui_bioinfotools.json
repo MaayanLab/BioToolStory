@@ -16,12 +16,12 @@
       "text_1": "Explore an extensive collection of bioinformatics tools",
       "text_4": " ",
       "preferred_name_singular": {
-        "libraries": "Tool",
-        "resources": "Journal"
+        "signatures": "Tool",
+        "libraries": "Journal"
       },
       "preferred_name": {
-        "libraries": "Tools",
-        "resources": "Journals"
+        "signatures": "Tools",
+        "libraries": "Journals"
       },
       "nav": {
         "MetadataSearch": {
