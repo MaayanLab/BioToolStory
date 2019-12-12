@@ -115,31 +115,34 @@ class Header extends React.Component {
         <AppBar position="static" color="primary">
           <Toolbar>
             <Hidden smDown>
-              {[this.props.ui_values.nav.MetadataSearch.endpoint, this.props.ui_values.nav.SignatureSearch.endpoint].indexOf(this.props.location.pathname) > -1 ?
+            { [this.props.ui_values.nav.MetadataSearch.endpoint, this.props.ui_values.nav.SignatureSearch.endpoint + "/Overlap", this.props.ui_values.nav.SignatureSearch.endpoint + "/Rank"].indexOf(this.props.location.pathname) > -1 ?
                 <div className={classes.grow}/>:
                 <Typography variant="h4" color="inherit" className={classes.grow}>
-                  <Link
-                    to="/"
-                    className={classes.header}
-                  >
-                  {this.props.ui_values.header_left || ''}<img {...this.props.ui_values.favicon} src={`${process.env.PREFIX}${this.props.ui_values.favicon.src}`} />{this.props.ui_values.header_right || ' Signature Commons'}
-                  </Link>
-                </Typography>
-              }
+                    <Link
+                      to="/"
+                      className={classes.header}
+                    >
+                    {this.props.ui_values.header_info.header_left}<img {...this.props.ui_values.header_info.icon} src={`${process.env.PREFIX}${this.props.ui_values.header_info.icon.src}`} />{this.props.ui_values.header_info.header_right}
+                    </Link>
+                  </Typography>
+                }
                 <Nav classes={classes} {...rest}/>
               </Hidden>
               <Hidden mdUp>
               <Button edge="start" className={classes.menuButton} onClick={this.toggleDrawer} color="inherit" aria-label="menu">
                 <MenuIcon />
               </Button>
-              <Typography variant="h4" align="center" color="inherit" className={classes.grow}>
-                <Link
-                  to="/"
-                  className={classes.header}
-                >
-                {this.props.ui_values.header_left || ''}<img {...this.props.ui_values.favicon} src={`${process.env.PREFIX}${this.props.ui_values.favicon.src}`} />&nbsp; {this.props.ui_values.header_right || 'Signature Commons'}
-                </Link>
-              </Typography>
+              { [this.props.ui_values.nav.MetadataSearch.endpoint, this.props.ui_values.nav.SignatureSearch.endpoint + "/Overlap", this.props.ui_values.nav.SignatureSearch.endpoint + "/Rank"].indexOf(this.props.location.pathname) > -1 ?
+                <div className={classes.grow}/>:
+                <Typography variant="h4" color="inherit" className={classes.grow}>
+                    <Link
+                      to="/"
+                      className={classes.header}
+                    >
+                    {this.props.ui_values.header_info.header_left}<img {...this.props.ui_values.header_info.icon} src={`${process.env.PREFIX}${this.props.ui_values.header_info.icon.src}`} />{this.props.ui_values.header_info.header_right}
+                    </Link>
+                  </Typography>
+                }
               <SwipeableDrawer
                 open={this.state.open}
                 onClose={this.toggleDrawer}
