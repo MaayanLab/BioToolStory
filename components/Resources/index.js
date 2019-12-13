@@ -38,26 +38,28 @@ class Resources extends React.PureComponent {
       })
       response = rlib
     }
-    const schema = await findMatchedSchema(response[0], schemas)
-    const name_props = Object.values(schema.properties).filter((prop) => prop.name)
-    const name_prop = name_props.length > 0 ? name_props[0].text : '${id}'
-    const icon_props = Object.values(schema.properties).filter((prop) => prop.icon)
-    const icon_prop = icon_props.length > 0 ? icon_props[0].src : '${id}'
-    const description_props = Object.values(schema.properties).filter((prop) => prop.description)
-    const description_prop = description_props.length > 0 ? description_props[0].text : '${id}'
-    const resources = response.reduce((acc, resource) => {
-      let name = makeTemplate(name_prop, resource)
-      if (name === 'undefined') name = resource.id
-      acc[name] = resource
-      return acc
-    }, {})
-    this.setState({
-      resources,
-      schemas,
-      name_prop,
-      icon_prop,
-      description_prop,
-    })
+    if (response.length>0){
+      const schema = await findMatchedSchema(response[0], schemas)
+      const name_props = Object.values(schema.properties).filter((prop) => prop.name)
+      const name_prop = name_props.length > 0 ? name_props[0].text : '${id}'
+      const icon_props = Object.values(schema.properties).filter((prop) => prop.icon)
+      const icon_prop = icon_props.length > 0 ? icon_props[0].src : '${id}'
+      const description_props = Object.values(schema.properties).filter((prop) => prop.description)
+      const description_prop = description_props.length > 0 ? description_props[0].text : '${id}'
+      const resources = response.reduce((acc, resource) => {
+        let name = makeTemplate(name_prop, resource)
+        if (name === 'undefined') name = resource.id
+        acc[name] = resource
+        return acc
+      }, {})
+      this.setState({
+        resources,
+        schemas,
+        name_prop,
+        icon_prop,
+        description_prop,
+      })
+    }
   }
 
 
