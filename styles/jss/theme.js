@@ -83,8 +83,14 @@ export const landingStyle = (theme) => ({
       'linear-gradient(45deg, ' + Grays[0] + ', ' + Grays[1] + ')',
   },
   landingCard: {
-    background: theme.palette.primary.main,
+    background: theme.palette.landingCard!==undefined? theme.palette.landingCard.main: theme.palette.primary.main,
+    color: theme.palette.landingCard!==undefined? theme.palette.landingCard.contrastText: theme.palette.primary.contrastText,
     paddingBottom: 30,
+    paddingTop: 50
+  },
+  headerText: {
+    fontSize: 100,
+    color: "inherit",
   },
   stretched: {
     width: '80%',
@@ -122,8 +128,9 @@ export const landingStyle = (theme) => ({
     zIndex: 100,
   },
   bottomLink: {
-    background: theme.palette.default.main,
-    color: theme.palette.default.contrastText
+    background: theme.palette.landingCard!==undefined? theme.palette.primary.main: theme.palette.default.main,
+    color: theme.palette.landingCard!==undefined? theme.palette.primary.contrastText: theme.palette.default.contrastText,
+    
   },
   icon_light: {
     float: 'right',
