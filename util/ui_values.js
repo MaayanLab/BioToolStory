@@ -1,4 +1,5 @@
 import merge from 'deepmerge'
+import { AutoFix } from 'mdi-material-ui'
 
 const default_values = {
   'landing': {
@@ -17,7 +18,8 @@ const default_values = {
         src: "/static/favicon.ico",
         alt: "Signature Commons",
         style: {
-          width: 30
+          width: 30,
+          height: "auto"
       }
       }
     },

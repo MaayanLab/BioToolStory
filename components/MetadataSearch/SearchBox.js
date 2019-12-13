@@ -212,8 +212,8 @@ export class SearchBox extends React.Component {
                   <Tooltip title={this.props.Info || <Info {...this.props}/>}
                     interactive placement="left-start"
                     classes={{ tooltip: this.props.classes.tooltip }}>
-                    <Button className={this.props.classes.tooltipButton} >
-                      <span className="mdi mdi-information mdi-24px mdi-dark" />
+                    <Button className={this.props.classes.tooltipButton} color="secondary" >
+                      <span className="mdi mdi-information mdi-24px" />
                     </Button>
                   </Tooltip>
                 </Hidden>
@@ -249,8 +249,8 @@ export class SearchBox extends React.Component {
               <Tooltip title={this.props.Info || <Info {...this.props}/>}
                 interactive placement="left-start"
                 classes={{ tooltip: this.props.classes.tooltip }}>
-                <Button className={this.props.classes.tooltipButton} >
-                  <span className="mdi mdi-information mdi-24px mdi-dark" />
+                <Button className={this.props.classes.tooltipButton} color="secondary" >
+                  <span className="mdi mdi-information mdi-24px" />
                 </Button>
               </Tooltip>
             </Hidden>

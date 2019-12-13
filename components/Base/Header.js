@@ -21,8 +21,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const styles = theme => ({
   grow: {
-    flexGrow: 1,
-    marginBottom: 10
+    flexGrow: 1
   },
   header: {
     whiteSpace: 'nowrap',
@@ -110,19 +109,26 @@ class Header extends React.Component {
   render = () => {
     const paths = this.props.location.pathname.split('/')
     const { staticContext, classes, ...rest } = this.props
+    const temp = this.props.ui_values.header_info.permanent===undefined
+    console.log(temp)
+    const {icon, header_left, header_right} = this.props.ui_values.header_info.permanent!==undefined ? this.props.ui_values.header_info.permanent: this.props.ui_values.header_info
     return (
       <header>
         <AppBar position="static" color="primary">
-          <Toolbar>
+          <Toolbar variant="denZse">
             <Hidden smDown>
-            { [this.props.ui_values.nav.MetadataSearch.endpoint, this.props.ui_values.nav.SignatureSearch.endpoint + "/Overlap", this.props.ui_values.nav.SignatureSearch.endpoint + "/Rank"].indexOf(this.props.location.pathname) > -1 ?
-                <div className={classes.grow}/>:
-                <Typography variant="h4" color="inherit" className={classes.grow}>
+            { temp && [this.props.ui_values.nav.MetadataSearch.endpoint, this.props.ui_values.nav.SignatureSearch.endpoint + "/Overlap", this.props.ui_values.nav.SignatureSearch.endpoint + "/Rank"].indexOf(this.props.location.pathname) > -1 ?
+                <div className={classes.grow} />:
+                <Typography variant="h4" color="inherit" className={classes.grow} style={this.props.ui_values.header_info.style}>
                     <Link
                       to="/"
                       className={classes.header}
                     >
-                    {this.props.ui_values.header_info.header_left}<img {...this.props.ui_values.header_info.icon} src={`${process.env.PREFIX}${this.props.ui_values.header_info.icon.src}`} />{this.props.ui_values.header_info.header_right}
+                    {header_left}
+                    {icon.src===null?null:
+                      <img {...icon} src={`${process.env.PREFIX}${icon.src}`} />        
+                    }
+                    {header_right}
                     </Link>
                   </Typography>
                 }
@@ -132,14 +138,18 @@ class Header extends React.Component {
               <Button edge="start" className={classes.menuButton} onClick={this.toggleDrawer} color="inherit" aria-label="menu">
                 <MenuIcon />
               </Button>
-              { [this.props.ui_values.nav.MetadataSearch.endpoint, this.props.ui_values.nav.SignatureSearch.endpoint + "/Overlap", this.props.ui_values.nav.SignatureSearch.endpoint + "/Rank"].indexOf(this.props.location.pathname) > -1 ?
-                <div className={classes.grow}/>:
-                <Typography variant="h4" color="inherit" className={classes.grow}>
+              { temp && [this.props.ui_values.nav.MetadataSearch.endpoint, this.props.ui_values.nav.SignatureSearch.endpoint + "/Overlap", this.props.ui_values.nav.SignatureSearch.endpoint + "/Rank"].indexOf(this.props.location.pathname) > -1 ?
+                <div className={classes.grow} />:
+                <Typography variant="h4" color="inherit" className={classes.grow} style={this.props.ui_values.header_info.style}>
                     <Link
                       to="/"
                       className={classes.header}
                     >
-                    {this.props.ui_values.header_info.header_left}<img {...this.props.ui_values.header_info.icon} src={`${process.env.PREFIX}${this.props.ui_values.header_info.icon.src}`} />{this.props.ui_values.header_info.header_right}
+                    {header_left}
+                    {icon.src===null?null:
+                      <img {...icon} src={`${process.env.PREFIX}${icon.src}`} />        
+                    }
+                    {header_right}
                     </Link>
                   </Typography>
                 }

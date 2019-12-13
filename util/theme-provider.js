@@ -8,7 +8,6 @@ const defaultTheme = {
   palette: {
     primary: {
       main: blue[500],
-      contrastText: '#FFF'
     },
     secondary: {
       main: '#F37F21',

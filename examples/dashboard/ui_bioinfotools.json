@@ -7,16 +7,20 @@
         "alt": "BTools",
         "title": "BTools: Bioinformatics Tool Search"
       },
-      "header_info": {
+      "header_info": {      
           "icon": {
               "src": "/static/btools.png",
               "alt": "BTools",
               "style": {
-                "width": 100
+                "height": 50,
+                "width": "auto"
               }
           },
           "header_left": "B",
-          "header_right": "ls"
+          "header_right": "ls",
+          "style": {
+            "fontSize": 50
+          }
       },
       "metadata_placeholder": "Search over thousands of tools",
       "text_1": "Explore an extensive collection of bioinformatics tools",
