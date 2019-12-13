@@ -5,6 +5,7 @@ import { ReadURLParams, URLFormatter } from '../../util/helper/misc'
 import { connect } from 'react-redux'
 import { SearchBox } from './SearchBox'
 
+
 const styles = (theme) => ({
   info: {
     paddingTop: theme.spacing.unit * 2,
@@ -14,10 +15,18 @@ const styles = (theme) => ({
     margin: theme.spacing.unit / 2,
   },
   defaultChip: {
-    ...theme.chipColors.default,
+    background: theme.palette.secondary.main,
+    color: theme.palette.secondary.contrastText,
+    '&:hover': {
+      background: theme.palette.secondary.dark,
+    }
   },
   defaultLightChip: {
-    ...theme.chipColors.defaultLight,
+    background: theme.palette.secondary.main,
+    color: theme.palette.secondary.contrastText,
+    '&:hover': {
+      background: theme.palette.secondary.dark,
+    }
   },
   notChip: {
     ...theme.chipColors.alert,
