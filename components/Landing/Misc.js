@@ -45,7 +45,7 @@ export const BottomLinks = ({ classes, width, theme, ...props }) => {
               direction={'column'}>
               <Grid item xs={12}>
                 <Link to={`${props.ui_values.nav.MetadataSearch.endpoint || '/MetadataSearch'}`}>
-                  <Button className={`${classes.bottomLink}`} variant="contained" color='default' onClick={() => scroll.scrollToTop()}>
+                  <Button className={`${classes.bottomLink}`} variant="contained"  onClick={() => scroll.scrollToTop()}>
                     <FileFind className={background.isDark() ? classes.icon: classes.icon_light} />
                   </Button>
                 </Link>
@@ -68,7 +68,7 @@ export const BottomLinks = ({ classes, width, theme, ...props }) => {
               direction={'column'}>
               <Grid item xs={12}>
                 <Link to={`${props.ui_values.nav.SignatureSearch.endpoint || '/SignatureSearch'}`}>
-                  <Button className={`${classes.bottomLink}`} variant="contained" color='default' onClick={() => scroll.scrollToTop()}>
+                  <Button className={`${classes.bottomLink}`} variant="contained"  onClick={() => scroll.scrollToTop()}>
                     <FindReplace className={background.isDark() ? classes.icon: classes.icon_light} />
                   </Button>
                 </Link>
@@ -90,7 +90,7 @@ export const BottomLinks = ({ classes, width, theme, ...props }) => {
               alignItems={'center'}
               direction={'column'}>
               <Grid item xs={12}>
-                <Button className={`${classes.bottomLink}`} variant="contained" color='default' href={`#/${props.ui_values.preferred_name.resources || 'Resources'}`}>
+                <Button className={`${classes.bottomLink}`} variant="contained"  href={`#/${props.ui_values.preferred_name.resources || 'Resources'}`}>
                   <NearMe className={background.isDark() ? classes.icon: classes.icon_light} />
                 </Button>
               </Grid>
@@ -111,7 +111,7 @@ export const BottomLinks = ({ classes, width, theme, ...props }) => {
             direction={'column'}>
             <Grid item xs={12}>
               <Link to="/API">
-                <Button className={`${classes.bottomLink}`} variant="contained" color='default'>
+                <Button className={`${classes.bottomLink}`} variant="contained" >
                   <Earth className={background.isDark() ? classes.icon: classes.icon_light} />
                 </Button>
               </Link>
@@ -214,9 +214,13 @@ export const SearchCard = ({ classes, width, ...props }) => {
           align="center"
           justify="center">
           <Grid item xs={12}>
-            <Typography variant="button" align={'center'} style={{ fontSize: 100, color: '#FFF' }}>
-              {props.ui_values.header_info.header_left}<img {...props.ui_values.header_info.icon} src={`${process.env.PREFIX}${props.ui_values.header_info.icon.src}`} />{props.ui_values.header_info.header_right}
-            </Typography>
+            <Typography variant="h4" align={'center'} className={classes.headerText}  style={props.ui_values.header_info.style}>
+              {props.ui_values.header_info.header_left}
+              {props.ui_values.header_info.icon.src === null ? null:
+                <img {...props.ui_values.header_info.icon} src={`${process.env.PREFIX}${props.ui_values.header_info.icon.src}`} />
+              }
+              {props.ui_values.header_info.header_right}
+              </Typography>
           </Grid>
           <Grid item xs={12}>
             { MetadataSearch && props.match.params.searchType == MetadataSearch.endpoint.substring(1) ?
@@ -241,8 +245,12 @@ export const SearchCard = ({ classes, width, ...props }) => {
           align="center"
           justify="center">
           <Grid item xs={12}>
-            <Typography variant="button" align={'center'} style={{ fontSize: 100, color: '#FFF' }}>
-            {props.ui_values.header_info.header_left}<img {...props.ui_values.header_info.icon} src={`${process.env.PREFIX}${props.ui_values.header_info.icon.src}`} />{props.ui_values.header_info.header_right}
+            <Typography variant="h4" align={'center'} className={classes.headerText}  style={props.ui_values.header_info.style}>
+            {props.ui_values.header_info.header_left}
+            {props.ui_values.header_info.icon.src === null ? null:
+              <img {...props.ui_values.header_info.icon} src={`${process.env.PREFIX}${props.ui_values.header_info.icon.src}`} />
+            }
+            {props.ui_values.header_info.header_right}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -262,8 +270,12 @@ export const SearchCard = ({ classes, width, ...props }) => {
           align="center"
           justify="center">
           <Grid item xs={12}>
-            <Typography variant="button" align={'center'} style={{ fontSize: 100, color: '#FFF' }}>
-            {props.ui_values.header_info.header_left}<img {...props.ui_values.header_info.icon} src={`${process.env.PREFIX}${props.ui_values.header_info.icon.src}`} />{props.ui_values.header_info.header_right}
+            <Typography variant="h4" align={'center'} className={classes.headerText}  style={props.ui_values.header_info.style}>
+            {props.ui_values.header_info.header_left}
+            {props.ui_values.header_info.icon.src === null ? null:
+              <img {...props.ui_values.header_info.icon} src={`${process.env.PREFIX}${props.ui_values.header_info.icon.src}`} />
+            }
+            {props.ui_values.header_info.header_right}
             </Typography>
           </Grid>
           <Grid item xs={12}>
