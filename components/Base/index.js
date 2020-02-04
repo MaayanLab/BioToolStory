@@ -56,9 +56,9 @@ export default connect(mapStateToProps)(withStyles(styles)(class Base extends Re
           <script async defer src="https://buttons.github.io/buttons.js"></script>
         </Head>
         <Header location={this.props.location}/>
-        <div>
+        <main>
           {this.props.children}
-        </div>
+        </main>
         <Footer/>
       </div>
     )
