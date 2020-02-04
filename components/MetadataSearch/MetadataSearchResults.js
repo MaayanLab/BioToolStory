@@ -15,7 +15,6 @@ export const value_by_type = {
     let color
     if (prop.hyperlink !== undefined) hyperlink = makeTemplate(prop.hyperlink, data)
     if (prop.color !== undefined) color = makeTemplate(prop.color, data)
-    if (color!==undefined) console.log(color)
     if (val === 'undefined') {
       return null
     } else {
