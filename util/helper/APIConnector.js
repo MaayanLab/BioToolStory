@@ -311,11 +311,14 @@ export default class Model {
       const res = this.parent === undefined ? m.response :
         m.response.map((r) => {
           const parent_id = r[this.parent]
-          const parent_meta = this.parents_meta[parent_id]
-          return {
-            ...r,
-            [this.parent]: parent_meta,
+          if (parent_id!==undefined){
+            const parent_meta = this.parents_meta[parent_id]
+            return {
+              ...r,
+              [this.parent]: parent_meta,
+            }
           }
+          return r
         })
       response = [...r]
       result = {
@@ -327,22 +330,23 @@ export default class Model {
       const [m, ...r] = response
 
       response = [...r]
+      const value_count = {}
+      for (const i of this.sorting_fields){
+        const field_name = i.meta.Field_Name
+        value_count[field_name] = {
+          schema: s,
+          stats: Object.entries(m.response[field_name] || {}).reduce((acc_1,[key, val])=>{
+            if (key==="null"){
+              return acc_1
+            }
+            acc_1[key] = val
+            return acc_1
+          },{})
+        }
+      }
       result = {
         ...result,
-        value_count: this.sorting_fields.reduce((acc, s) => {
-          const field_name = s.meta.Field_Name
-          acc[field_name] = {
-            schema: s,
-            stats: Object.entries(m.response[field_name]).reduce((acc_1,[key, val])=>{
-              if (key==="null"){
-                return acc_1
-              }
-              acc_1[key] = val
-              return acc_1
-            },{}),
-          }
-          return acc
-        }, {}),
+        value_count
       }
     }
     if (count) {
