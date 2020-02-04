@@ -110,7 +110,6 @@ class Header extends React.Component {
     const paths = this.props.location.pathname.split('/')
     const { staticContext, classes, ...rest } = this.props
     const temp = this.props.ui_values.header_info.permanent===undefined
-    console.log(temp)
     const {icon, header_left, header_right} = this.props.ui_values.header_info.permanent!==undefined ? this.props.ui_values.header_info.permanent: this.props.ui_values.header_info
     return (
       <header>

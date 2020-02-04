@@ -22,7 +22,7 @@
                     "src": "/static/cfde/CFDE-logo.png",
                     "alt": "Common Fund Bioinformatics Tools",
                     "style": {
-                      "height": 64,
+                      "height": 90,
                       "width": "auto"
                     }
                 } 
@@ -33,11 +33,11 @@
         "text_4": " ",
         "preferred_name_singular": {
           "signatures": "Tool",
-          "libraries": "Journal"
+          "libraries": "Center"
         },
         "preferred_name": {
           "signatures": "Tools",
-          "libraries": "Journals"
+          "libraries": "Centers"
         },
         "nav": {
           "MetadataSearch": {
@@ -49,7 +49,7 @@
           },
           "Resources": {
             "active": true,
-            "endpoint": "/Journals"
+            "endpoint": "/Centers"
           },
           "API": {
             "active": true
@@ -84,11 +84,18 @@
             "fontFamily": "Poppins"
           },
           "overrides": {
-              "MUIToolBar": {
+              "MuiAppBar": {
                   "root": {
-                      "borderBottom": "1px solid #e6e6e6"
+                      "borderBottom": "1px solid #e6e6e6",
+                      "paddingLeft": 100,
+                      "paddingRight": 100
                   }
-              }
+              },
+              "MuiButton": {
+                "contained": {
+                    "boxShadow": "none"
+                }
+            }
           }
         },
         "github": "https://github.com/MaayanLab/btools-ui",

@@ -18,13 +18,15 @@
       "type": "text",
       "field": "Description",
       "text": "${meta['description']}",
-      "priority": 2
+      "priority": 2,
+      "MDI_Icon": "mdi-comment-processing"
     },
     "homepage": {
       "visibility": 1,
       "type": "text",
-      "field": "URL",
       "text": "${meta['homepage']}",
+      "hyperlink": "${meta['homepage']}",
+      "display": true,
       "priority": 3
     }
   }

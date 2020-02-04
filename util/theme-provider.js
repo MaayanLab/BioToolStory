@@ -4,6 +4,20 @@ import amber from '@material-ui/core/colors/amber'
 import grey from '@material-ui/core/colors/grey'
 import green from '@material-ui/core/colors/green'
 
+// We can use card.BottomCard, card.TopCard for specific card modification
+// card: {
+//   bottomCard: {
+//     palette: {
+//       main: xx,
+//       contrastText: xx,
+//       light: xx,
+//       dark,
+//     },
+//     overrides: {
+//       ...
+//     }
+//   }
+// }
 const defaultTheme = {
   palette: {
     primary: {
@@ -18,6 +32,16 @@ const defaultTheme = {
     default: {
       main: grey[200],
       contrastText: '#000'
+    }
+  },
+  card: {
+    bottomCard: {
+      palette: {},
+      overrides: {}
+    },
+    topCard: {
+      palette: {},
+      overrides: {}
     }
   },
   chipColors: {

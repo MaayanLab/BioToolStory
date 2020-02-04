@@ -137,7 +137,6 @@ export function *workFetchMetaData(action) {
   } finally {
     if (yield cancelled()) {
       controller.abort()
-      console.log('Aborted')
       yield put(fetchMetaDataAborted('aborted'))
     }
   }

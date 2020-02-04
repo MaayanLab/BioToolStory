@@ -1,0 +1,241 @@
+{
+    "$id": "https://raw.githubusercontent.com/jeevangelista/signature-commons-schema/master/meta/library/btools-tool.json",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "allOf": [
+      {
+        "$ref": "/dcic/signature-commons-schema/v5/core/meta.json"
+      },
+      {
+        "properties": {
+            "publications": {
+                "type": "array",
+                "items": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "abstract": {
+                                "description": "The abstract of the tool's publication.",
+                                "type": "array",
+                                "items": [
+                                    {
+                                        "type": "array",
+                                        "items": [
+                                            {
+                                                "type": "string",
+                                                "description": "parts of the abstract. First part is the subpart title and the second the value"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            "affiliation": {
+                                "description": "affiliations",
+                                "type": "string"
+                            },
+                            "altmetric_badge": {
+                                "description": "The url that this library can be acccessed from.",
+                                "format": "uri",
+                                "type": "string"
+                              },
+                              "article_title": {
+                                "description": "Title of the article",
+                                "type": "string"
+                              },
+                              "author_affiliations": {
+                                "description": "Affiliations of the authors",
+                                "type": "array",
+                                "items": [
+                                  {
+                                    "description": "affiliation",
+                                    "type": "string"
+                                  }
+                                ]
+                              },
+                              "authors": {
+                                "description": "List of authors",
+                                "type": "array",
+                                "items": [
+                                  {
+                                    "description": "author",
+                                    "type": "string"
+                                  }
+                                ]
+                              },
+                              "country": {
+                                "description": "Country of origin of the tool",
+                                "type": "string"
+                              },
+                              "date": {
+                                "description": "date of publication",
+                                "type": "string"
+                              },
+                              "doi": {
+                                "description": "DOI",
+                                "type": "string",
+                                "format": "uri"
+                              },
+                              "institution": {
+                                "description": "Institution",
+                                "type": "string"
+                              },
+                              "journal_name": {
+                                "description": "Name of the journal where it is published",
+                                "type": "string"
+                              },
+                              "last_author": {
+                                "type": "string",
+                                "description": "Name of the last author"
+                              },
+                              "last_author_affiliation": {
+                                  
+                              }
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "description": "Name of the author"
+                                  },
+                                  "affiliation": {
+                                    "type": "array",
+                                    "description": "Affiliations of the author",
+                                    "items": [
+                                      {
+                                        "description": "affiliation",
+                                        "type": "string"
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              "pub_year": {
+                                "description": "Year of publication",
+                                "type": "string"
+                              },
+                              "pubmed": {
+                                "description": "Link to pubmed page",
+                                "type": "string",
+                                "format": "uri"
+                              },
+                        }
+                    }
+                ]
+            },            
+        
+          "abstract": {
+            "description": "The abstract of the tool's publication.",
+            "type": "object",
+            "patternProperties": {
+              ".*": {
+                "description": "Parts of the abstract",
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "array",
+                    "items": [
+                      {
+                        "description": "subparts in an abstract",
+                        "type": "string"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "age_days": {
+            "description": "Age of tools, in days",
+            "type": "string"
+          },
+          "age_years": {
+            "description": "Age of tools, in years",
+            "type": "string"
+          },
+          
+          "attention_percentile": {
+            "description": "Attention percentile",
+            "type": "number"
+          },
+          "attention_score": {
+            "description": "Attention score",
+            "type": "number"
+          },
+          "base_url": {
+            "description": "Landing page of the tool",
+            "type": "string"
+          },
+          "cited_by_tweeters_count": {
+            "description": "Tweet cite counts",
+            "type": "integer"
+          },
+          "readers_count": {
+            "description": "Number of readers",
+            "type": "integer"
+          },
+          "redirect": {
+            "description": "Tag that tells if a website redirects or not",
+            "type": "integer"
+          },
+          "referenced_by": {
+            "description": "List of articles that cites the tool",
+            "type": "array",
+            "items": [
+              {
+                "type": "object",
+                "description": "pubmed link and year of publication",
+                "properties": {
+                  "pubmed": {
+                    "description": "Link to pubmed page",
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "year": {
+                    "description": "Year of publication",
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "standardized_tool_name": {
+            "description": "Standardized name of the tool",
+            "type": "string"
+          },
+          "tool_description": {
+            "description": "Description of the tool",
+            "type": "string"
+          },
+          "tool_homepage_http_code": {
+            "description": "http response of the tool homepage",
+            "type": "string"
+          },
+          "tool_homepage_url": {
+            "description": "Homepage of the tool",
+            "type": "string"
+          },
+          "tool_name": {
+            "description": "Name of the tool",
+            "type": "string"
+          },
+          "total_pubmed_citations": {
+            "description": "Total number of pubmed citations",
+            "type": "integer"
+          },
+          "up_down": {
+            "description": "Tag that tells if the website is up or down",
+            "type": "string",
+            "enum": [
+              "up",
+              "down"
+            ]
+          }
+        },
+        "required": [
+          "tool_name",
+          "tool_homepage_url",
+          "tool_description"
+        ],
+        "type": "object"
+      }
+    ]
+  }
