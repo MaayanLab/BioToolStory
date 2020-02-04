@@ -334,7 +334,7 @@ export default class Model {
       for (const i of this.sorting_fields){
         const field_name = i.meta.Field_Name
         value_count[field_name] = {
-          schema: s,
+          schema: i,
           stats: Object.entries(m.response[field_name] || {}).reduce((acc_1,[key, val])=>{
             if (key==="null"){
               return acc_1
