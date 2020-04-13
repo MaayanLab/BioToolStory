@@ -125,11 +125,11 @@
                         "type": "string"
                     },
             "Publication_Type": { 
-                        "description": "type of  of article",
-                        "type": "array",
-                        "item": {
-                          "description": "type of  of article",
-                          "type":"string"
+                          "description": "Publication_Type",
+                          "type": "array",
+                          "item": {
+                            "description": "Publication_Type",
+                            "type":"string"
                           }
                         },
             "Grant_List": {
