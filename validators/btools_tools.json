@@ -124,10 +124,14 @@
                         "description": "doi of the article",
                         "type": "string"
                     },
-            "Publication_Type": {
-                        "description": "article or somthing else",
-                        "type": "string"
-                    },
+            "Publication_Type": { 
+                        "description": "type of  of article",
+                        "type": "array",
+                        "item": {
+                          "description": "type of  of article",
+                          "type":"string"
+                        }
+                        },
             "Grant_List": {
                         "description": "list of grant ids",
                         "type": "list"
