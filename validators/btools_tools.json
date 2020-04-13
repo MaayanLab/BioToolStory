@@ -34,7 +34,11 @@
                         },
             "Article_Language": { 
                 "description": "language of the article",
-                "type": "string"
+                "type": "array",
+                "item": {
+                  "description": "language of the article",
+                  "type":"string"
+                }
                         },
             "Last_Updated": {
                 "description": "last update date of the article in epoc time",
