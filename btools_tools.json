@@ -3,7 +3,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "allOf": [
     {
-      "$ref": "/dcic/signature-commons-schema/v5/core/meta.json" # replace with github raw url
+      "$ref": "https://raw.githubusercontent.com/MaayanLab/btools-ui/master/btools_tools.json" # replace with github raw url
     },
     {
       "properties": {
