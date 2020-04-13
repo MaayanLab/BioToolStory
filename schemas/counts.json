@@ -1,0 +1,73 @@
+[
+    {
+        "Field_Name": "libraries",
+        "Type": "table",
+        "Preferred_Name": "Journals",
+        "MDI_Icon": "mdi-library",
+        "Table_Count": true,
+        "Visible_On_Landing": true,
+        "Priority": 2
+    },
+    {
+        "Field_Name": "signatures",
+        "Type": "table",
+        "Preferred_Name": "Tools",
+        "MDI_Icon": "mdi-tools",
+        "Table_Count": true,
+        "Visible_On_Landing": true,
+        "Priority": 3
+    },
+    {
+        "Field_Name": "meta.Tool_Name",
+        "Order_By": "meta.Citations",
+        "Preferred_Name": "Tool Citations",
+        "Type": "text",
+        "Preferred_Name_Singular": "Tool Citation",
+        "Table": "signatures",
+        "Bar_Score": true,
+        "Priority": 1
+    },
+    {
+        "Field_Name": "meta.Article_Date.Year",
+        "Preferred_Name": "Year",
+        "Type": "text",
+        "Table": "signatures",
+        "Bar_Count": true,
+        "Priority": 2
+    },
+    {
+        "Field_Name": "meta.Author_Information.FullName",
+        "Preferred_Name": "Author",
+        "Type": "text",
+        "Table": "signatures",
+        "Bar_Count": true,
+        "Priority": 2
+    },
+    {
+        "Field_Name": "meta.Tool_Name",
+        "Order_By": "meta.Readers_Count",
+        "Preferred_Name": "Readers Count",
+        "Type": "text",
+        "Table": "signatures",
+        "Bar_Score": true,
+        "Priority": 2
+    },
+    {
+        "Field_Name": "meta.Tool_Name",
+        "Order_By": "meta.Facebook_Shares",
+        "Preferred_Name": "Facebook Shares",
+        "Type": "text",
+        "Table": "signatures",
+        "Bar_Score": true,
+        "Priority": 4
+    },
+    {
+        "Field_Name": "meta.Tool_Name",
+        "Order_By": "meta.Users_who_mentioned_the_publication_on_Twitter",
+        "Preferred_Name": "Tweets",
+        "Type": "text",
+        "Table": "signatures",
+        "Bar_Score": true,
+        "Priority": 4
+    }
+]

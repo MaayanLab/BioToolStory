@@ -1,0 +1,87 @@
+{
+    "match": {
+      "${$validator}": "/@?dcic/signature-commons-schema/(v[0-9]+/)?core/signature.json"
+    },
+    "properties": {
+      "Image": {
+        "visibility": 1,
+        "type": "img",
+        "src": "${PREFIX}/${library.meta.Icon || 'static/tools/tools.png'}",
+        "alt": "${meta.Tool_Name}",
+        "text": "${meta.Tool_Name}",
+        "hyperlink": "${meta.tool_homepage_url}",
+        "priority": 1,
+        "icon": true,
+        "name": true,
+        "homepage": true
+      },
+      "Description": {
+        "visibility": 1,
+        "type": "text",
+        "text": "${meta.Tool_Description}",
+        "priority": 2,
+        "subtitle": true
+      },
+      "PMID": {
+        "visibility": 1,
+        "type": "text",
+        "field": "name",
+        "hyperlink": "https://www.ncbi.nlm.nih.gov/pubmed/${meta.PMID[0]}",
+        "text": "${meta.PMID[0]}",
+        "priority": 2,
+        "display": true
+      },
+      "Date of Publication": {
+        "visibility": 1,
+        "type": "text",
+        "text": "${meta.Published_On}",
+        "MDI_Icon": "mdi-calendar-blank",
+        "priority": 6
+      },
+      "Citations": {
+        "visibility": 1,
+        "type": "text",
+        "text": "${meta.Citations}",
+        "Field_Name": "meta.Citations",
+        "MDI_Icon": "mdi-fountain-pen-tip",
+        "priority": 7,
+        "score": true
+      },
+      "Facebook Shares": {
+        "visibility": 1,
+        "type": "text",
+        "text": "${meta.Facebook_Shares}",
+        "Field_Name": "meta.Facebook_Shares",
+        "MDI_Icon": "mdi-facebook-box",
+        "priority": 8,
+        "score": true
+      },
+      "Tweets": {
+        "visibility": 1,
+        "type": "text",
+        "text": "${meta.Users_who_mentioned_the_publication_on_Twitter}",
+        "Field_Name": "meta.Users_who_mentioned_the_publication_on_Twitter",
+        "MDI_Icon": "mdi-twitter",
+        "priority": 9,
+        "score": true
+      },
+      "Social Media Mentions": {
+        "visibility": 1,
+        "type": "text",
+        "text": "${meta.Mentions_in_social_media}",
+        "Field_Name": "meta.Mentions_in_social_media",
+        "MDI_Icon": "mdi-web-box",
+        "priority": 9,
+        "score": true
+      },
+      "Keywords": {
+        "visibility": 1,
+        "type": "object",
+        "text": "${meta.KeywordList}",
+        "Field_Name": "meta.KeywordList",
+        "MDI_Icon": "mdi-tag-multiple",
+        "priority": 12,
+        "keywords": true
+      }
+    }
+  }
