@@ -130,7 +130,7 @@
                         "item": {
                           "description": "type of  of article",
                           "type":"string"
-                        }
+                          }
                         },
             "Grant_List": {
                         "description": "list of grant ids",
