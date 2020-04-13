@@ -1,9 +1,9 @@
 {
-  "$id": "/dcic/signature-commons-schema/v5/meta/library/sigcom.json",
+  "$id": "https://raw.githubusercontent.com/MaayanLab/btools-ui/master/btools_tools.json",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "allOf": [
     {
-      "$ref": "https://raw.githubusercontent.com/MaayanLab/btools-ui/master/btools_tools.json"
+      "$ref": "/dcic/signature-commons-schema/v5/core/meta.json"
     },
     {
       "properties": {
