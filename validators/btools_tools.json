@@ -138,8 +138,20 @@
                     },
             "Chemical_List": {
                         "description": "list of chemicals",
-                        "type": "string"
-                    },
+                        "items": {
+                          "RegistryNumber": {
+                              "description": "chemical id",
+                              "type": "string"
+                            },
+                            "NameOfSubstance": {
+                              "description": "Official name of the chemical",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
             "KeywordList": {
                         "description": "key word of an article",
                         "type": "string"
