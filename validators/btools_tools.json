@@ -140,19 +140,21 @@
                         "description": "list of chemicals",
                         "items": {
                           "properties": {
-                                  "RegistryNumber": {
-                                      "description": "chemical id",
-                                      "type": "string"
-                                    },
-                                    "NameOfSubstance": {
-                                      "description": "Official name of the chemical",
-                                      "type": "string"
-                                    }
-                                }
-                            "type": "object"
+                            "RegistryNumber": {
+                              "description": "chemical id",
+                              "type": "string"
+                            },
+                            "NameOfSubstance": {
+                              "description": "Official name of the chemical",
+                              "type": "string"
+                            }
                           },
-                         "type": "array"
+                          "required": [
+                          ],
+                          "type": "object"
                         },
+                        "type": "array"
+                      },
             "KeywordList": {
                         "description": "key word of an article",
                         "type": "string"
