@@ -149,8 +149,6 @@
                               "type": "string"
                             }
                           },
-                          "required": [
-                          ],
                           "type": "object"
                         },
                         "type": "array"
