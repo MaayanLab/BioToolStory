@@ -34,7 +34,11 @@
                         },
             "Article_Language": { 
                 "description": "language of the article",
-                "type": "string"
+                "type": "array",
+                "item": {
+                  "description": "language of the article",
+                  "type":"string"
+                }
                         },
             "Last_Updated": {
                 "description": "last update date of the article in epoc time",
@@ -120,18 +124,35 @@
                         "description": "doi of the article",
                         "type": "string"
                     },
-            "Publication_Type": {
-                        "description": "article or somthing else",
-                        "type": "string"
-                    },
+            "Publication_Type": { 
+                          "description": "Publication_Type",
+                          "type": "array",
+                          "item": {
+                            "description": "Publication_Type",
+                            "type":"string"
+                          }
+                        },
             "Grant_List": {
                         "description": "list of grant ids",
                         "type": "list"
                     },
             "Chemical_List": {
                         "description": "list of chemicals",
-                        "type": "string"
-                    },
+                        "items": {
+                          "properties": {
+                            "RegistryNumber": {
+                              "description": "chemical id",
+                              "type": "string"
+                            },
+                            "NameOfSubstance": {
+                              "description": "Official name of the chemical",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
             "KeywordList": {
                         "description": "key word of an article",
                         "type": "string"
