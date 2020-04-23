@@ -10,7 +10,7 @@
             "PMID":{
                         "description": "list pubmed ids that describe the same tool",
                         "type": "list"
-                        }, 
+                        },
             "tool_homepage_url": {
                         "description": "link to the article",
                         "type": "string",
@@ -20,7 +20,7 @@
                         "description": "the name of the tool",
                         "type": "string"
                     },
-            "Tool_Description": { 
+            "Tool_Description": {
                         "description": "the name of the tool",
                         "type": "string"
                     },
@@ -32,7 +32,7 @@
                 "description": "number of citations on pubmed",
                 "type": "int"
                         },
-            "Article_Language": { 
+            "Article_Language": {
                 "description": "language of the article",
                 "type": "array",
                 "item": {
@@ -124,7 +124,7 @@
                         "description": "doi of the article",
                         "type": "string"
                     },
-            "Publication_Type": { 
+            "Publication_Type": {
                           "description": "Publication_Type",
                           "type": "array",
                           "item": {
@@ -154,8 +154,8 @@
                         "type": "array"
                       },
             "KeywordList": {
-                        "description": "key word of an article",
-                        "type": "string"
+                        "description": "list of keywords of an article",
+                        "type": "list"
                     }
         },
       "required": [
