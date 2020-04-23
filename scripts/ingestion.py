@@ -63,11 +63,14 @@ for l in res.json():
         print(l["id"])
 
 failed_libraries = []
+res = requests.get(APIURL+"/libraries")
+libs = [i["id"] for i in res.json()]
 for l in libraries:
-    res = requests.post(APIURL+"/libraries/", json=empty_cleaner(l), auth=auth)
-    time.sleep(0.3)
-    if not res.ok:
-        failed_libraries.append(l["id"])
+    if l["id"] not in libs:
+        res = requests.post(APIURL+"/libraries/", json=empty_cleaner(l), auth=auth)
+        time.sleep(0.3)
+        if not res.ok:
+            failed_libraries.append(l["id"])
 
 with open("failed_libraries.json", "w") as o:
     o.write(json.dumps(failed_libraries))
@@ -85,3 +88,6 @@ for l in signatures:
 
 with open("failed_signatures.json", "w") as o:
     o.write(json.dumps(failed_signatures))
+
+res = requests.get(APIURL+"/optimize/refresh", auth=auth)
+print(res.ok)
