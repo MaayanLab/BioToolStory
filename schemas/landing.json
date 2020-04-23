@@ -12,7 +12,8 @@
                 "alt": "",
                 "style": {
                     "height": 60,
-                    "width": "auto"
+                    "width": "auto",
+                    "paddingTop": 10
                 }
             },
             "header_right": " ToolSTory: Tool repoSiTory",
@@ -109,7 +110,7 @@
         "github_issues": "https://github.com/MaayanLab/BTools/issues",
         "footer_links": [
             {
-                "src": "/static/maayanlab.png",
+                "src": "${PREFIX}/static/maayanlab.png",
                 "alt": "mssm"
             }
         ],

@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/MaayanLab/btools-ui/master/btools_tools.json",
+  "$id": "https://raw.githubusercontent.com/MaayanLab/btools-ui/toolstory/validators/btools_tools.json",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "allOf": [
     {
