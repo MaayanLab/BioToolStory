@@ -7,13 +7,14 @@
         "visibility": 1,
         "type": "img",
         "src": "${PREFIX}/static/tools/library.png",
-        "alt": "${meta.name}",
-        "text": "${meta.name}",
+        "alt": "${meta.Journal_Title}",
+        "text": "${meta.Journal_Title}",
         "hyperlink": "${meta.homepage}",
         "priority": 1,
         "icon": true,
         "name": true,
-        "homepage": true
+        "homepage": true,
+        "description": true
       },
       "Publisher": {
         "visibility": 1,

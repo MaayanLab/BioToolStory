@@ -6,14 +6,15 @@
       "Image": {
         "visibility": 1,
         "type": "img",
-        "src": "${PREFIX}/${library.meta.Icon || 'static/tools/tools.png'}",
+        "src": "${PREFIX}/static/tools/tools.png",
         "alt": "${meta.Tool_Name}",
         "text": "${meta.Tool_Name}",
         "hyperlink": "${meta.tool_homepage_url}",
         "priority": 1,
         "icon": true,
         "name": true,
-        "homepage": true
+        "homepage": true,
+        "urlcheck": true
       },
       "Description": {
         "visibility": 1,
@@ -74,11 +75,11 @@
         "priority": 9,
         "score": true
       },
-      "Keywords": {
+      "Authors": {
         "visibility": 1,
         "type": "object",
-        "text": "${meta.KeywordList}",
-        "Field_Name": "meta.KeywordList",
+        "text": "${LastName}, ${ForeName}",
+        "Field_Name": "meta.Author_Information",
         "MDI_Icon": "mdi-tag-multiple",
         "priority": 12,
         "keywords": true
