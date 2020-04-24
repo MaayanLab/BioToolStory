@@ -7,10 +7,14 @@
     },
     {
       "properties": {
-            "PMID":{
-                        "description": "list pubmed ids that describe the same tool",
-                        "type": "list"
-                        },
+            "PMID":"KeywordList": {
+                "description": "pubmed ids of papers describing the same tool",
+                "type": "array",
+                "item": {
+                  "description": "a single pubmed id of the paper describing the tool",
+                  "type":"string"
+                }
+        },
             "tool_homepage_url": {
                         "description": "link to the article",
                         "type": "string",
@@ -154,9 +158,12 @@
                         "type": "array"
                       },
             "KeywordList": {
-                        "description": "list of keywords of an article",
-                        "type": "list"
-                    }
+                "description": "list of keywords",
+                "type": "array",
+                "item": {
+                  "description": "a single keyword",
+                  "type":"string"
+                }
         },
       "required": [
             "$validator",
