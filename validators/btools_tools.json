@@ -7,7 +7,7 @@
     },
     {
       "properties": {
-            "PMID":"KeywordList": {
+            "PMID": {
                 "description": "pubmed ids of papers describing the same tool",
                 "type": "array",
                 "item": {
@@ -34,7 +34,7 @@
                         },
             "Citations": {
                 "description": "number of citations on pubmed",
-                "type": "int"
+                "type": "integer"
                         },
             "Article_Language": {
                 "description": "language of the article",
@@ -46,15 +46,15 @@
                         },
             "Last_Updated": {
                 "description": "last update date of the article in epoc time",
-                "type": "float"
+                "type": "number"
                     },
             "Added_On": {
                 "description": "time in epoc an article was submitted to pubmed",
-                "type": "float"
+                "type": "number"
                     },
             "Published_On": {
                 "description": "publication date of the article (epoc)",
-                "type": "float"
+                "type": "number"
                     },
             "Journal": {
                 "description": "name of the journal the article was published on",
@@ -70,52 +70,73 @@
                     },
             "Altmetric_Score": {
                 "description": "score of the article on altmetric",
-                "type": "float"
+                "type": "number"
                     },
             "Readers_Count": {
                 "description": "number of readers as reported on altmetric",
-                "type": "float"
+                "type": "number"
                     },
             "Readers_in_Mendele": {
                 "description": "number of readers on Mendele as reported on altmetric",
-                "type": "float"
+                "type": "number"
                     },
             "Readers_in_Connote": {
                 "description": "number of readers on Connote as reported on altmetric",
-                "type": "float"
+                "type": "number"
                     },
             "Readers_in_Citeuli": {
                 "description": "number of readers on Citeuli as reported on altmetric",
-                "type": "float"
+                "type": "number"
                     },
             "Cited_By_Posts_Cou": {
                 "description": "number of posts citations as reported on altmetric",
-                "type": "float"
+                "type": "number"
                     },
             "Twitter_accounts_that_tweeted_this_publication": {
                 "description": "based on altmetric data",
-                "type": "float"
+                "type": "number"
                     },
             "Users_who_mentioned_the_publication_on_Twitter": {
                 "description": "based on altmetric data",
-                "type": "float"
+                "type": "number"
                     },
             "Scientists_who_mentioned_the_publication_on_Twitter":{
                 "description": "based on altmetric data",
-                "type": "float"
+                "type": "number"
                     },
             "News_sources_that_mentioned_the_publication":{
                 "description": "based on altmetric data",
-                "type": "float"
+                "type": "number"
                     },
             "Mentions_in_social_media":{
                 "description": "based on altmetric data",
-                "type": "float"
+                "type": "number"
                     },
             "Author_Information": {
-                        "description": "names of authors",
-                        "type": "dict"
-                    },
+              "description": "names of authors",
+              "items": {
+                "properties": {
+                  "AffiliationInfo": {
+                    "description": "institusion",
+                    "type": "string"
+                  },
+                  "LastName": {
+                    "description": "author last name",
+                    "type": "string"
+                  },
+                  "ForeName": {
+                    "description": "author Fore name",
+                    "type": "string"
+                  },
+                  "Initials": {
+                    "description": "author Initials",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
             "Article_Date": {
                         "description": "publish date",
                         "type": "string"
@@ -138,7 +159,7 @@
                         },
             "Grant_List": {
                         "description": "list of grant ids",
-                        "type": "list"
+                        "type": "array"
                     },
             "Chemical_List": {
                         "description": "list of chemicals",
@@ -158,12 +179,15 @@
                         "type": "array"
                       },
             "KeywordList": {
-                "description": "list of keywords",
-                "type": "array",
-                "item": {
-                  "description": "a single keyword",
-                  "type":"string"
-                }
+                "description": "list of article keywords",
+                        "items":[
+                            {
+                            "description": "a single keyword",
+                            "type": "string"
+                            }
+                            ],
+                        "type": "array"
+            }
         },
       "required": [
             "$validator",
