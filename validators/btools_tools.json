@@ -117,7 +117,7 @@
               "items": {
                 "properties": {
                   "AffiliationInfo": {
-                    "description": "institusion",
+                    "description": "institution",
                     "type": "string"
                   },
                   "LastName": {
