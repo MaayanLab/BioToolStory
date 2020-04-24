@@ -70,47 +70,47 @@
                     },
             "Altmetric_Score": {
                 "description": "score of the article on altmetric",
-                "type": "integer"
+                "type": "number"
                     },
             "Readers_Count": {
                 "description": "number of readers as reported on altmetric",
-                "type": "integer"
+                "type": "number"
                     },
             "Readers_in_Mendele": {
                 "description": "number of readers on Mendele as reported on altmetric",
-                "type": "integer"
+                "type": "number"
                     },
             "Readers_in_Connote": {
                 "description": "number of readers on Connote as reported on altmetric",
-                "type": "integer"
+                "type": "number"
                     },
             "Readers_in_Citeuli": {
                 "description": "number of readers on Citeuli as reported on altmetric",
-                "type": "integer"
+                "type": "number"
                     },
             "Cited_By_Posts_Cou": {
                 "description": "number of posts citations as reported on altmetric",
-                "type": "integer"
+                "type": "number"
                     },
             "Twitter_accounts_that_tweeted_this_publication": {
                 "description": "based on altmetric data",
-                "type": "integer"
+                "type": "number"
                     },
             "Users_who_mentioned_the_publication_on_Twitter": {
                 "description": "based on altmetric data",
-                "type": "integer"
+                "type": "number"
                     },
             "Scientists_who_mentioned_the_publication_on_Twitter":{
                 "description": "based on altmetric data",
-                "type": "integer"
+                "type": "number"
                     },
             "News_sources_that_mentioned_the_publication":{
                 "description": "based on altmetric data",
-                "type": "integer"
+                "type": "number"
                     },
             "Mentions_in_social_media":{
                 "description": "based on altmetric data",
-                "type": "integer"
+                "type": "number"
                     },
             "Author_Information": {
               "description": "names of authors",
