@@ -46,15 +46,15 @@
                         },
             "Last_Updated": {
                 "description": "last update date of the article in epoc time",
-                "type": "number"
+                "type": "string"
                     },
             "Added_On": {
                 "description": "time in epoc an article was submitted to pubmed",
-                "type": "number"
+                "type": "string"
                     },
             "Published_On": {
                 "description": "publication date of the article (epoc)",
-                "type": "number"
+                "type": "string"
                     },
             "Journal": {
                 "description": "name of the journal the article was published on",
@@ -70,47 +70,47 @@
                     },
             "Altmetric_Score": {
                 "description": "score of the article on altmetric",
-                "type": "number"
+                "type": "integer"
                     },
             "Readers_Count": {
                 "description": "number of readers as reported on altmetric",
-                "type": "number"
+                "type": "integer"
                     },
             "Readers_in_Mendele": {
                 "description": "number of readers on Mendele as reported on altmetric",
-                "type": "number"
+                "type": "integer"
                     },
             "Readers_in_Connote": {
                 "description": "number of readers on Connote as reported on altmetric",
-                "type": "number"
+                "type": "integer"
                     },
             "Readers_in_Citeuli": {
                 "description": "number of readers on Citeuli as reported on altmetric",
-                "type": "number"
+                "type": "integer"
                     },
             "Cited_By_Posts_Cou": {
                 "description": "number of posts citations as reported on altmetric",
-                "type": "number"
+                "type": "integer"
                     },
             "Twitter_accounts_that_tweeted_this_publication": {
                 "description": "based on altmetric data",
-                "type": "number"
+                "type": "integer"
                     },
             "Users_who_mentioned_the_publication_on_Twitter": {
                 "description": "based on altmetric data",
-                "type": "number"
+                "type": "integer"
                     },
             "Scientists_who_mentioned_the_publication_on_Twitter":{
                 "description": "based on altmetric data",
-                "type": "number"
+                "type": "integer"
                     },
             "News_sources_that_mentioned_the_publication":{
                 "description": "based on altmetric data",
-                "type": "number"
+                "type": "integer"
                     },
             "Mentions_in_social_media":{
                 "description": "based on altmetric data",
-                "type": "number"
+                "type": "integer"
                     },
             "Author_Information": {
               "description": "names of authors",
