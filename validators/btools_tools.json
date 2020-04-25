@@ -111,14 +111,21 @@
             "Mentions_in_social_media":{
                 "description": "based on altmetric data",
                 "type": "number"
-                    },
+                    },    
             "Author_Information": {
               "description": "names of authors",
               "items": {
                 "properties": {
                   "AffiliationInfo": {
-                    "description": "institution",
-                    "type": "string"
+                    "items": {
+                      "properties": {
+                        "Affiliation": {
+                          "description": "author institute",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
                   },
                   "LastName": {
                     "description": "author last name",
@@ -135,7 +142,7 @@
                 },
                 "type": "object"
               },
-              "type": "array"
+              "type": "object"
             },
             "Article_Date": {
                         "description": "publish date",
