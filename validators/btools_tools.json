@@ -142,7 +142,7 @@
                 },
                 "type": "object"
               },
-              "type": "object"
+              "type": "array"
             },
             "Article_Date": {
                         "description": "publish date",
