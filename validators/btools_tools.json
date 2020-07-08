@@ -24,6 +24,10 @@
                         "description": "the name of the tool",
                         "type": "string"
                     },
+            "Country": {
+                        "description": "author country",
+                        "type": "string"
+                    },
             "Tool_Description": {
                         "description": "the name of the tool",
                         "type": "string"
