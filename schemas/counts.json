@@ -28,19 +28,48 @@
         "Priority": 1
     },
     {
-        "Field_Name": "meta.Article_Date.Year",
-        "Preferred_Name": "Year",
+        "Field_Name": "meta.Country",
+        "Preferred_Name": "Countries",
+        "Type": "text",
+        "Table": "signatures",
+        "Bar_Count": true,
+        "Meta_Count": true,
+        "MDI_Icon": "mdi-earth",
+        "Priority": 2
+    },
+    {
+        "Field_Name": "meta.Year",
+        "Preferred_Name": "Years",
+        "Type": "text",
+        "Table": "signatures",
+        "Bar_Count": true,
+        "MDI_Icon": "mdi-calendar",
+        "Priority": 2
+    },
+    {
+        "Field_Name": "meta.Last_Author.Name",
+        "Preferred_Name": "Last Authors",
         "Type": "text",
         "Table": "signatures",
         "Bar_Count": true,
         "Priority": 2
     },
     {
-        "Field_Name": "meta.Author_Information.FullName",
-        "Preferred_Name": "Author",
+        "Field_Name": "meta.Author_Information.Name",
+        "Preferred_Name": "Authors",
         "Type": "text",
         "Table": "signatures",
-        "Bar_Count": true,
+        "Meta_Count": true,
+        "MDI_Icon": "mdi-fountain-pen-tip",
+        "Priority": 2
+    },
+    {
+        "Field_Name": "meta.KeywordList",
+        "Preferred_Name": "Keywords",
+        "Type": "text",
+        "Table": "signatures",
+        "Meta_Count": true,
+        "MDI_Icon": "mdi-tag",
         "Priority": 2
     },
     {

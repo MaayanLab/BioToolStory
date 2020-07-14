@@ -107,7 +107,7 @@
             }
         },
         "github": "https://github.com/MaayanLab/signature-commons-ui/tree/tools",
-        "github_issues": "https://github.com/MaayanLab/BTools/issues",
+        "github_issues": "https://github.com/MaayanLab/ToolStory/issues",
         "footer_links": [
             {
                 "src": "${PREFIX}/static/maayanlab.png",

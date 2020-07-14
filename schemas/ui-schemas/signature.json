@@ -32,10 +32,10 @@
         "priority": 2,
         "display": true
       },
-      "Date of Publication": {
+      "Year": {
         "visibility": 1,
         "type": "text",
-        "text": "${meta.Published_On}",
+        "text": "${meta.Year}",
         "MDI_Icon": "mdi-calendar-blank",
         "priority": 6
       },
@@ -75,13 +75,21 @@
         "priority": 9,
         "score": true
       },
-      "Authors": {
+      "Last Author": {
         "visibility": 1,
         "type": "object",
-        "text": "${LastName}, ${ForeName}",
-        "Field_Name": "meta.Author_Information",
-        "MDI_Icon": "mdi-tag-multiple",
-        "priority": 12,
+        "text": "${Name}",
+        "Field_Name": "meta.Last_Author",
+        "MDI_Icon": "mdi-fountain-pen-tip",
+        "priority": 6
+      },
+      "Keywords": {
+        "visibility": 1,
+        "type": "object",
+        "text": "${meta.KeywordList}",
+        "Field_Name": "meta.KeywordList",
+        "MDI_Icon": "mdi-tag",
+        "priority": 10,
         "keywords": true
       }
     }
