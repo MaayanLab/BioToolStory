@@ -1,0 +1,42 @@
+{
+    "match": {
+      "${$validator}": "/@?dcic/signature-commons-schema/(v[0-9]+/)?core/library.json"
+    },
+    "properties": {
+      "Image": {
+        "visibility": 1,
+        "type": "img",
+        "src": "${PREFIX}/static/tools/library.png",
+        "alt": "${meta.Journal_Title}",
+        "text": "${meta.Journal_Title}",
+        "hyperlink": "${meta.homepage}",
+        "priority": 1,
+        "icon": true,
+        "name": true,
+        "homepage": true,
+        "description": true
+      },
+      "Publisher": {
+        "visibility": 1,
+        "type": "text",
+        "text": "${meta.Publisher}",
+        "priority": 2,
+        "subtitle": true
+      },
+      "Open Access": {
+        "visibility": 1,
+        "type": "text",
+        "field": "name",
+        "text": "${meta[`Open access`]}",
+        "MDI_Icon": "mdi-book-open",
+        "priority": 2
+      },
+      "ISSN": {
+        "visibility": 1,
+        "type": "text",
+        "text": "${meta.eISSN}",
+        "MDI_Icon": "mdi-book-open-variant",
+        "priority": 6
+      }
+    }
+  }
