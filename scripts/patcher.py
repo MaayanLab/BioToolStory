@@ -55,7 +55,7 @@ with open("../data/patched.txt", "a+") as o:
                 except Exception as e:
                     print("Failed at %s, retrying..."%t["id"])
                     time.sleep(1)
-                    c+=5
+                    c+=1
             if not r.ok and not success:
                 print(res.text)
                 break
