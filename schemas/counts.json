@@ -64,6 +64,16 @@
         "Priority": 2
     },
     {
+        "Field_Name": "meta.Institution",
+        "Preferred_Name": "Institutions",
+        "Type": "text",
+        "Table": "signatures",
+        "Meta_Count": true,
+        "Bar_Count": true,
+        "MDI_Icon": "mdi-office-building",
+        "Priority": 2
+    },
+    {
         "Field_Name": "meta.KeywordList",
         "Preferred_Name": "Keywords",
         "Type": "text",
