@@ -3,8 +3,8 @@
     "content": {
         "favicon": {
             "src": "${PREFIX}/static/tools/logo.png",
-            "alt": "ToolSTory",
-            "title": "ToolSTory"
+            "alt": "BioToolSTory",
+            "title": "BioToolSTory"
         },
         "header_info": {
             "icon": {
@@ -16,7 +16,7 @@
                     "paddingTop": 10
                 }
             },
-            "header_right": " ToolSTory: Tool repoSiTory",
+            "header_right": " BioToolSTory: Bioinformatics Tool repoSiTory",
             "style": {
                 "fontSize": 40,
                 "fontWeight": 300
