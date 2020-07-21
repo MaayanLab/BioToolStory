@@ -91,6 +91,21 @@
         "MDI_Icon": "mdi-tag",
         "priority": 10,
         "keywords": true
+      },
+      "Topic": {
+        "visibility": 1,
+        "type": "object",
+        "text": "${Topic}: ${(LDA_probability*100).toFixed(2)}%",
+        "Field_Name": "meta.Topic",
+        "props": {
+          "style": {
+            "background": "#d44a1e",
+            "opacity": "${LDA_probability}"
+          }
+        },
+        "MDI_Icon": "mdi-tag",
+        "priority": 10,
+        "keywords": true
       }
     }
   }
