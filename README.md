@@ -1,5 +1,5 @@
 # BioToolStory
-```PubMedTools```: Pipeline to automatically detect and download tools.
+```PubMedTools```: Pipeline to automatically detect and download bioinformatics tools.
 
 ```old_code```: Old scripts for btools
 
