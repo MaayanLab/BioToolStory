@@ -143,7 +143,7 @@
                         "type": "string"
                         },
         "Last_author": {
-           "description": "list of chemicals",
+           "description": "details of last author",
               "items": {
                 "properties": {
                   "Name": {
