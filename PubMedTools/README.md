@@ -112,6 +112,20 @@ Run ```0_main.sh``` file which runs the following scripts: </br>
  </li>
  </ul>
  
+```7_dataupdate.py```
+ <ul>
+  <li> 
+      Weekly update of Altmetric and citations metadata 
+ </li>
+ </ul>
+ 
+```8_Fairshake.py```
+ <ul>
+  <li> 
+      Automatic FAIR assessment of tools
+ </li>
+ </ul>
+ 
  ## Tools similarity API
  <ul>
   <li>
@@ -119,13 +133,6 @@ Run ```0_main.sh``` file which runs the following scripts: </br>
   </li>
 </ul>
 
-
- ```7_dataupdate.py```
- <ul>
-  <li> 
-      Weekly update of Altmetric and citations metadata 
- </li>
- </ul>
  
 # Details About The Collected Data
 Details on Altmetric data:
