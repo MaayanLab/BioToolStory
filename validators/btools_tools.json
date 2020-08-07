@@ -11,7 +11,7 @@
                 "description": "pubmed ids of papers describing the same tool",
                 "type": "array",
                 "item": {
-                  "description": "pubmed id/s of the paper/s describing the tool/s",
+                  "description": "a single pubmed id of a paper describing the tool",
                   "type":"string"
                 }
         },
@@ -108,6 +108,40 @@
                 "description": "based on altmetric data",
                 "type": "number"
                     },
+        "Topic": {
+           "description": "list of chemicals",
+              "items": {
+                "properties": {
+                  "Topic": {
+                        "description": "list of topic names",
+                        "type": "array",
+                        "item": {
+                          "description": "a single topic name",
+                          "type":"string"
+                        },
+                  "LDA_probability": {
+                        "description": "list of topic affiliation frobability for each paper",
+                        "type": "array",
+                        "item": {
+                          "description": "a single topic affiliation frobability for a single topic",
+                          "type":"string"
+                        },
+                  "Topic_number": {
+                        "description": "list of topic ids",
+                        "type": "array",
+                        "item": {
+                          "description": "a single topic id",
+                          "type":"string"
+                        }
+                },
+                "type": "object"
+              },
+              "type": "array"
+                      },
+        "Institution": {
+                        "description": "institution affiliation",
+                        "type": "string"
+                        },
         "Last_author": {
            "description": "list of chemicals",
               "items": {
