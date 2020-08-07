@@ -108,38 +108,39 @@
                 "description": "based on altmetric data",
                 "type": "number"
                     },
-            "description": "list of topic metadata",
-                 "items": {
-                   "properties": {
-                     "Topic": {
-                           "description": "list of topic names",
-                           "type": "array",
-                           "item": {
-                             "description": "a single topic name",
-                             "type":"string"
-                           }
-                          },
-                     "LDA_probability": {
-                           "description": "list of topic affiliation frobability for each paper",
-                           "type": "array",
-                           "item": {
-                             "description": "a single topic affiliation frobability for a single topic",
-                              "type":"string"
-                           }
-                          },
-                     "Topic_number": {
-                           "description": "list of topic ids",
-                           "type": "array",
-                           "item": {
-                             "description": "a single topic id",
-                             "type":"string"
-                           }
-                          },
-                   "type": "object"
-                 },
-                 "type": "array"
-              }
-          },
+            "Topic":{
+                "description": "list of topic metadata",
+                     "items": {
+                       "properties": {
+                         "Topic": {
+                               "description": "list of topic names",
+                               "type": "array",
+                               "item": {
+                                 "description": "a single topic name",
+                                 "type":"string"
+                               }
+                              },
+                         "LDA_probability": {
+                               "description": "list of topic affiliation frobability for each paper",
+                               "type": "array",
+                               "item": {
+                                 "description": "a single topic affiliation frobability for a single topic",
+                                  "type":"string"
+                               }
+                              },
+                         "Topic_number": {
+                               "description": "list of topic ids",
+                               "type": "array",
+                               "item": {
+                                 "description": "a single topic id",
+                                 "type":"string"
+                               }
+                              },
+                       "type": "object"
+                     },
+                     "type": "array"
+                  }
+            },
         "Institution": {
                         "description": "institution affiliation",
                         "type": "string"
