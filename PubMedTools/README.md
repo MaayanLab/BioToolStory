@@ -119,6 +119,14 @@ Run ```0_main.sh``` file which runs the following scripts: </br>
   </li>
 </ul>
 
+
+ ```7_dataupdate.py```
+ <ul>
+  <li> 
+      Weekly update of Altmetric and citations metadata 
+ </li>
+ </ul>
+ 
 # Details About The Collected Data
 Details on Altmetric data:
 https://docs.google.com/spreadsheets/d/1ndVY8Q2LOaZO_P_HDmSQulagjeUrS250mAL2N5V8GvY/edit#gid=0
