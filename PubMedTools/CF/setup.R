@@ -1,0 +1,5 @@
+install.packages('sqldf')
+install.packages('ggplot2')
+install.packages('readxl')
+install.packages('dotenv')
+install.packages('ggfortify')
