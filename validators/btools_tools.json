@@ -11,7 +11,7 @@
                 "description": "pubmed ids of papers describing the same tool",
                 "type": "array",
                 "item": {
-                  "description": "a single pubmed id of the paper describing the tool",
+                  "description": "pubmed id/s of the paper/s describing the tool/s",
                   "type":"string"
                 }
         },
@@ -21,7 +21,7 @@
                         "format":"uri"
                     },
             "Tool_Name": {
-                        "description": "the name of the tool",
+                        "description": "name of the tool",
                         "type": "string"
                     },
             "Country": {
@@ -29,15 +29,15 @@
                         "type": "string"
                     },
             "Tool_Description": {
-                        "description": "the name of the tool",
+                        "description": "short description of the tool's functionality",
                         "type": "string"
                     },
-                    "Article_Title": {
+            "Article_Title": {
                         "description": "title of the article",
                         "type": "string"
                         },
             "Citations": {
-                "description": "number of citations on pubmed",
+                "description": "number of citations as indicated on pubmed",
                 "type": "integer"
                         },
             "Article_Language": {
@@ -48,20 +48,12 @@
                   "type":"string"
                 }
                         },
-            "Last_Updated": {
-                "description": "last update date of the article in epoc time",
-                "type": "string"
-                    },
-            "Added_On": {
-                "description": "time in epoc an article was submitted to pubmed",
-                "type": "string"
-                    },
-            "Published_On": {
-                "description": "publication date of the article (epoc)",
+            "Article_Date": {
+                "description": "publication date of the article (%Y-%m-%d)",
                 "type": "string"
                     },
             "Journal": {
-                "description": "name of the journal the article was published on",
+                "description": "short name of the journal that the article was published on",
                 "type": "string"
                     },
             "ISSN": {
@@ -69,7 +61,7 @@
                 "type": "string"
                     },
             "Journal_Title": {
-                "description": "journal name - same as journals schema",
+                "description": "journal full name",
                 "type": "string"
                     },
             "Altmetric_Score": {
@@ -88,12 +80,12 @@
                 "description": "number of readers on Connote as reported on altmetric",
                 "type": "number"
                     },
-            "Readers_in_Citeuli": {
-                "description": "number of readers on Citeuli as reported on altmetric",
+            "Readers_in_Citeulike": {
+                "description": "number of readers on Citeulike as reported on altmetric",
                 "type": "number"
                     },
-            "Cited_By_Posts_Cou": {
-                "description": "number of posts citations as reported on altmetric",
+            "Cited_By_Posts_Count": {
+                "description": "number of social media posts on tha article as reported on altmetric",
                 "type": "number"
                     },
             "Twitter_accounts_that_tweeted_this_publication": {
@@ -115,7 +107,7 @@
             "Mentions_in_social_media":{
                 "description": "based on altmetric data",
                 "type": "number"
-                    },    
+                    }, 
             "Author_Information": {
               "description": "names of authors",
               "items": {
@@ -148,10 +140,6 @@
               },
               "type": "array"
             },
-            "Article_Date": {
-                        "description": "publish date",
-                        "type": "string"
-                    },
             "Abstract": {
                         "description": "article abstract",
                         "type": "string"
