@@ -107,7 +107,32 @@
             "Mentions_in_social_media":{
                 "description": "based on altmetric data",
                 "type": "number"
-                    }, 
+                    },
+        "Last_author": {
+           "description": "list of chemicals",
+              "items": {
+                "properties": {
+                  "Name": {
+                    "description": "fore name and last name of last author",
+                    "type": "string"
+                  },
+                  "ForeName": {
+                    "description": "fore name of last author",
+                    "type": "string"
+                  },
+                  "Initials": {
+                    "description": "initials of last author",
+                    "type": "string"
+                  },
+                  "LastName": {
+                    "description": "last name of last author",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+                      },
             "Author_Information": {
               "description": "names of authors",
               "items": {
