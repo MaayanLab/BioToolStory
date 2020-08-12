@@ -1,0 +1,33 @@
+{
+  "name": "biotools-middleman",
+  "version": "0.1.0",
+  "description": "Middleman for biotools",
+  "author": "John Erol Evangelista <JohnErol.Evangelista@mssm.edu>",
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "npm run build",
+    "build": "parcel build app/static/src/index.js -d app/static/dist",
+    "watch": "parcel watch app/static/src/index.js -d app/static/dist"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
+    "parcel-bundler": "^1.12.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.8.6"
+  },
+  "peerDependencies": {
+    "react": "^16.8.6"
+  },
+  "dependencies": {
+    "@maayanlab/data-table": "^0.1.0",
+    "@material-ui/core": "^3.9.2",
+    "@mdi/font": "^5.4.55",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.2.0"
+  }
+}
