@@ -54,10 +54,6 @@
                 "description": "publication date of the article (%Y-%m-%d)",
                 "type": "string"
                     },
-            "Journal": {
-                "description": "short name of the journal that the article was published on",
-                "type": "string"
-                    },
             "ISSN": {
                 "description": "electronic ISSN - matches to ISSN on the journals schema",
                 "type": "string"
@@ -112,23 +108,21 @@
                     },
             "Topic": {
               "description": "list of topics",
-              "items": {
+              "items": [
+                {
                 "properties": {
-                  "Topic": {
+                  "Topic_name": {
                     "description": "topic description",
                     "type": "string"
                   },
                   "LDA_probability": {
                     "description": "probability",
                     "type": "number"
-                  },
-                  "Topic_number": {
-                    "description": "topic id",
-                    "type": "integer"
                   }
                 },
                 "type": "object"
-              },
+              }
+            ],
               "type": "array"
             },
         "Institution": {
