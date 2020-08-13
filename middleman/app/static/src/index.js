@@ -1,11 +1,11 @@
 import ReactDOM from 'react-dom'
 import App from './js/app'
+import './sass/index.scss'
 
 window.onload = () => {
-  const el = document.createElement('div')
-  document.body.appendChild(el)
-
+  const el = document.getElementById('content')
+  const props = document.getElementById('content').getAttribute('props')
   ReactDOM.render((
-    <App />
+    <App { ...(JSON.parse(props)) }/>
   ), el)
 }
