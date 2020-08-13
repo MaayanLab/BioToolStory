@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>BioToolStory Middleman</title>
+    <meta charSet="utf-8" />
+    <title>{{props.title}}</title>
+    <link rel="shortcut icon" alt="{{props.ui.favicon.alt}}" href="{{props.ui.favicon.src}}" />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='index.css') }}"
+      href="{{ url_for('static', filename='dist/index.css') }}"
     />
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
+    {% for font_family in props.ui.font_families %}
+      <link href="{{font_family}}" rel="stylesheet" type="text/css"/>
+    {% endfor %}    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
     <link rel="stylesheet"
       href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css" />
   </head>
   <body>
     <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <div id="content" props='{{ props|tojson|safe }}'></div>
     <script src="{{ url_for('static', filename='dist/index.js') }}"></script>
   </body>
 </html>
