@@ -54,10 +54,6 @@
                 "description": "publication date of the article (%Y-%m-%d)",
                 "type": "string"
                     },
-            "Journal": {
-                "description": "short name of the journal that the article was published on",
-                "type": "string"
-                    },
             "ISSN": {
                 "description": "electronic ISSN - matches to ISSN on the journals schema",
                 "type": "string"
@@ -112,60 +108,61 @@
                     },
             "Topic": {
               "description": "list of topics",
-              "items": {
+              "items": [
+                {
                 "properties": {
-                  "Topic": {
+                  "Topic_name": {
                     "description": "topic description",
                     "type": "string"
                   },
                   "LDA_probability": {
                     "description": "probability",
                     "type": "number"
-                  },
-                  "Topic_number": {
-                    "description": "topic id",
-                    "type": "integer"
                   }
                 },
                 "type": "object"
-              },
+              }
+            ],
               "type": "array"
             },
         "Institution": {
                         "description": "institution affiliation",
                         "type": "string"
                         },
-        "Last_author": {
-           "description": "details of last author",
-              "items": {
-                "properties": {
-                  "Name": {
-                    "description": "fore name and last name of last author",
-                    "type": "string"
-                  },
-                  "ForeName": {
-                    "description": "fore name of last author",
-                    "type": "string"
-                  },
-                  "Initials": {
-                    "description": "initials of last author",
-                    "type": "string"
-                  },
-                  "LastName": {
-                    "description": "last name of last author",
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              },
-              "type": "array"
-                      },
+        "Last_Author": {
+          "description": "details of last author",
+             "items": [
+                 {
+               "properties": {
+                 "Name": {
+                   "description": "fore name and last name of last author",
+                   "type": "string"
+                 },
+                 "ForeName": {
+                   "description": "fore name of last author",
+                   "type": "string"
+                 },
+                 "Initials": {
+                   "description": "initials of last author",
+                   "type": "string"
+                 },
+                 "LastName": {
+                   "description": "last name of last author",
+                   "type": "string"
+                 }
+               },
+               "type": "object"
+                 }
+                 ],
+             "type": "array"
+            },
             "Author_Information": {
               "description": "names of authors",
               "items": {
                 "properties": {
                   "AffiliationInfo": {
-                    "items": {
+                    "items": [
+                      {
                       "properties": {
                         "Affiliation": {
                           "description": "author institute",
@@ -174,6 +171,7 @@
                       },
                       "type": "object"
                     }
+                  ]
                   },
                   "LastName": {
                     "description": "author last name",
