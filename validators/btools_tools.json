@@ -129,7 +129,7 @@
                         "description": "institution affiliation",
                         "type": "string"
                         },
-        "Last_author": {
+        "Last_Author": {
            "description": "details of last author",
               "items": {
                 "properties": {
