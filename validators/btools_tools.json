@@ -161,7 +161,8 @@
               "items": {
                 "properties": {
                   "AffiliationInfo": {
-                    "items": {
+                    "items": [
+                      {
                       "properties": {
                         "Affiliation": {
                           "description": "author institute",
@@ -170,6 +171,7 @@
                       },
                       "type": "object"
                     }
+                  ]
                   },
                   "LastName": {
                     "description": "author last name",
