@@ -17,11 +17,12 @@ import string
 import nltk
 from nltk.corpus import stopwords
 import pandas as pd
-from pandas.io.json import json_normalize
 from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 import sys
 import gzip
+
+nltk.download('stopwords')
 
 load_dotenv(verbose=True)
 
@@ -40,7 +41,7 @@ keeplist = "=./" #characters to keep in url
 # read a list of keywords to ignore
 f = open(os.path.join(PTH,'RemoveKeyWords.txt'), 'r')
 blacklist = f.readlines()
-blacklist = [x.rstrip('\n') for x in blacklist] 
+blacklist = [x.rstrip('\n') for x in blacklist]
 f.close()
 
 
@@ -125,7 +126,7 @@ if __name__=='__main__':
     with gzip.open(os.path.join(PTH,'data/tools_'+s+'_'+en,file)) as fin:
       try:
         json_obj = json.load(fin)
-        df = json_normalize(json_obj['MedlineCitation'])
+        df = pd.json_normalize(json_obj['MedlineCitation'])
         article = json_obj['MedlineCitation']
         PMID = is_key(['PMID'],article)
         ArticleTitle = is_key(['Article','ArticleTitle'],article)
