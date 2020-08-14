@@ -131,7 +131,7 @@
                         },
         "Last_Author": {
           "description": "details of last author",
-             "items": [
+             "items":
                  {
                "properties": {
                  "Name": {
@@ -152,8 +152,7 @@
                  }
                },
                "type": "object"
-                 }
-                 ],
+                },
              "type": "array"
             },
             "Author_Information": {
