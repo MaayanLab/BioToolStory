@@ -37,7 +37,7 @@ while True:
   except OverflowError:
     maxInt = int(maxInt/10)
 
-PTH = os.environ.get('PTH') # PTH ='/home/maayanlab/Tools/'; PTH ='/users/alon/desktop/github/toolspaper/pubmedtools/'
+PTH = os.environ.get('PTH_A') # PTH ='/home/maayanlab/Tools/'; PTH ='/users/alon/desktop/github/toolspaper/pubmedtools/'
 
 start = str(sys.argv[1])
 end = str(sys.argv[2])
@@ -87,7 +87,7 @@ def get_value(data):
   
 def is_tool(df):
   df['valid_tool'] = 'NA'
-  whitelist = ['tool','tools','database','github', 'package','algorithm','amp.pharm.mssm.edu',
+  whitelist = ['tool','tools','database','github', 'package','algorithm','amp.pharm.mssm.edu', 'maayanlab.cloud',
               'software','cran.r-project.org','.rar','.zip','gitlab','API','pypi.org','open source']
   #blacklist = ['WITHDRAWN']
   for i in range(0,len(df)):
@@ -201,10 +201,16 @@ def keep_first_link(df):
   return(links)
   
 
-# df[df['PMID']=='31106342']
+def read_data(fpath):  
+  try:
+     return(pd.read_csv(fpath, delim_whitespace=True,dtype=str))
+  except:
+    print("No tools were detected for",start)
+    sys.exit()
+
 
 if __name__=='__main__':
-  df = pd.read_csv(os.path.join(PTH,"data/tools_"+s+"_"+en+".csv"),dtype=str)
+  df = read_data(os.path.join(PTH,"data/tools_"+s+"_"+en+".csv"))
   df = clean(df)
   df = df.reset_index()
   # create data for bert
@@ -236,5 +242,5 @@ if __name__=='__main__':
   df = testURL(df) # test if url loads
   df = df.dropna(subset=['tool_URL'])
   df = fix_tool_name(df)
-  df.to_csv(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv'),index=None)
+  df.to_csv(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv'),index=False)
 
