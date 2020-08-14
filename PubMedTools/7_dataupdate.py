@@ -16,15 +16,18 @@ from Bio import Entrez
 import time
 import progressbar
 from requests.auth import HTTPBasicAuth
+import dropbox
+from pandas import ExcelWriter
 
 load_dotenv(verbose=True)
-PTH = os.environ.get('PTH_A')
+PTH = os.environ.get('PTH_A') # PTH = "/home/maayanlab/Tools/"
 API_url = os.environ.get('API_URL')
 username = os.getenv("USERNAME")
 password = os.getenv("PASSWORD")
 credentials = HTTPBasicAuth(username, password)
 Entrez.email = os.environ.get('EMAIL')
 API_KEY = os.environ.get('API_KEY')
+DROPBOX_ACCESS_TOKEN = os.environ.get('DROPBOX_ACCESS_TOKEN')
 
 
 # Articles that cite a given article ONLY covers journals indexed for PubMed Central
@@ -44,7 +47,7 @@ def who_cited(pmid):
 
 # update tool data
 def update(tool):
-  res = requests.patch('https://amp.pharm.mssm.edu/biotoolstory/meta-api/' +"signatures/" + tool['id'], json=tool, auth=credentials)
+  res = requests.patch('https://maayanlab.cloud/biotoolstory/metadata-api/' +"signatures/" + tool['id'], json=tool, auth=credentials)
   if not res.ok:
     print(res.text)
     return ("error")
@@ -93,15 +96,36 @@ def testURL(tool):
   
 # update the website after petching data
 def refresh():
-  res = requests.get("https://amp.pharm.mssm.edu/biotoolstory/meta-api/optimize/refresh", auth=credentials)
+  res = requests.get("https://maayanlab.cloud/biotoolstory/metadata-api/optimize/refresh", auth=credentials)
   print(res.ok)
-  res = requests.get("https://amp.pharm.mssm.edu/biotoolstory/meta-api/"+"optimize/status", auth=credentials)
+  res = requests.get("https://maayanlab.cloud/biotoolstory/metadata-api/"+"optimize/status", auth=credentials)
   while not res.text == "Ready":
     time.sleep(1)
-    res = requests.get("https://amp.pharm.mssm.edu/biotoolstory/meta-api"+"/optimize/status", auth=credentials)
-  res = requests.get("https://amp.pharm.mssm.edu/biotoolstory/meta-api/"+"summary/refresh", auth=credentials)
+    res = requests.get("https://maayanlab.cloud/biotoolstory/metadata-api"+"/optimize/status", auth=credentials)
+  res = requests.get("https://maayanlab.cloud/biotoolstory/metadata-api/"+"summary/refresh", auth=credentials)
   print(res.ok)
   
+
+# backup data in dropbox
+class TransferData:
+  def __init__(self, access_token):
+    self.access_token = access_token
+  def upload_file(self, file_from, file_to):
+    dbx = dropbox.Dropbox(self.access_token)
+    #dbx = dropbox.DropboxTeam(access_token)
+    with open(file_from, 'rb') as f:
+      dbx.files_upload(f.read(), file_to, mode=dropbox.files.WriteMode.overwrite)
+
+
+def dropbox(tools_DB):
+  df = pd.json_normalize(tools_DB)
+  df.to_excel(os.path.join(PTH,'data/dump.xlsx'),index=False)
+  transferData_a = TransferData(DROPBOX_ACCESS_TOKEN)
+  file_from = os.path.join(PTH,'data/dump.xlsx')
+  file_to = '/BioToolStory/dump.xlsx'  # The full path to upload the file to, including the file name
+  transferData_a.upload_file(file_from, file_to)
+  os.remove(file_from)
+
 
 if __name__ == '__main__':
   res = requests.get(API_url%('signatures',""))
@@ -120,18 +144,29 @@ if __name__ == '__main__':
     if f == "error":
       break
   refresh()
+  dropbox(tools_DB)
 
 
 #==================================================== update query to existing journals ===================================================================
-# res = requests.get(API_url%('libraries',""))
-# journal_DB = res.json()
+#res = requests.get(API_url%('libraries',""))
+#journal_DB = res.json()
 # for jour in journal_DB:
 #       ... do some updates to the data here...
 #       push the updated journal back
-#       res = requests.patch('https://amp.pharm.mssm.edu/toolstory/meta-api/' +"libraries/" + jour['id'], json=jour, auth=credentials)
+#       res = requests.patch('https://maayanlab.cloud/toolstory/meta-api/' +"libraries/" + jour['id'], json=jour, auth=credentials)
 #       if not res.ok:
 #         print(jour)
 #         print(res.text)
 #         break
 
-  
+# for tool in tools_DB:
+#   if 'Tool_Name' in tool['meta'].keys():
+#     if tool['meta']['Tool_Name']=='Enrichr':
+#       print("found")
+#       tool['meta']['Edit'] = 'https://script.google.com/macros/s/AKfycbxkUYRqihmOPx3FvNJZzS8Ae6ahz9EIduKVu4iTU3ESOoltVvA7/exec?pmid='+str(tool['meta']['PMID'][0])
+#       break
+#       
+# for tool in tools_DB:    
+#   tool["meta"]["$validator"] = 'https://raw.githubusercontent.com/MaayanLab/BioToolStory/master/validators/btools_tools.json'
+#   update(tool)
+    
