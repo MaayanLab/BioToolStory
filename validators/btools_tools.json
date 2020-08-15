@@ -129,31 +129,26 @@
                         "description": "institution affiliation",
                         "type": "string"
                         },
-        "Last_Author": {
-          "description": "details of last author",
-             "items":
-                 {
-               "properties": {
-                 "Name": {
-                   "description": "fore name and last name of last author",
-                   "type": "string"
-                 },
-                 "ForeName": {
-                   "description": "fore name of last author",
-                   "type": "string"
-                 },
-                 "Initials": {
-                   "description": "initials of last author",
-                   "type": "string"
-                 },
-                 "LastName": {
-                   "description": "last name of last author",
-                   "type": "string"
-                 }
-               },
-               "type": "object"
-                },
-             "type": "object"
+        "Last_Authoe": {
+          "properties": {
+            "Name": {
+              "description": "fore name and last name of last author",
+              "type": "string"
+            },
+            "ForeName": {
+              "description": "fore name of last author",
+              "type": "string"
+            },
+            "Initials": {
+              "description": "initials of last author",
+              "type": "string"
+            },
+            "LastName": {
+              "description": "last name of last author",
+              "type": "string"
+            }
+          },
+          "type": "object"
             },
             "Author_Information": {
               "description": "names of authors",
