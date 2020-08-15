@@ -129,7 +129,7 @@
                         "description": "institution affiliation",
                         "type": "string"
                         },
-        "Last_Authoe": {
+        "Last_Author": {
           "properties": {
             "Name": {
               "description": "fore name and last name of last author",
