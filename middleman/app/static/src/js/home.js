@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import CircularProgress from '@material-ui/core/CircularProgress';
-import SwipeableViews from 'react-swipeable-views'
+import IconButton from '@material-ui/core/IconButton';
 import TablePagination from '@material-ui/core/TablePagination'
 import { DataTable, ExpandedMeta, ExpandButton } from '@maayanlab/data-table'
 
@@ -131,9 +131,26 @@ export default class Home extends React.Component {
                   ),
                   props: {
                     expanded: this.state.expanded == data.id,
-                    search: ["stat3"]
                   }
                 },
+              ])
+              const RightComponents = (data) => ([
+                {
+                    component: (props) => (
+                        <IconButton><span class="mdi mdi-square-edit-outline"></span></IconButton>
+                    ),
+                    props: {
+                        data: data
+                    }
+                },
+                {
+                    component: (props) => (
+                        <IconButton><span class="mdi mdi-check"></span></IconButton>
+                    ),
+                    props: {
+                        data: data
+                    }
+                }, 
               ])
               const entries = this.state.collection.map(entry=>(
                 {
@@ -141,6 +158,7 @@ export default class Home extends React.Component {
                   key: entry.data.id,
                   LeftComponents: LeftComponents(entry.data),
                   BottomComponents: BottomComponents(entry.data),
+                  RightComponents: RightComponents(entry.data)
                 }
               ))
           
