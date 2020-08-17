@@ -10,6 +10,7 @@ import urllib.request
 import json
 import datetime
 import sys
+import shutil
 import os
 import time
 from datetime import datetime
@@ -96,13 +97,13 @@ def post_data(data,model):
 
 # update the website after petching data
 def refresh():
-  res = requests.get("https://amp.pharm.mssm.edu/biotoolstory/meta-api/optimize/refresh", auth=credentials)
+  res = requests.get("https://maayanlab.cloud/biotoolstory/meta-api/optimize/refresh", auth=credentials)
   print(res.ok)
-  res = requests.get("https://amp.pharm.mssm.edu/biotoolstory/meta-api/"+"optimize/status", auth=credentials)
+  res = requests.get("https://maayanlab.cloud/biotoolstory/meta-api/"+"optimize/status", auth=credentials)
   while not res.text == "Ready":
     time.sleep(1)
-    res = requests.get("https://amp.pharm.mssm.edu/biotoolstory/meta-api"+"/optimize/status", auth=credentials)
-  res = requests.get("https://amp.pharm.mssm.edu/biotoolstory/meta-api/"+"summary/refresh", auth=credentials)
+    res = requests.get("https://maayanlab.cloud/biotoolstory/meta-api"+"/optimize/status", auth=credentials)
+  res = requests.get("https://maayanlab.cloud/biotoolstory/meta-api/"+"summary/refresh", auth=credentials)
   print(res.ok)
 
 #==================================================  HELP FUNCTIONS ===================================================================
@@ -407,7 +408,9 @@ def push_tools(df):
     if len(data["meta"]["KeywordList"]) > 0:
       if isinstance(data["meta"]["KeywordList"], list):
         data["meta"]["KeywordList"] = isnan(data["meta"]["KeywordList"][0])
-    data["meta"]["$validator"] = '/dcic/signature-commons-schema/v5/core/unknown.json' #'https://raw.githubusercontent.com/MaayanLab/btools-ui/toolstory/validators/btools_tools.json'
+        # https://raw.githubusercontent.com/MaayanLab/btools-ui/toolstory/validators/btools_tools.json
+        #'/dcic/signature-commons-schema/v5/core/unknown.json'
+    data["meta"]["$validator"] = 'https://raw.githubusercontent.com/MaayanLab/BioToolStory/master/validators/btools_tools.json'
     data['meta']['Published_On'] =''
     data['meta']['Added_On']=''
     data['meta']['Last_Updated']=''
@@ -420,12 +423,28 @@ def push_tools(df):
       tools_pmids.append(data['meta']['PMID'])
       post_data(data,"signatures")
 
+
+def read_data(fpath):  
+  try:
+     return(pd.read_csv(fpath, delim_whitespace=True,dtype=str))
+  except:
+    try:
+      os.remove(os.path.join(PTH,'data/tools_'+s+'_'+en+'.csv'))
+      # remove folders
+      shutil.rmtree(os.path.join(PTH,'data/tools_'+s+'_'+en))
+      shutil.rmtree(os.path.join(PTH,'data/jsons_'+s+'_'+en))
+    except:
+      print("unable to delete folder or file")
+      print("No tools were detected for",start)
+    sys.exit()
+
+
 #================================================== Main ===========================================================================================
 
 if __name__ == "__main__":
   if os.path.exists(os.path.join(PTH,"data/fail_to_load.txt")):
     os.remove(os.path.join(PTH,"data/fail_to_load.txt")) # delete failure log file from last time
-  df = pd.read_csv(os.path.join(PTH,'data/classified_tools_'+(s)+'_'+(en)+'.csv'))
+  df = read_data(os.path.join(PTH,'data/classified_tools_'+(s)+'_'+(en)+'.csv'))
   df = df.replace(np.nan, '', regex=True)  
   push_tools(df)
   combine_duplicates_tools()

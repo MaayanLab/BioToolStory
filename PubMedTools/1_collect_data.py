@@ -1,6 +1,6 @@
 # This script creates the following: 
-# 1. collect articles from Pubmed as jsons in /data/jsons
-# 2. open the files and save articles that have a link in their title or abstract in /data/tools
+# 1. collects articles from Pubmed as jsons in /data/jsons
+# 2. opens the files and save articles that have a link in their title or abstract in /data/tools
 
 from Bio import Entrez
 import os
@@ -18,6 +18,7 @@ load_dotenv(verbose=True)
 
 start = str(sys.argv[1])
 end = str(sys.argv[2])
+loop_index = int(str(sys.argv[3]))
 print(start, end)
 s = start.replace("/","")
 en = end.replace("/","")
@@ -28,10 +29,10 @@ API_KEY = os.environ.get('API_KEY')
 # returns a list of PubMedCentral ids between dates
 def article_links(start_date = None, end_date = None):
   print("collecting PubMed from",start_date,"to",end_date)
-  handle = Entrez.esearch(db="pubmed", term='("%s"[Date - Publication] : "%s"[Date - Publication]) ' %(start_date, end_date),
+  handle = Entrez.esearch(db="pubmed", term='("%s"[Date - Publication] : "%s"[Date - Publication])' %(start_date, end_date),
                               api_key=API_KEY,
                               usehistory ='y',
-                              retmax = 10000000
+                              retmax = 1000000
                               )
   records = Entrez.read(handle)
   return (records['IdList'])
@@ -56,9 +57,9 @@ def collectData(PubMedIds, start_index, s, en):
       print(e, "round",i)
       missing.append(i)
     iteration = iteration + 1
-    if iteration%10==0:
+    if iteration%9==0:
       print("sleep")
-      time.sleep(5)
+      #time.sleep(1)
   handleS.close()
   return(missing)
   
@@ -99,7 +100,7 @@ if __name__ == '__main__':
   # get pubmeds_ids between dates
   PubMedIds = article_links(start,end) # start/ end dates in format 'YYYY/MM/DD'
   # collect data by pubmed_id
-  missing_pubmed_ids = collectData(PubMedIds,0,s,en) # the second input is the last file name in ./data/jsons/ (where the loop failed)
+  missing_pubmed_ids = collectData(PubMedIds,loop_index,s,en) # the second input is the last file name in ./data/jsons_.../ (where the loop failed)
   # read json files and parse (each json file contains up to 200 articles)
   filesnames = [ x for x in os.listdir(os.path.join(PTH,'data/jsons_'+s+'_'+en)) if x.endswith("json.gz") ]
   k = len(filesnames)
@@ -109,7 +110,3 @@ if __name__ == '__main__':
     i = i + 1
     articles = os.path.join(PTH,'data/jsons_'+s+'_'+en,file)
     parsejsons(articles,s,en)
-
-
-
-

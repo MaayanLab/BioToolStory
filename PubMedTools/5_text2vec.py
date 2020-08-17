@@ -49,10 +49,18 @@ def get_new_tools(df):
   pubmed_keep = [pmid for pmid in df['PMID'] if str(pmid)+'.npy' not in files]
   df = df[df['PMID'].isin(pubmed_keep)]
   return(df)
-  
-  
+ 
+
+def read_data(fpath):  
+  try:
+     return(pd.read_csv(fpath, delim_whitespace=True,dtype=str))
+  except:
+    print("No tools were detected for",start)
+    sys.exit() 
+ 
+
 if __name__ == '__main__':
-  df = pd.read_csv(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv'))
+  df = read_data(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv'))
   # keep only **new** tools (tools that do not have a vector .npy file)
   df = get_new_tools(df)
   if len(df)==0:
@@ -84,7 +92,3 @@ if __name__ == '__main__':
   except:
     print("unable to delete folder or file")
   print("Done!",s,'_',en)
-
-  
-  
-  

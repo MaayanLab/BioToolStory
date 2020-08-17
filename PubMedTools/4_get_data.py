@@ -201,6 +201,9 @@ def get_country(author_list):
   country_names.append('Korea')
   country_names.append(' uk ')
   country_names.append(' uk.')
+  country_names.append('United Arab Emirates')
+  country_names.append('Saudi Arabia')
+  country_names.append('Taiwan')
   for affil in author_list:
     text = str(affil)
     country = [country for country in country_names if country in text.lower()]
@@ -221,9 +224,17 @@ def get_country(author_list):
   return(countries)
 
 
+def read_data(fpath):  
+  try:
+     return(pd.read_csv(fpath, delim_whitespace=True,dtype=str))
+  except:
+    print("No tools were detected for",start)
+    sys.exit()
+
+
 if __name__=='__main__':
   # laod tools
-  tools = pd.read_csv(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv'))
+  tools = read_data(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv'))
   tools = tools[pd.notna(tools['tool_URL'])]
   tools['tool_URL'] = keep_first_link(tools)
   tools['num_citations'] = who_cited(tools['PMID'].tolist())
@@ -267,3 +278,4 @@ if __name__=='__main__':
   # save tools
   tools1.to_csv(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv'),index=False)
   
+

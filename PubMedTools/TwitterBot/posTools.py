@@ -9,6 +9,7 @@ import datetime
 import sys
 import time
 from datetime import datetime
+from datetime import timedelta
 import re
 from dotenv import load_dotenv
 import numpy as np
@@ -42,7 +43,7 @@ auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth, wait_on_rate_limit=True)
 
-TODAY = str(date.today())
+YESTERDAY = str(date.today() - timedelta(days=1))
 
 def init_selenium(CHROMEDRIVER_PATH, windowSize='1080,1080'):
   print('Initializing selenium...')
@@ -75,20 +76,20 @@ def link_to_screenshot(link=None, output=None, zoom='100 %', browser=None):
 
 # update tool data
 def update(tool):
-  res = requests.patch('https://amp.pharm.mssm.edu/biotoolstory/meta-api/' +"signatures/" + tool['id'], json=tool, auth=credentials)
+  res = requests.patch('https://maayanlab.cloud/biotoolstory/meta-api/' +"signatures/" + tool['id'], json=tool, auth=credentials)
   if not res.ok:
     print(res.text)
     return ("error")
 
   
 def refresh():
-  res = requests.get("https://amp.pharm.mssm.edu/biotoolstory/meta-api/optimize/refresh", auth=credentials)
+  res = requests.get("https://maayanlab.cloud/biotoolstory/biotoolstory/meta-api/optimize/refresh", auth=credentials)
   print(res.ok)
-  res = requests.get("https://amp.pharm.mssm.edu/biotoolstory/meta-api/"+"optimize/status", auth=credentials)
+  res = requests.get("https://maayanlab.cloud/biotoolstory/meta-api/"+"optimize/status", auth=credentials)
   while not res.text == "Ready":
     time.sleep(1)
-    res = requests.get("https://amp.pharm.mssm.edu/biotoolstory/meta-api"+"/optimize/status", auth=credentials)
-  res = requests.get("https://amp.pharm.mssm.edu/biotoolstory/meta-api/"+"summary/refresh", auth=credentials)
+    res = requests.get("https://maayanlab.cloud/biotoolstory/meta-api"+"/optimize/status", auth=credentials)
+  res = requests.get("https://maayanlab.cloud/biotoolstory/meta-api/"+"summary/refresh", auth=credentials)
   print(res.ok)
 
 
@@ -113,7 +114,7 @@ if __name__=='main':
   tools_DB = res.json()
   for tool in tools_DB:
     if 'Article_Date' in tool['meta'].keys():
-      if tool['meta']['Article_Date'] == TODAY:
+      if tool['meta']['Article_Date'] == YESTERDAY:
         print(tool['meta']['PMID'])
         tool = testURL(tool)
         if ('Tweeted' not in tool['meta'].keys()) & ('url_status' in tool['meta'].keys()):
