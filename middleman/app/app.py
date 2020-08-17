@@ -64,6 +64,21 @@ def get_landing_ui():
     }
   }
 
+def get_schemas():
+  filter_json = json.dumps({
+    "where": {
+        "meta.$validator": "/dcic/signature-commons-schema/v5/meta/schema/ui-schema.json"
+    }
+  })
+  payload = { 
+    "filter": filter_json
+  }
+  for tries in range(5):
+    res = requests.get(META_API + "/schemas", params=payload)
+    if res.ok:
+      return [i["meta"] for i in res.json()]
+  else:
+    raise Exception(res.text)
 
 @app.route(ROOT_PATH + 'static')
 def staticfiles(path):
@@ -73,10 +88,15 @@ def staticfiles(path):
 @app.route(ROOT_PATH, methods=['GET'])
 def index():
   ui = get_landing_ui()
-
+  schemas = get_schemas()
   props = {
     **ui,
-    "title": "BioToolStory Middleman"
+    "schemas": schemas,
+    "title": "BioToolStory Middleman",
+    "preferred_names": {
+      "signatures": "Tools",
+      "libraries": "Journals",
+    }
   }
   props = json.dumps(props).replace("${PREFIX}", BASE_URL)
   return flask.render_template('index.html', props=json.loads(props))
