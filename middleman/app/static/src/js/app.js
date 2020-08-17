@@ -5,6 +5,11 @@ import { defaultUI } from './defaultUI'
 import { defaultTheme } from './defaultTheme'
 import merge from 'deepmerge'
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core'
+import Header from './header'
+import 'regenerator-runtime/runtime'
+import dotenv from "dotenv"
+
+dotenv.config()
 
 // from deepmerge
 const overwriteMerge = (destinationArray, sourceArray, options) => sourceArray
