@@ -37,6 +37,7 @@ class App extends React.Component {
     render = () => (
         <MuiThemeProvider theme={this.state.theme}>
             <Router>
+                <Header {...this.props} />
                 <Switch>
                     <Route
                         path={'/'}

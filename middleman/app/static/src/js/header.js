@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -21,7 +21,7 @@ export function Nav(props) {
         <ListItemLink
             selected={location.pathname === '/PendingTools'}
             style={{color: "inherit"}}
-            href={"#/PendingTools"}
+            href={"#/"}
         >
             {"PendingTools"}
         </ListItemLink>
@@ -37,7 +37,7 @@ export function Nav(props) {
   }
 
 
-export default class Header extends React.Component {
+class Header extends React.Component {
     constructor(props){
         super(props)
         this.state = {
@@ -66,6 +66,7 @@ export default class Header extends React.Component {
                         </Link>
                     </Typography>
                     <List
+                    style={{display: "flex"}}
                     {...this.props.ui.header_info.menu_props}
                     >
                         <Nav {...this.props}/>
@@ -106,3 +107,5 @@ export default class Header extends React.Component {
         )
     }
 }
+
+export default withRouter(Header)
