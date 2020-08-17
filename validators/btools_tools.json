@@ -9,12 +9,10 @@
             "properties": {
                 "PMID": {
                     "description": "list of pubmed ids",
-                    "items": [
-                        {
-                            "description": "a single pmid of a paper, describing a tool",
-                            "type": "integer"
-                        }
-                    ],
+                    "items": {
+                        "description": "a single pmid of a paper, describing a tool",
+                        "type": "integer"
+                    },
                     "type": "array"
                 },
                 "tool_homepage_url": {
@@ -45,11 +43,9 @@
                 "Article_Language": {
                     "description": "language of the article",
                     "type": "array",
-                    "items": [
-                        {
-                            "type": "string"
-                        }
-                    ]
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "Article_Date": {
                     "description": "publication date of the article (%Y-%m-%d)",
@@ -109,21 +105,19 @@
                 },
                 "Topic": {
                     "description": "list of topics",
-                    "items": [
-                        {
-                            "properties": {
-                                "Topic": {
-                                    "description": "topic description",
-                                    "type": "string"
-                                },
-                                "LDA_probability": {
-                                    "description": "probability",
-                                    "type": "number"
-                                }
+                    "items": {
+                        "properties": {
+                            "Topic": {
+                                "description": "topic description",
+                                "type": "string"
                             },
-                            "type": "object"
-                        }
-                    ],
+                            "LDA_probability": {
+                                "description": "probability",
+                                "type": "number"
+                            }
+                        },
+                        "type": "object"
+                    },
                     "type": "array"
                 },
                 "Institution": {
@@ -155,31 +149,33 @@
                     "description": "names of authors",
                     "items": {
                         "properties": {
-                            "AffiliationInfo": {
-                                "type": "array",
-                                "items": [
-                                    {
-                                        "properties": {
-                                            "Affiliation": {
-                                                "description": "author institute",
-                                                "type": "string"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                ]
+                            "Name": {
+                                "description": "Full name of author",
+                                "type": "string"
                             },
                             "LastName": {
-                                "description": "author last name",
+                                "description": "last name of author",
                                 "type": "string"
                             },
                             "ForeName": {
-                                "description": "author Fore name",
+                                "description": "fore name of author",
                                 "type": "string"
                             },
                             "Initials": {
-                                "description": "author Initials",
+                                "description": "initials of author",
                                 "type": "string"
+                            },
+                            "AffiliationInfo": {
+                                "type": "array",
+                                "items": {
+                                    "properties": {
+                                        "Affiliation": {
+                                            "description": "author institute",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
                             }
                         },
                         "type": "object"
@@ -225,12 +221,10 @@
                 },
                 "KeywordList": {
                     "description": "list of article keywords",
-                    "items": [
-                        {
-                            "description": "a single keyword",
-                            "type": "string"
-                        }
-                    ],
+                    "items": {
+                        "description": "a single keyword",
+                        "type": "string"
+                    },
                     "type": "array"
                 }
             },
