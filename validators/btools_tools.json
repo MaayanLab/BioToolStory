@@ -180,6 +180,7 @@
                     "title": "Authors",
                     "description": "names of authors",
                     "items": {
+                      "title": "Author",
                         "properties": {
                             "Name": {
                                 "title": "Full Name",
