@@ -32,7 +32,7 @@ cache = Cache(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URI', '')
 db = SQLAlchemy(app)
 
-@cache.cached(timeout=1000)
+@cache.cached(timeout=1000, key_prefix='landing')
 def get_landing_ui():
   filter_json = json.dumps({
     "where": {
@@ -64,6 +64,7 @@ def get_landing_ui():
     }
   }
 
+@cache.cached(timeout=1000, key_prefix='schemas')
 def get_schemas():
   filter_json = json.dumps({
     "where": {
@@ -102,3 +103,30 @@ def index():
   return flask.render_template('index.html', props=json.loads(props))
 
 # Add the rest of your routes....
+
+# input ?validator=<url>
+@app.route(ROOT_PATH + "get_validator", methods=['GET', 'POST'])
+def get_validator():
+  if flask.request.method == 'GET':
+    validator=flask.request.args.get('validator')
+  elif flask.request.method=='POST':
+    validator=flask.request.form.get('validator')
+  res = requests.get(validator)
+  try:
+    if res.ok:
+      return flask.jsonify(res.json())
+    else:
+      response = flask.jsonify({
+        "error": {
+          "status_code": res.status_code,
+          "message": res.text
+        } 
+      })
+      return response
+  except Exception as e:
+    response = flask.jsonify({
+        "error": {
+          "message": str(e)
+        } 
+      })
+    return response
