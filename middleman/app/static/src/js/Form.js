@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Form from 'react-jsonschema-form'
+import Form from 'react-jsonschema-form-material-ui';
 import fetch from 'node-fetch'
 
 const cache = {}
@@ -10,7 +10,7 @@ const baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.sp
 
 export const fetch_cached_validator = async (url) => {
     if (cache[url]) return cache[url]
-    url = "https://raw.githubusercontent.com/MaayanLab/BioToolStory/master/validators/btools_tools.json"
+    // url = "https://raw.githubusercontent.com/MaayanLab/BioToolStory/master/validators/btools_tools.json"
     const m = /^\/@?dcic\/signature-commons-schema(\/v\d+)?(.*)$/.exec(url)
     if (m) {
         if (m[1] === undefined) {

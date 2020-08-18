@@ -36,12 +36,12 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-jsonschema-form": "^1.8.1",
+    "react-jsonschema-form-material-ui": "^2.0.22",
     "react-router-dom": "^5.2.0",
     "react-swipeable-views": "^0.13.9",
     "regenerator-runtime": "^0.13.7"
   },
   "browserslist": [
     "since 2017-06"
-  ]  
+  ]
 }
