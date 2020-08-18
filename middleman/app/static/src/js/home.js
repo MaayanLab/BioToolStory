@@ -147,6 +147,11 @@ export default class Home extends React.Component {
                     ),
                     props: {
                         expanded: this.state.expandedForm == data.id,
+                        uiSchema: {
+                            abstract: {
+                                "ui:widget": "textarea",
+                            }
+                        }
                     }
                 },
               ])

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Form from 'react-jsonschema-form-material-ui';
+import Form from '@rjsf/material-ui';
 import fetch from 'node-fetch'
 
 const cache = {}
