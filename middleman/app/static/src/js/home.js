@@ -52,13 +52,15 @@ export default class Home extends React.Component {
 
     handleClick = (id) => {
         this.setState({
-          expanded: this.state.expanded === id ? null: id
+          expanded: this.state.expanded === id ? null: id,
+          expandedForm: null,
         })
       }
     
     handleEditClick = (id) => {
         this.setState({
-          expandedForm: this.state.expandedForm === id ? null: id
+          expandedForm: this.state.expandedForm === id ? null: id,
+          expanded: null,
         })
       }
 
