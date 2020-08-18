@@ -200,6 +200,23 @@
                 },
                 "Grant_List": {
                     "description": "list of grant ids",
+                    "items": {
+                        "properties": {
+                            "Agency": {
+                                "description": "funder name",
+                                "type": "string"
+                            },
+                            "Country": {
+                                "description": "country of funder",
+                                "type": "string"
+                            },
+                            "GrantID":{
+                                "description": "unique id of the grant",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
                     "type": "array"
                 },
                 "Chemical_List": {
