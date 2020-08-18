@@ -8,6 +8,7 @@
         {
             "properties": {
                 "PMID": {
+                    "title": "PMIDs",
                     "description": "list of pubmed ids",
                     "items": {
                         "description": "a single pmid of a paper, describing a tool",
@@ -16,31 +17,38 @@
                     "type": "array"
                 },
                 "tool_homepage_url": {
+                    "title": "Homepage",
                     "description": "link to the article",
                     "type": "string",
                     "format": "uri"
                 },
                 "Tool_Name": {
+                    "title": "Tool Name",
                     "description": "name of the tool",
                     "type": "string"
                 },
                 "Country": {
+                    "title": "Country",
                     "description": "author country",
                     "type": "string"
                 },
                 "Tool_Description": {
+                    "title": "Tool Description",
                     "description": "short description of the tool's functionality",
                     "type": "string"
                 },
                 "Article_Title": {
+                    "title": "Article Title",
                     "description": "title of the article",
                     "type": "string"
                 },
                 "Citations": {
+                    "title": "Citations",
                     "description": "number of citations as indicated on pubmed",
                     "type": "integer"
                 },
                 "Article_Language": {
+                    "title": "Article Language",
                     "description": "language of the article",
                     "type": "array",
                     "items": {
@@ -48,70 +56,87 @@
                     }
                 },
                 "Article_Date": {
+                    "title": "Article Date (%Y-%m-%d)",
                     "description": "publication date of the article (%Y-%m-%d)",
                     "type": "string"
                 },
                 "ISSN": {
+                    "title": "ISSN",
                     "description": "electronic ISSN - matches to ISSN on the journals schema",
                     "type": "string"
                 },
                 "Journal_Title": {
+                    "title": "Journal Title",
                     "description": "journal full name",
                     "type": "string"
                 },
                 "Altmetric_Score": {
+                    "title": "Altmeric Score",
                     "description": "score of the article on altmetric",
                     "type": "number"
                 },
                 "Readers_Count": {
+                    "title": "Readers Count",
                     "description": "number of readers as reported on altmetric",
                     "type": "number"
                 },
                 "Readers_in_Mendele": {
+                    "title": "Readers in Mendeley",
                     "description": "number of readers on Mendele as reported on altmetric",
                     "type": "number"
                 },
                 "Readers_in_Connote": {
+                    "title": "Readers in Connote",
                     "description": "number of readers on Connote as reported on altmetric",
                     "type": "number"
                 },
                 "Readers_in_Citeulike": {
+                    "title": "Readers in Citeulike",
                     "description": "number of readers on Citeulike as reported on altmetric",
                     "type": "number"
                 },
                 "Cited_By_Posts_Count": {
+                    "title": "Cited by Post Count",
                     "description": "number of social media posts on tha article as reported on altmetric",
                     "type": "number"
                 },
                 "Twitter_accounts_that_tweeted_this_publication": {
+                    "title": "Twitter accounts that tweeted the publication",
                     "description": "based on altmetric data",
                     "type": "number"
                 },
                 "Users_who_mentioned_the_publication_on_Twitter": {
+                    "title": "Users that tweeted the publication",
                     "description": "based on altmetric data",
                     "type": "number"
                 },
                 "Scientists_who_mentioned_the_publication_on_Twitter": {
+                    "title": "Scientists that tweeted the publication",
                     "description": "based on altmetric data",
                     "type": "number"
                 },
                 "News_sources_that_mentioned_the_publication": {
+                    "title": "News sources mentioning the publication",
                     "description": "based on altmetric data",
                     "type": "number"
                 },
                 "Mentions_in_social_media": {
+                    "title": "Social Media Mentions",
                     "description": "based on altmetric data",
                     "type": "number"
                 },
                 "Topic": {
+                    "title": "Topic",
                     "description": "list of topics",
                     "items": {
                         "properties": {
                             "Topic": {
+                                "title": "Topic Name",
                                 "description": "topic description",
                                 "type": "string"
                             },
                             "LDA_probability": {
+                                "title": "LDA Probability",
                                 "description": "probability",
                                 "type": "number"
                             }
@@ -121,24 +146,30 @@
                     "type": "array"
                 },
                 "Institution": {
+                    "title": "Institution",
                     "description": "institution affiliation",
                     "type": "string"
                 },
                 "Last_Author": {
+                    "title": "Last Author",
                     "properties": {
                         "Name": {
-                            "description": "fore name and last name of last author",
+                            "title": "Full Name",
+                            "description": "Full name of last author",
                             "type": "string"
                         },
                         "ForeName": {
+                            "title": "Fore Name",
                             "description": "fore name of last author",
                             "type": "string"
                         },
                         "Initials": {
+                            "title": "Initials",
                             "description": "initials of last author",
                             "type": "string"
                         },
                         "LastName": {
+                            "title": "Last Name",
                             "description": "last name of last author",
                             "type": "string"
                         }
@@ -146,26 +177,32 @@
                     "type": "object"
                 },
                 "Author_Information": {
+                    "title": "Authors",
                     "description": "names of authors",
                     "items": {
                         "properties": {
                             "Name": {
+                                "title": "Full Name",
                                 "description": "Full name of author",
                                 "type": "string"
                             },
                             "LastName": {
+                                "title": "Last Name",
                                 "description": "last name of author",
                                 "type": "string"
                             },
                             "ForeName": {
+                                "title": "First Name",
                                 "description": "fore name of author",
                                 "type": "string"
                             },
                             "Initials": {
+                                "title": "Initials",
                                 "description": "initials of author",
                                 "type": "string"
                             },
                             "AffiliationInfo": {
+                                "title": "Affiliation",
                                 "type": "array",
                                 "items": {
                                     "properties": {
@@ -183,14 +220,17 @@
                     "type": "array"
                 },
                 "Abstract": {
+                    "title": "Abstract",
                     "description": "article abstract",
                     "type": "string"
                 },
                 "Electronic_Location_Identifier": {
+                    "title": "DOI",
                     "description": "doi of the article",
                     "type": "string"
                 },
                 "Publication_Type": {
+                    "title": "Publication Type",
                     "description": "Publication_Type",
                     "type": "array",
                     "items": {
@@ -199,18 +239,22 @@
                     }
                 },
                 "Grant_List": {
+                    "title": "Grant List",
                     "description": "list of grant ids",
                     "items": {
                         "properties": {
                             "Agency": {
+                                "title": "Agency",
                                 "description": "funder name",
                                 "type": "string"
                             },
                             "Country": {
+                                "title": "Country",
                                 "description": "country of funder",
                                 "type": "string"
                             },
-                            "GrantID":{
+                            "GrantID": {
+                                "title": "Grant ID",
                                 "description": "unique id of the grant",
                                 "type": "string"
                             }
@@ -220,14 +264,17 @@
                     "type": "array"
                 },
                 "Chemical_List": {
+                    "title": "Chemical List",
                     "description": "list of chemicals",
                     "items": {
                         "properties": {
                             "RegistryNumber": {
+                                "title": "Registry Number",
                                 "description": "chemical id",
                                 "type": "string"
                             },
                             "NameOfSubstance": {
+                                "title": "Name of Substance",
                                 "description": "Official name of the chemical",
                                 "type": "string"
                             }
@@ -237,6 +284,7 @@
                     "type": "array"
                 },
                 "KeywordList": {
+                    "title": "Keywords",
                     "description": "list of article keywords",
                     "items": {
                         "description": "a single keyword",
