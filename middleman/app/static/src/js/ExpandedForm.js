@@ -8,7 +8,11 @@ import PropTypes from 'prop-types'
 export const ExpandedForm = ({expanded, data, onChange, onSubmit, onError, ...props}) => {
     return (
     <Collapse in={expanded} timeout="auto" unmountOnExit >
-        <CardContent style={{height:"100%", padding: 10}}>
+        <CardContent style={{height:"100%",
+                            padding: 10,
+                            visibility: "visible"    
+                        }}
+        >
             <Grid
             container
             direction="row"
