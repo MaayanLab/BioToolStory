@@ -202,11 +202,12 @@
                                 "type": "string"
                             },
                             "AffiliationInfo": {
-                                "title": "Affiliation",
+                                "title": "Affiliations",
                                 "type": "array",
                                 "items": {
                                     "properties": {
                                         "Affiliation": {
+                                            "title": "Institute",
                                             "description": "author institute",
                                             "type": "string"
                                         }
