@@ -21,6 +21,7 @@
     "react": "^16.8.6"
   },
   "dependencies": {
+    "@dcic/signature-commons-schema": "^1.5.0",
     "@maayanlab/data-table": "^0.1.1",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
@@ -35,8 +36,12 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-jsonschema-form": "^1.8.1",
     "react-router-dom": "^5.2.0",
     "react-swipeable-views": "^0.13.9",
     "regenerator-runtime": "^0.13.7"
-  }
+  },
+  "browserslist": [
+    "since 2017-06"
+  ]  
 }
