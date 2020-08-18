@@ -8,6 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
 import TablePagination from '@material-ui/core/TablePagination'
 import { DataTable, ExpandedMeta, ExpandButton } from '@maayanlab/data-table'
+import { ExpandedForm } from "./ExpandedForm"
 
 export default class Home extends React.Component {
     constructor(props){
@@ -19,6 +20,7 @@ export default class Home extends React.Component {
             model: Object.keys(this.props.preferred_names)[0],
             index_value: 0,
             expanded: null,
+            expandedForm: null,
             page: 0,
             perPage: 10,
         }
@@ -51,6 +53,12 @@ export default class Home extends React.Component {
     handleClick = (id) => {
         this.setState({
           expanded: this.state.expanded === id ? null: id
+        })
+      }
+    
+    handleEditClick = (id) => {
+        this.setState({
+          expandedForm: this.state.expandedForm === id ? null: id
         })
       }
 
@@ -133,11 +141,23 @@ export default class Home extends React.Component {
                     expanded: this.state.expanded == data.id,
                   }
                 },
+                {
+                    component: (props) => (
+                        <ExpandedForm data={data} {...props}/>
+                    ),
+                    props: {
+                        expanded: this.state.expandedForm == data.id,
+                    }
+                },
               ])
               const RightComponents = (data) => ([
                 {
                     component: (props) => (
-                        <IconButton><span class="mdi mdi-square-edit-outline"></span></IconButton>
+                        <IconButton
+                            onClick={()=>this.handleEditClick(data.id)}
+                        >
+                            <span class="mdi mdi-square-edit-outline"></span>
+                        </IconButton>
                     ),
                     props: {
                         data: data
