@@ -205,7 +205,7 @@ def patch_or_create(table, uid):
         db.session.add(db_entry)
 
       db.session.commit()
-      return flask.jsonify(db_entry.serialize)
+      return ('', 200)
     except Exception as e:
       db.session.rollback()
       return flask.jsonify({"error": str(e)}), 406
