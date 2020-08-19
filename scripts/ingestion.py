@@ -4,13 +4,23 @@ import requests
 from requests.auth import HTTPBasicAuth
 from dotenv import load_dotenv
 import time
+import base64
+
 load_dotenv(dotenv_path="../.env")
 
 APIURL = os.getenv("APIURL")
 USERNAME = os.getenv("USERNAME")
 PASSWORD = os.getenv("PASSWORD")
 
-auth = HTTPBasicAuth(USERNAME,PASSWORD)
+# auth = HTTPBasicAuth(USERNAME,PASSWORD)
+credential = base64.b64encode('{username}:{password}'.format(
+    username=USERNAME, password=PASSWORD
+  ).encode()).decode()
+
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": 'Basic {credential}'.format(credential=credential)
+}
 
 with open("../data/libraries.json") as o:
     libraries = json.loads(o.read())
@@ -54,7 +64,7 @@ while True:
     try:
         res = requests.get(APIURL+"/signatures")
         for s in res.json():
-            r = requests.delete(APIURL+"/signatures/"+s["id"], auth=auth)
+            r = requests.delete(APIURL+"/signatures/"+s["id"], headers=headers)
             time.sleep(0.1)
             if not r.ok:
                 print(s["id"])
@@ -71,7 +81,7 @@ while True:
     try:
         res = requests.get(APIURL+"/libraries")
         for l in res.json():
-            r = requests.delete(APIURL+"/libraries/"+l["id"], auth=auth)
+            r = requests.delete(APIURL+"/libraries/"+l["id"], headers=headers)
             if not r.ok:
                 print(l["id"])
                 raise Exception(r.text)
@@ -90,7 +100,7 @@ while True:
         libs = [i["id"] for i in res.json()]
         for l in libraries:
             if l["id"] not in libs:
-                r = requests.post(APIURL+"/libraries/", json=empty_cleaner(l), auth=auth)
+                r = requests.post(APIURL+"/libraries/", json=empty_cleaner(l), headers=headers)
                 time.sleep(0.3)
                 if not res.ok:
                     raise Exception(r.text)
@@ -111,7 +121,7 @@ while True:
             if s["id"] not in sigs:
                 if s["meta"]["KeywordList"] == "[]":
                     s["meta"]["KeywordList"] = []
-                r = requests.post(APIURL+"/signatures/", json=empty_cleaner(s), auth=auth)
+                r = requests.post(APIURL+"/signatures/", json=empty_cleaner(s), headers=headers)
                 time.sleep(0.3)
                 if not r.ok:
                     raise Exception(r.text)
@@ -127,7 +137,7 @@ while True:
 # libs = [i["id"] for i in res.json()]
 # for l in libraries:
 #     if l["id"] not in libs:
-#         res = requests.post(APIURL+"/libraries/", json=empty_cleaner(l), auth=auth)
+#         res = requests.post(APIURL+"/libraries/", json=empty_cleaner(l), headers=headers)
 #         time.sleep(0.3)
 #         if not res.ok:
 #             failed_libraries.append(l["id"])
@@ -141,7 +151,7 @@ while True:
 # failed_signatures = []
 # for l in signatures:
 #     if l["id"] not in sigs:
-#         res = requests.post(APIURL+"/signatures/", json=empty_cleaner(l), auth=auth)
+#         res = requests.post(APIURL+"/signatures/", json=empty_cleaner(l), headers=headers)
 #         time.sleep(0.3)
 #         if not res.ok:
 #             failed_signatures.append(l["id"])
@@ -151,7 +161,7 @@ while True:
 
 
 print("refreshing...")
-res = requests.get(APIURL+"/optimize/refresh", auth=auth)
+res = requests.get(APIURL+"/optimize/refresh", headers=headers)
 print(res.ok)
-res = requests.get(APIURL+"/summary/refresh", auth=auth)
+res = requests.get(APIURL+"/summary/refresh", headers=headers)
 print(res.ok)

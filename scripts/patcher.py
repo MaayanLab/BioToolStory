@@ -4,13 +4,22 @@ import requests
 from requests.auth import HTTPBasicAuth
 from dotenv import load_dotenv
 import time
+import base64
 load_dotenv(dotenv_path="../.env")
 
 APIURL = os.getenv("APIURL")
 USERNAME = os.getenv("USERNAME")
 PASSWORD = os.getenv("PASSWORD")
 
-auth = HTTPBasicAuth(USERNAME,PASSWORD)
+# auth = HTTPBasicAuth(USERNAME,PASSWORD)
+credential = base64.b64encode('{username}:{password}'.format(
+    username=USERNAME, password=PASSWORD
+  ).encode()).decode()
+
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": 'Basic {credential}'.format(credential=credential)
+}
 
 while True:
     res = requests.get(APIURL+"/signatures")
@@ -49,7 +58,7 @@ with open("../data/patched.txt", "a+") as o:
             success = False
             while c<5:
                 try:
-                    r = requests.patch(APIURL+"/signatures/"+t["id"], json=t, auth=auth)
+                    r = requests.patch(APIURL+"/signatures/"+t["id"], json=t, headers=headers)
                     success = True
                     break
                 except Exception as e:
