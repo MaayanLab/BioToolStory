@@ -120,8 +120,24 @@ export default class Home extends React.Component {
         })
     }
 
-    listen_edits = () => {
-
+    approve_edit = async (id) => {
+        const {response} = await send_meta_post({
+            endpoint: `/approve/${this.state.model}/${id}`,
+          })
+        if (response.error){
+            console.error(response.error)
+        }else {
+            const {search_results, model} = this.state
+            const {start, end} = search_results[model]
+            const perPage = end-start
+            search_results[model] = await this.search(model, perPage, 0)
+            const coll = this.state.search_results[model].response
+            const collection = this.process_card_data(coll)
+            this.setState({
+                search_results,
+                collection,
+            })
+        }
     }
     
     send_edits = async (originalData, meta, props) => {
@@ -209,7 +225,9 @@ export default class Home extends React.Component {
                 },
                 {
                     component: (props) => (
-                        <IconButton><span class="mdi mdi-check"></span></IconButton>
+                        <IconButton
+                            onClick={()=>this.approve_edit(data.id)}
+                        ><span class="mdi mdi-check"></span></IconButton>
                     ),
                     props: {
                         data: data

@@ -11,7 +11,7 @@ export async function send_meta_post({ endpoint, body, signal }) {
       + (endpoint === undefined ? '' : endpoint),
         {
           method: 'POST',
-          body: JSON.stringify(body),
+          body: JSON.stringify(body || {}),
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export async function send_meta_post({ endpoint, body, signal }) {
       + (endpoint === undefined ? '' : endpoint),
         {
           method: 'PATCH',
-          body: JSON.stringify(body),
+          body: JSON.stringify(body || {}),
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
