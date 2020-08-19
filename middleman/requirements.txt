@@ -6,3 +6,4 @@ Flask-SQLAlchemy
 SQLAlchemy
 requests
 Flask-Caching
+jsonschema
