@@ -167,7 +167,8 @@ def query(table):
   start = skip
   end = skip+limit
   count = model.query.count()
-  results = [i.serialize for i in model.query.offset(skip).limit(limit).all()]
+  query = model.query.order_by(model.id)
+  results = [i.serialize for i in query.offset(skip).limit(limit).all()]
   contentRange = "%d-%d/%d"%(start,end,count)
   resp = flask.jsonify(results)
   resp.headers["Content-Range"] = contentRange
