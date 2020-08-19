@@ -66,16 +66,25 @@ export default class Home extends React.Component {
         })
       }
 
+    updateCollection = (model, search_results) => {
+        if (search_results[this.state.model].count == 0){
+            model = this.state.tabs.filter(m=>search_results[m].count>0)[0] || this.state.model
+        }
+        const coll = search_results[model].response
+        const collection = this.process_card_data(coll)
+        return {model, collection}
+    }
+    
     componentDidMount = async () => {
         const search_results = {}
         for (const model in this.props.preferred_names){
             search_results[model] = await this.search(model)
         }
-        const coll = search_results[this.state.model].response
-        const collection = this.process_card_data(coll)
+        let model = this.state.model 
+        const updates = this.updateCollection(model, search_results)
         this.setState({
-            collection,
             search_results,
+            ...updates
         })
     }
     
@@ -131,11 +140,10 @@ export default class Home extends React.Component {
             const {start, end} = search_results[model]
             const perPage = end-start
             search_results[model] = await this.search(model, perPage, 0)
-            const coll = this.state.search_results[model].response
-            const collection = this.process_card_data(coll)
+            const updates = this.updateCollection(model, search_results)
             this.setState({
                 search_results,
-                collection,
+                ...updates,
             })
         }
     }
