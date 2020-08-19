@@ -1,5 +1,6 @@
 import React from 'react'
 import { fetch_meta_post } from './util/fetch_meta'
+import { send_meta_post, send_meta_patch } from './util/send_meta'
 import { get_card_data } from './util/get_card_data'
 import Grid from '@material-ui/core/Grid'
 import Tabs from '@material-ui/core/Tabs'
@@ -9,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import TablePagination from '@material-ui/core/TablePagination'
 import { DataTable, ExpandedMeta, ExpandButton } from '@maayanlab/data-table'
 import { ExpandedForm } from "./ExpandedForm"
+import deepEqual from "deep-equal"
 
 export default class Home extends React.Component {
     constructor(props){
@@ -85,6 +87,7 @@ export default class Home extends React.Component {
             index_value,
             model,
             collection,
+            page: 0,
         })
     }
 
@@ -115,6 +118,39 @@ export default class Home extends React.Component {
             collection,
             page
         })
+    }
+
+    listen_edits = () => {
+
+    }
+    
+    send_edits = async (originalData, meta, props) => {
+        if (deepEqual(meta, originalData.meta)) {
+            console.log("unchanged")
+        }
+        const body = {
+            ...originalData,
+            meta
+        }
+        const {response} = await send_meta_patch({
+            endpoint: `/${this.state.model}/${body.id}`,
+            body,
+          })
+        if (response.error){
+            console.error(response.error)
+        }else {
+            const {search_results, model} = this.state
+            const {start, end} = search_results[model]
+            const perPage = end-start
+            search_results[model] = await this.search(model, perPage, start)
+            const coll = this.state.search_results[model].response
+            const collection = this.process_card_data(coll)
+            this.setState({
+                expandedForm: null,
+                search_results,
+                collection,
+            })
+        }
     }
     
     render_table = () => {
@@ -153,7 +189,8 @@ export default class Home extends React.Component {
                             abstract: {
                                 "ui:widget": "textarea",
                             }
-                        }
+                        },
+                        onSubmit: ({formData, ...rest}, e) => this.send_edits(data, formData, rest),
                     }
                 },
               ])
