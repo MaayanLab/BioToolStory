@@ -28,7 +28,7 @@ export default class Home extends React.Component {
 
     search = async (model, limit=10, skip=0) => {
         const { response, contentRange } = await fetch_meta_post({
-            endpoint: `/${model}/find`,
+            endpoint: `/${model}`,
             body: {
               filter: {
                 limit,
