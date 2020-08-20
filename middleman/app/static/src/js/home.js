@@ -354,7 +354,7 @@ export default class Home extends React.Component {
                     <Grid item xs={2}/>
                     <Grid item xs={12}>
                         <Snackbar open={this.state.alert!==null}
-                            autoHideDuration={6000}
+                            autoHideDuration={3000}
                             onClose={this.handleCloseAlert}
                             anchorOrigin={{
                                 vertical: 'bottom',
