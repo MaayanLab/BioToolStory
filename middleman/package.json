@@ -42,7 +42,10 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-swipeable-views": "^0.13.9",
-    "regenerator-runtime": "^0.13.7"
+    "refractor": "^3.1.0",
+    "regenerator-runtime": "^0.13.7",
+    "swagger-client": "^3.10.0",
+    "swagger-ui-react": "^3.25.0"
   },
   "browserslist": [
     "since 2017-06"
