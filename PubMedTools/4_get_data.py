@@ -8,7 +8,6 @@ import os
 import time
 import re, string
 import requests
-from pandas.io.json import json_normalize
 from bs4 import BeautifulSoup
 import sys
 import ast
@@ -66,7 +65,7 @@ def Altmetric(pmids):
       url = 'https://api.altmetric.com/v1/pmid/'+str(pmid)
       r = requests.get(url)
       time.sleep(1) # rate limit is 1 per sec
-      f = json_normalize(r.json())
+      f = pd.json_normalize(r.json())
       Frame = Frame.append(f, ignore_index=True)
     except:
       print("no results")
@@ -190,7 +189,6 @@ def remove_tools(df):
   df = df.reset_index(drop=True)
   # remove tools with the same PMID (keep first one)
   df = df.drop_duplicates(subset='PMID', keep="first")
-  del df['is_tool']
   return(df)
 
 
@@ -226,7 +224,7 @@ def get_country(author_list):
 
 def read_data(fpath):  
   try:
-     return(pd.read_csv(fpath, delim_whitespace=True,dtype=str))
+    return(pd.read_csv(fpath,dtype=str))
   except:
     print("No tools were detected for",start)
     sys.exit()
@@ -245,7 +243,8 @@ if __name__=='__main__':
   Altmetric_dataframe['pmid'] = Altmetric_dataframe['pmid'].astype('str')
   # merge the Altmetric dataframe with the tools dataframe. Keep all data from tools
   tools1 = tools.merge(Altmetric_dataframe, left_on='PMID', right_on='pmid',how='left')
-  meta = pd.read_csv('https://raw.githubusercontent.com/MaayanLab/btools/master/PubMedTools/CF/data/tool_meta.csv?token=AFKKUELTKW324YQPDO22AXK7GF4YY')
+  # https://raw.githubusercontent.com/MaayanLab/BioToolStory/master/PubMedTools/CF/data/tool_meta.csv?token=AFKKUELTKW324YQPDO22AXK7GF4YY
+  meta = pd.read_csv('https://raw.githubusercontent.com/MaayanLab/BioToolStory/master/PubMedTools/CF/data/tool_meta.csv')
   # keep only columns in tools1
   cl = set(meta['old_name'].tolist()).intersection(tools1.columns)
   # reorder columns
