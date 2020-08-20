@@ -203,7 +203,7 @@ def keep_first_link(df):
 
 def read_data(fpath):  
   try:
-     return(pd.read_csv(fpath, delim_whitespace=True,dtype=str))
+     return(pd.read_csv(fpath,dtype=str))
   except:
     print("No tools were detected for",start)
     sys.exit()

@@ -1,6 +1,6 @@
 # This script creates the following: 
-# 1. collects articles from Pubmed as jsons in /data/jsons
-# 2. opens the files and save articles that have a link in their title or abstract in /data/tools
+# 1. collect articles from Pubmed as jsons in /data/jsons
+# 2. open the files and save articles that have a link in their title or abstract in /data/tools
 
 from Bio import Entrez
 import os

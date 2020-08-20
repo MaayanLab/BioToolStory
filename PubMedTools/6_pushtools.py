@@ -53,6 +53,8 @@ end = str(sys.argv[2])
 s = start.replace("/","")
 en = end.replace("/","")
 
+all_tools = []
+dry_run = int(sys.argv[3])
 #==================================================  Database ===================================================================
 
 # delete a single journal
@@ -60,9 +62,10 @@ en = end.replace("/","")
 
 # delete a single item
 def delete_data(data,schema):
-  res = requests.delete(API_url%(schema,data["id"]), auth=credentials)
-  if not res.ok:
-    raise Exception(res.text)
+  if dry_run != 1:
+    res = requests.delete(API_url%(schema,data["id"]), auth=credentials)
+    if not res.ok:
+      raise Exception(res.text)
 
 
 # delete all * from Database
@@ -82,28 +85,31 @@ def write_to_file(schema):
 
 
 def post_data(data,model):
-  time.sleep(0.5)
-  res = requests.post(API_url%(model,""), auth=credentials, json=data)
-  try:
-    if not res.ok:
-      raise Exception(res.text)
-  except Exception as e:
-    print(e)
-    if model == "signatures":
-      f = open(os.path.join(PTH,"data/fail_to_load.txt"), "a")
-      f.write(','.join(map(str, data['meta']['PMID'])) + "\n")
-      f.close()
+  if dry_run:
+    all_tools.append(data)
+  else:
+    time.sleep(0.5)
+    res = requests.post(API_url%(model,""), auth=credentials, json=data)
+    try:
+      if not res.ok:
+        raise Exception(res.text)
+    except Exception as e:
+      print(e)
+      if model == "signatures":
+        f = open(os.path.join(PTH,"data/fail_to_load.txt"), "a")
+        f.write(','.join(map(str, data['meta']['PMID'])) + "\n")
+        f.close()
 
 
 # update the website after petching data
 def refresh():
-  res = requests.get("https://maayanlab.cloud/biotoolstory/meta-api/optimize/refresh", auth=credentials)
+  res = requests.get("https://maayanlab.cloud/biotoolstory/metadata-api/optimize/refresh", auth=credentials)
   print(res.ok)
-  res = requests.get("https://maayanlab.cloud/biotoolstory/meta-api/"+"optimize/status", auth=credentials)
+  res = requests.get("https://maayanlab.cloud/biotoolstory/metadata-api/"+"optimize/status", auth=credentials)
   while not res.text == "Ready":
     time.sleep(1)
-    res = requests.get("https://maayanlab.cloud/biotoolstory/meta-api"+"/optimize/status", auth=credentials)
-  res = requests.get("https://maayanlab.cloud/biotoolstory/meta-api/"+"summary/refresh", auth=credentials)
+    res = requests.get("https://maayanlab.cloud/biotoolstory/metadata-api"+"/optimize/status", auth=credentials)
+  res = requests.get("https://maayanlab.cloud/biotoolstory/metadata-api/"+"summary/refresh", auth=credentials)
   print(res.ok)
 
 #==================================================  HELP FUNCTIONS ===================================================================
@@ -347,7 +353,8 @@ def push_new_journal(ISSN):
     'publisher': pub,
     'icon': '',
     # replace validator with raw.github
-    '$validator': '/dcic/signature-commons-schema/v5/core/unknown.json' # 'https://raw.githubusercontent.com/MaayanLab/biobtools-ui/toolstory/validators/btools_journal.json', 
+    '$validator': 'https://raw.githubusercontent.com/MaayanLab/BioToolStory/master/validators/btools_journal.json'
+      #'/dcic/signature-commons-schema/v5/core/unknown.json'  
     }
     }
   new_journal = empty_cleaner(new_journal)
@@ -426,7 +433,7 @@ def push_tools(df):
 
 def read_data(fpath):  
   try:
-     return(pd.read_csv(fpath, delim_whitespace=True,dtype=str))
+     return(pd.read_csv(fpath, dtype=str))
   except:
     try:
       os.remove(os.path.join(PTH,'data/tools_'+s+'_'+en+'.csv'))
@@ -448,12 +455,16 @@ if __name__ == "__main__":
   df = df.replace(np.nan, '', regex=True)  
   push_tools(df)
   combine_duplicates_tools()
-  refresh()
-    try:
+  if dry_run == 0:
+    refresh()
+  try:
     os.remove(os.path.join(PTH,'data/tools_'+s+'_'+en+'.csv'))
     # remove folders
     shutil.rmtree(os.path.join(PTH,'data/tools_'+s+'_'+en))
     shutil.rmtree(os.path.join(PTH,'data/jsons_'+s+'_'+en))
+    if dry_run:
+      with open(os.path.join(PTH,schema + '.json'), 'w') as outfile:
+        json.dump(all_tools, outfile)
   except:
     print("unable to delete folder or file")
   print("Done!",s,'_',en)

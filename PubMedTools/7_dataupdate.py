@@ -158,15 +158,3 @@ if __name__ == '__main__':
 #         print(jour)
 #         print(res.text)
 #         break
-
-# for tool in tools_DB:
-#   if 'Tool_Name' in tool['meta'].keys():
-#     if tool['meta']['Tool_Name']=='Enrichr':
-#       print("found")
-#       tool['meta']['Edit'] = 'https://script.google.com/macros/s/AKfycbxkUYRqihmOPx3FvNJZzS8Ae6ahz9EIduKVu4iTU3ESOoltVvA7/exec?pmid='+str(tool['meta']['PMID'][0])
-#       break
-#       
-# for tool in tools_DB:    
-#   tool["meta"]["$validator"] = 'https://raw.githubusercontent.com/MaayanLab/BioToolStory/master/validators/btools_tools.json'
-#   update(tool)
-    

@@ -140,4 +140,4 @@ if __name__=='__main__':
         Frame = Frame.append(pd.DataFrame(data = df), ignore_index=True)
       except Exception as e:
         print(e,'at line 186',i,'out of', tot)
-  Frame.to_csv(os.path.join(PTH,'data/tools_'+s+'_'+en+'.csv'), index=None) # write tools dataframe to file
+  Frame.to_csv(os.path.join(PTH,'data/tools_'+s+'_'+en+'.csv'), index=False) # write tools dataframe to file
