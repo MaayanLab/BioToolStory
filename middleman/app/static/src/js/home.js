@@ -13,6 +13,7 @@ import { ExpandedForm } from "./ExpandedForm"
 import deepEqual from "deep-equal"
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
+import { Typography } from '@material-ui/core';
 
 export default class Home extends React.Component {
     constructor(props){
@@ -295,6 +296,20 @@ export default class Home extends React.Component {
     render = () => {
         if (this.state.search_results == null){
             return <CircularProgress/>
+        }
+        if (this.state.collection.length===0){
+            return (
+                <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                >
+                    <Grid item xs style={{textAlign: "center", paddingTop: 100}}>
+                        <Typography>You have no pending tools</Typography>
+                    </Grid>
+                </Grid>
+            )
         }
         return (
             <Grid
