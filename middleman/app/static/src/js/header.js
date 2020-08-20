@@ -19,19 +19,19 @@ export function Nav(props) {
     return (
       <React.Fragment>
         <ListItemLink
-            selected={location.pathname === '/PendingTools'}
+            selected={location.pathname === '/'}
             style={{color: "inherit"}}
             href={"#/"}
         >
-            {"PendingTools"}
+            {"Pending"}
         </ListItemLink>
-        <ListItemLink
+        {/* <ListItemLink
           selected={location.pathname === '/API'}
           style={{color: "inherit"}}
           href={"#/API"}
         >
           {"API"}
-        </ListItemLink>
+        </ListItemLink> */}
       </React.Fragment>
     )
   }
