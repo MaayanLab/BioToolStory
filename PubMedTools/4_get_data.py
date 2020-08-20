@@ -243,7 +243,6 @@ if __name__=='__main__':
   Altmetric_dataframe['pmid'] = Altmetric_dataframe['pmid'].astype('str')
   # merge the Altmetric dataframe with the tools dataframe. Keep all data from tools
   tools1 = tools.merge(Altmetric_dataframe, left_on='PMID', right_on='pmid',how='left')
-  # https://raw.githubusercontent.com/MaayanLab/BioToolStory/master/PubMedTools/CF/data/tool_meta.csv?token=AFKKUELTKW324YQPDO22AXK7GF4YY
   meta = pd.read_csv('https://raw.githubusercontent.com/MaayanLab/BioToolStory/master/PubMedTools/CF/data/tool_meta.csv')
   # keep only columns in tools1
   cl = set(meta['old_name'].tolist()).intersection(tools1.columns)
