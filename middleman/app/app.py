@@ -181,35 +181,32 @@ def get_entry(table, uid):
   if db_entry:
     return flask.jsonify(db_entry.serialize)
   else:
-    return flask.jsonify({})
+    return flask.jsonify({"error": "Not found"}), 404
 
 
 @app.route(ROOT_PATH + "api/<table>/<uid>", methods=['POST', 'PATCH'])
 @basic_auth.required
 def patch_or_create(table, uid):
+  session = db.create_scoped_session()
   model = temp_model_maper[table]
-  db_entry = model.query.filter_by(id=uid).first()
-  if not db_entry and flask.request.method == 'PATCH':
-    return flask.jsonify({"error": "%s does not exist"%uid}), 406
-
-  if db_entry and flask.request.method == 'POST':
-    return flask.jsonify({"error": "%s exists, try PATCH"%uid}), 406
-
+  db_entry = session.query(model).filter_by(id=uid).first()
   entry=flask.request.json
   error = validate_entry(entry, resolver)
   if not error:
     try:
-      if flask.request.method == 'PATCH':
+      if not db_entry == None:
         db_entry.update(entry)
+        session.commit()
       else:
         db_entry = model(entry)
-        db.session.add(db_entry)
-
-      db.session.commit()
+        session.add(db_entry)
+        session.commit()
+        session.close()
       return ('', 200)
     except Exception as e:
-      db.session.rollback()
-      return flask.jsonify({"error": str(e)}), 406
+      session.rollback()
+      session.close()
+      return flask.jsonify({"error": str(e)}), 400
   else:
     return flask.jsonify(json.loads(error)), 406
 
@@ -217,26 +214,26 @@ def patch_or_create(table, uid):
 @app.route(ROOT_PATH + "api/approve/<table>/<uid>", methods=['POST'])
 @basic_auth.required
 def approve_tool(table, uid):
-  # temp
-  temp_model = temp_model_maper[table]
-  temp_entry = temp_model.query.filter_by(id=uid).first()
-  if not temp_entry:
-    return flask.jsonify({"error": "%s does not exist"%uid}), 406
+  session = db.create_scoped_session()
 
-  # permanent
-  model = model_maper[table]
-  entry = model.query.filter_by(uuid=uid).first()
-  
   try:
+    temp_model = temp_model_maper[table]
+    temp_entry = session.query(temp_model).filter_by(id=uid).first()
+    if not temp_entry:
+      return flask.jsonify({"error": "%s does not exist"%uid}), 400
+    serialized = temp_entry.serialize
+    # permanent
+    model = model_maper[table]
+    entry = session.query(model).filter_by(uuid=uid).first()
     if entry:
       # update existing
-      entry.update(temp_entry.serialize)
+      entry.update(serialized)
     else:
-      db_entry = model(temp_entry.serialize)
-      db.session.add(db_entry)
-    db.session.query(temp_model).filter(temp_model.id==uid).delete()
-    db.session.commit()
+      db_entry = model(serialized)
+      session.add(db_entry)
+    session.delete(temp_entry)
+    session.commit()
     return ('', 200)
   except Exception as e:
-    db.session.rollback()
-    return flask.jsonify({"error": str(e)}), 406
+    session.rollback()
+    return flask.jsonify({"error": str(e)}), 400
