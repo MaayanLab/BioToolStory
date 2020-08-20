@@ -19,7 +19,7 @@ export const fetch_cached_validator = async (url) => {
           url = `https://raw.githubusercontent.com/dcic/signature-commons-schema${m[1]}${m[2]}`
         }
       }
-    cache[url] = await (await fetch(`${baseUrl}/get_validator?validator=${url}`)).json() 
+    cache[url] = await (await fetch(`${base_url}/get_validator?validator=${url}`)).json() 
     return cache[url]
 }
 
