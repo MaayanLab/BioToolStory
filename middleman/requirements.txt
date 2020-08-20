@@ -6,3 +6,6 @@ Flask-SQLAlchemy
 SQLAlchemy
 requests
 Flask-Caching
+jsonschema
+psycopg2
+Flask-BasicAuth

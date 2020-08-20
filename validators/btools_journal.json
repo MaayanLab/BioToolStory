@@ -1,36 +1,40 @@
 {
-  "$id": "https://raw.githubusercontent.com/MaayanLab/btools-ui/toolstory/validators/btools_journal.json",
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "allOf": [
-    {
-      "$ref": "/dcic/signature-commons-schema/v5/core/meta.json"
-    },
-    {
-      "properties": {
-            "Journal_Title": {
-                        "description": "journal name",
-                        "type": "string"
-                    },
-            "ISSN": {
-                        "description": "electronic ISSN",
-                        "type": "string"
-                    },
-            "publisher": {
-                        "description": "journal publisher",
-                        "type": "string"
-                    },
-            "icon": {
-                        "description": "path to journal symbol",
-                        "type": "string",
-                        "format":"uri"
-                    }
+    "$id": "https://raw.githubusercontent.com/MaayanLab/btools-ui/toolstory/validators/btools_journal.json",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "allOf": [
+        {
+            "$ref": "/dcic/signature-commons-schema/v5/core/meta.json"
         },
-      "required": [
-            "$validator",
-            "Journal_Title",
-            "ISSN"
-        ],
-      "type": "object"
-    }
-  ]
+        {
+            "properties": {
+                "Journal_Title": {
+                    "title": "Journal Title",
+                    "description": "journal name",
+                    "type": "string"
+                },
+                "ISSN": {
+                    "title": "ISSN",
+                    "description": "electronic ISSN",
+                    "type": "string"
+                },
+                "publisher": {
+                    "title": "Publisher",
+                    "description": "journal publisher",
+                    "type": "string"
+                },
+                "icon": {
+                    "title": "Icon",
+                    "description": "path to journal symbol",
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "required": [
+                "$validator",
+                "Journal_Title",
+                "ISSN"
+            ],
+            "type": "object"
+        }
+    ]
 }

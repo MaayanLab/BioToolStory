@@ -1,6 +1,8 @@
 import fetch from 'isomorphic-unfetch'
 
-export const base_url = process.env.META_API
+
+const getUrl = window.location;
+const base_url = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1] + "/api"
 
 // From sigcom
 export async function fetch_meta({ endpoint, body, signal, headers }) {
