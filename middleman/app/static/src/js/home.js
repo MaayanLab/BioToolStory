@@ -140,7 +140,7 @@ export default class Home extends React.Component {
             this.setState({
                 alert: {
                     severity: "error",
-                    message: response.error,
+                    message: response.error.error,
                 }
             })
             console.error(response.error)
@@ -183,7 +183,7 @@ export default class Home extends React.Component {
                 this.setState({
                     alert: {
                         severity: "error",
-                        message: response.error,
+                        message: response.error.error,
                     }
                 })
                 console.error(response.error)
