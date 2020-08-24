@@ -6,7 +6,7 @@ import fetch from 'node-fetch'
 const cache = {}
 
 const getUrl = window.location;
-const baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+const base_url = getUrl.protocol + "//" + getUrl.host + process.env.ROOT_PATH + "api"
 
 export const fetch_cached_validator = async (url) => {
     if (cache[url]) return cache[url]
@@ -19,7 +19,7 @@ export const fetch_cached_validator = async (url) => {
           url = `https://raw.githubusercontent.com/dcic/signature-commons-schema${m[1]}${m[2]}`
         }
       }
-    cache[url] = await (await fetch(`${baseUrl}/api/get_validator?validator=${url}`)).json() 
+    cache[url] = await (await fetch(`${base_url}/get_validator?validator=${url}`)).json() 
     return cache[url]
 }
 

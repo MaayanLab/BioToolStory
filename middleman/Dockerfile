@@ -22,5 +22,6 @@ ADD boot.sh /app/boot.sh
 RUN set -x && chmod +x /app/boot.sh
 CMD /app/boot.sh
 
+ADD init_db.py /app/init_db.py
 ADD app /app/app
 RUN set -x && chown app:app -R /app/

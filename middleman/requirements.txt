@@ -1,4 +1,5 @@
 # Python dependencies
+setuptools
 uwsgi
 Flask
 python-dotenv

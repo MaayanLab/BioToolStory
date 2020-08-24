@@ -11,6 +11,9 @@ import TablePagination from '@material-ui/core/TablePagination'
 import { DataTable, ExpandedMeta, ExpandButton } from '@maayanlab/data-table'
 import { ExpandedForm } from "./ExpandedForm"
 import deepEqual from "deep-equal"
+import Alert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
+import { Typography } from '@material-ui/core';
 
 export default class Home extends React.Component {
     constructor(props){
@@ -25,6 +28,7 @@ export default class Home extends React.Component {
             expandedForm: null,
             page: 0,
             perPage: 10,
+            alert: null,
         }
     }
 
@@ -134,6 +138,12 @@ export default class Home extends React.Component {
             endpoint: `/approve/${this.state.model}/${id}`,
           })
         if (response.error){
+            this.setState({
+                alert: {
+                    severity: "error",
+                    message: response.error.error,
+                }
+            })
             console.error(response.error)
         }else {
             const {search_results, model} = this.state
@@ -144,37 +154,64 @@ export default class Home extends React.Component {
             this.setState({
                 search_results,
                 ...updates,
+                alert: {
+                    severity: "success",
+                    message: "Approved!",
+                },
             })
         }
     }
     
     send_edits = async (originalData, meta, props) => {
         if (deepEqual(meta, originalData.meta)) {
-            console.log("unchanged")
-        }
-        const body = {
-            ...originalData,
-            meta
-        }
-        const {response} = await send_meta_patch({
-            endpoint: `/${this.state.model}/${body.id}`,
-            body,
-          })
-        if (response.error){
-            console.error(response.error)
-        }else {
-            const {search_results, model} = this.state
-            const {start, end} = search_results[model]
-            const perPage = end-start
-            search_results[model] = await this.search(model, perPage, start)
-            const coll = this.state.search_results[model].response
-            const collection = this.process_card_data(coll)
             this.setState({
-                expandedForm: null,
-                search_results,
-                collection,
+                alert: {
+                    severity: "info",
+                    message: "Unchanged",
+                },
+                expandedForm: null
             })
+        } else {
+            const body = {
+                ...originalData,
+                meta
+            }
+            const {response} = await send_meta_patch({
+                endpoint: `/${this.state.model}/${body.id}`,
+                body,
+              })
+            if (response.error){
+                this.setState({
+                    alert: {
+                        severity: "error",
+                        message: response.error.error,
+                    }
+                })
+                console.error(response.error)
+            }else {
+                const {search_results, model} = this.state
+                const {start, end} = search_results[model]
+                const perPage = end-start
+                search_results[model] = await this.search(model, perPage, start)
+                const coll = this.state.search_results[model].response
+                const collection = this.process_card_data(coll)
+                this.setState({
+                    expandedForm: null,
+                    search_results,
+                    collection,
+                    alert: {
+                        severity: "success",
+                        message: "Edited!",
+                    },
+                })
+            }
         }
+    }
+
+    handleCloseAlert = () => {
+        this.setState({
+            alert: null
+        })
     }
     
     render_table = () => {
@@ -260,6 +297,20 @@ export default class Home extends React.Component {
         if (this.state.search_results == null){
             return <CircularProgress/>
         }
+        if (this.state.collection.length===0){
+            return (
+                <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                >
+                    <Grid item xs style={{textAlign: "center", paddingTop: 100}}>
+                        <Typography>You have no pending tools</Typography>
+                    </Grid>
+                </Grid>
+            )
+        }
         return (
             <Grid
                 container
@@ -316,6 +367,20 @@ export default class Home extends React.Component {
                         </Grid>
                     </Grid>
                     <Grid item xs={2}/>
+                    <Grid item xs={12}>
+                        <Snackbar open={this.state.alert!==null}
+                            autoHideDuration={3000}
+                            onClose={this.handleCloseAlert}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                                }}
+                        >
+                            <Alert onClose={this.handleCloseAlert} severity={(this.state.alert||{}).severity}>
+                                {(this.state.alert||{}).message}
+                            </Alert>
+                        </Snackbar>
+                    </Grid>
             </Grid>
         )
     }

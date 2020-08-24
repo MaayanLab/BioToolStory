@@ -6,7 +6,6 @@ import { defaultTheme } from './defaultTheme'
 import merge from 'deepmerge'
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core'
 import Header from './header'
-import 'regenerator-runtime/runtime'
 import dotenv from "dotenv"
 
 dotenv.config()
@@ -33,6 +32,8 @@ class App extends React.Component {
     landing = (props) => {
         return <Home {...props} {...this.props} ui={this.state.ui} />
     }
+
+
 
     render = () => (
         <MuiThemeProvider theme={this.state.theme}>

@@ -25,6 +25,7 @@
     "@maayanlab/data-table": "^0.1.1",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/utils": "^4.10.2",
     "@mdi/font": "^5.4.55",
     "@rjsf/core": "^2.3.0",
@@ -41,7 +42,10 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-swipeable-views": "^0.13.9",
-    "regenerator-runtime": "^0.13.7"
+    "refractor": "^3.1.0",
+    "regenerator-runtime": "^0.13.7",
+    "swagger-client": "^3.10.0",
+    "swagger-ui-react": "^3.25.0"
   },
   "browserslist": [
     "since 2017-06"

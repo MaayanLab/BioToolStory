@@ -1,0 +1,263 @@
+{
+   "openapi": "3.0.2",
+   "info": {
+      "title": "BioToolStory Middleman",
+      "license": {
+         "name": "Apache 2.0",
+         "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+      },
+      "version": "0.1.0"
+   },
+   "servers": [
+      {
+         "url": "http://localhost:8080/middleman/api"
+      }
+   ],
+   "paths": {
+      "/api/get_validator": {
+         "get": {
+            "summary": "Fetches the validator",
+            "requestBody": {
+               "description": "Request to send",
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "validator": {
+                              "type": "string"
+                           }
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "Validator was fetched"
+               }
+            }
+         }
+      },
+      "/api/signatures": {
+         "get": {
+            "summary": "Fetches the tools",
+            "requestBody": {
+               "description": "Successful response",
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "limit": {
+                              "type": "integer"
+                           },
+                           "skip": {
+                              "type": "integer"
+                           }
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "OK"
+               }
+            }
+         },
+         "post": {
+            "summary": "Fetches the tools",
+            "requestBody": {
+               "description": "Successful response",
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "limit": {
+                              "type": "integer"
+                           },
+                           "skip": {
+                              "type": "integer"
+                           }
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "OK"
+               }
+            }
+         }
+      },
+      "/api/signatures/{id}": {
+         "get": {
+            "summary": "Fetches the tool metadata for the specified id",
+            "responses": {
+               "200": {
+                  "description": "OK"
+               }
+            }
+         },
+         "post": {
+            "summary": "Posts a new tool",
+            "requestBody": {
+               "description": "Successful response",
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object"
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "OK"
+               }
+            }
+         },
+         "patch": {
+            "summary": "Patches an existing tool",
+            "requestBody": {
+               "description": "Successful response",
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object"
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "OK"
+               }
+            }
+         }
+      },
+      "/api/approve/signatures/{id}": {
+         "post": {
+            "summary": "Approves the tool specified by ID and sends it to biotoolstory",
+            "responses": {
+               "200": {
+                  "description": "OK"
+               }
+            }
+         }
+      },
+      "/api/libraries": {
+         "get": {
+            "summary": "Fetches the journals",
+            "requestBody": {
+               "description": "Successful response",
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "limit": {
+                              "type": "integer"
+                           },
+                           "skip": {
+                              "type": "integer"
+                           }
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "OK"
+               }
+            }
+         },
+         "post": {
+            "summary": "Fetches the journals",
+            "requestBody": {
+               "description": "Successful response",
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "limit": {
+                              "type": "integer"
+                           },
+                           "skip": {
+                              "type": "integer"
+                           }
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "OK"
+               }
+            }
+         }
+      },
+      "/api/libraries/{id}": {
+         "get": {
+            "summary": "Fetches the tool metadata for the specified id",
+            "responses": {
+               "200": {
+                  "description": "OK"
+               }
+            }
+         },
+         "post": {
+            "summary": "Posts a new tool",
+            "requestBody": {
+               "description": "Successful response",
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object"
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "OK"
+               }
+            }
+         },
+         "patch": {
+            "summary": "Patches an existing tool",
+            "requestBody": {
+               "description": "Successful response",
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object"
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "OK"
+               }
+            }
+         }
+      },
+      "/api/approve/libraries/{id}": {
+         "post": {
+            "summary": "Approves the tool specified by ID and sends it to biotoolstory",
+            "responses": {
+               "200": {
+                  "description": "OK"
+               }
+            }
+         }
+      }
+   }
+}
