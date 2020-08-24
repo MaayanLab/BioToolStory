@@ -62,10 +62,9 @@ dry_run = int(sys.argv[3])
 
 # delete a single item
 def delete_data(data,schema):
-  if dry_run != 1:
-    res = requests.delete(API_url%(schema,data["id"]), auth=credentials)
-    if not res.ok:
-      raise Exception(res.text)
+  res = requests.delete(API_url%(schema,data["id"]), auth=credentials)
+  if not res.ok:
+    raise Exception(res.text)
 
 
 # delete all * from Database
@@ -85,20 +84,17 @@ def write_to_file(schema):
 
 
 def post_data(data,model):
-  if dry_run:
-    all_tools.append(data)
-  else:
-    time.sleep(0.5)
-    res = requests.post(API_url%(model,""), auth=credentials, json=data)
-    try:
-      if not res.ok:
-        raise Exception(res.text)
-    except Exception as e:
-      print(e)
-      if model == "signatures":
-        f = open(os.path.join(PTH,"data/fail_to_load.txt"), "a")
-        f.write(','.join(map(str, data['meta']['PMID'])) + "\n")
-        f.close()
+  time.sleep(0.5)
+  res = requests.post(API_url%(model,""), auth=credentials, json=data)
+  try:
+    if not res.ok:
+      raise Exception(res.text)
+  except Exception as e:
+    print(e)
+    if model == "signatures":
+      f = open(os.path.join(PTH,"data/fail_to_load.txt"), "a")
+      f.write(','.join(map(str, data['meta']['PMID'])) + "\n")
+      f.close()
 
 
 # update the website after petching data
@@ -328,6 +324,18 @@ def predict_topic(text, nlp=nlp):
     js=dt.to_json(orient='records')
     return(ast.literal_eval(js))
 
+
+def final_test(data):
+  if 'Last_Author' in data['meta'].keys():
+    if type(data['meta']['Last_Author'])==list:
+      data['meta']['Last_Author'] = data['meta']['Last_Author'][0]
+  if 'Author_Information' in data['meta'].keys():
+    for x in range(len(data['meta']['Author_Information'] ) ):
+      if 'AffiliationInfo' in data['meta']['Author_Information'][x]:
+        if type(data['meta']['Author_Information'][x]['AffiliationInfo'][0]) == str:
+          data['meta']['Author_Information'][x]['AffiliationInfo'] = [{ 'Affiliation' : y} for y in data['meta']['Author_Information'][x]['AffiliationInfo']]
+  return(data)
+
 #================================================ Push data ============================================================================================
 
 def push_new_journal(ISSN):
@@ -396,12 +404,12 @@ def push_tools(df):
       continue
     data["meta"]["Article_Language"] =  fix_dirty_json(tool['Article_Language'])
     data["meta"]["Author_Information"] = restructure_author_info(tool['Author_Information'])
-    data['meta']['Last_Author'] = [{
+    data['meta']['Last_Author'] = {
       'Name': isnan(data["meta"]["Author_Information"][-1]['ForeName']) + " " + isnan(data["meta"]["Author_Information"][-1]['LastName']),
       'ForeName': isnan(data["meta"]["Author_Information"][-1]['ForeName']),
       'Initials': isnan(data["meta"]["Author_Information"][-1]['Initials']),
       'LastName': isnan(data["meta"]["Author_Information"][-1]['LastName'])
-      }]
+      }
     if len(data["meta"]["Author_Information"][-1]['AffiliationInfo']) == 0:
       data['meta']['Institution'] = ''
     else:
@@ -413,7 +421,7 @@ def push_tools(df):
     data["meta"]["Chemical_List"] =  fix_dirty_json(tool['Chemical_List'])
     data["meta"]["KeywordList"] =  fix_dirty_json(tool['KeywordList'])
     if len(data["meta"]["KeywordList"]) > 0:
-      if isinstance(data["meta"]["KeywordList"], list):
+      if (isinstance(data["meta"]["KeywordList"], list)) and (data["meta"]["KeywordList"]):
         data["meta"]["KeywordList"] = isnan(data["meta"]["KeywordList"][0])
         # https://raw.githubusercontent.com/MaayanLab/btools-ui/toolstory/validators/btools_tools.json
         #'/dcic/signature-commons-schema/v5/core/unknown.json'
@@ -422,6 +430,7 @@ def push_tools(df):
     data['meta']['Added_On']=''
     data['meta']['Last_Updated']=''
     data["meta"] = empty_cleaner(data['meta']) # delete empty fields
+    data = final_test(data)
     # check that the pmid does not exist in the dataset
     if data['meta']['PMID'][0] in tools_pmids:
       print("pmid",data['meta']['PMID'], 'exist')
@@ -469,3 +478,9 @@ if __name__ == "__main__":
     print("unable to delete folder or file")
   print("Done!",s,'_',en)
   
+# keep = []
+# for i in range(0,len(df)):
+#   if df.iloc[i]['PMID'] not in tools_pmids:
+#     print(df.iloc[i]['PMID'])
+#     keep.append(df.iloc[i])
+
