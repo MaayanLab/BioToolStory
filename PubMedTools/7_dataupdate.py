@@ -94,6 +94,7 @@ def testURL(tool):
   tool['meta']['url_status'] = str(status)
   return(tool)
   
+
 # update the website after petching data
 def refresh():
   res = requests.get("https://maayanlab.cloud/biotoolstory/metadata-api/optimize/refresh", auth=credentials)
