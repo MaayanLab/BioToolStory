@@ -47,8 +47,7 @@ auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth, wait_on_rate_limit=True)
 
-dry_run = str(sys.argv[1]) # set to 0 if you wat to post tweets
-YESTERDAY = str(sys.argv[2]).replace("/","-")
+dry_run = int(sys.argv[1]) # set to 0 if you wat to post tweets
 
 
 def init_selenium(CHROMEDRIVER_PATH, windowSize='1080,1080'):
@@ -69,7 +68,7 @@ def init_selenium(CHROMEDRIVER_PATH, windowSize='1080,1080'):
 
 
 def link_to_screenshot(link=None, output=None, zoom='100 %', browser=None):
-  print('Capturing screenshot for enrichr...')
+  print('Capturing screenshot...')
   time.sleep(2)
   browser.get(link)
   time.sleep(3)
@@ -93,7 +92,7 @@ def refresh():
   print(res.ok)
   res = requests.get("https://maayanlab.cloud/biotoolstory/metadata-api/"+"optimize/status", auth=credentials)
   while not res.text == "Ready":
-    time.sleep(1)
+    time.sleep(2)
     res = requests.get("https://maayanlab.cloud/biotoolstory/metadata-api"+"/optimize/status", auth=credentials)
   res = requests.get("https://maayanlab.cloud/biotoolstory/metadata-api/"+"summary/refresh", auth=credentials)
   print(res.ok)
@@ -101,14 +100,15 @@ def refresh():
 
 # test if url is available
 def testURL(tool):
-  if 'url_status' in tool['meta'].keys():
-    url = tool['meta']['tool_homepage_url']
-    try:
-      request = requests.head(url,allow_redirects=False, timeout=10)
-      status = request.status_code
-    except:
-      status = "error"
-    tool['meta']['url_status'] = str(status)
+  url = tool['meta']['tool_homepage_url']
+  try:
+    request = requests.head(url,allow_redirects=False, timeout=10)
+    status = request.status_code
+    if status >= 400:
+      status = 'error'
+  except:
+    status = 'error'
+  tool['meta']['url_status'] = str(status)
   return(tool)
 
 
@@ -152,11 +152,11 @@ if  __name__ == "__main__":
   res = requests.get(API_url%("signatures",""))
   tools_DB = res.json()
   for tool in tools_DB:
-    if 'Article_Date' in tool['meta'].keys() and tool['meta']['Year'] >= 2020:
-      print(tool['meta']['PMID'])
-      tool = testURL(tool)
-      if ('Tweeted' not in tool['meta'].keys()) & ('url_status' in tool['meta'].keys()):
-        if (tool['meta']['url_status'] != 'error') & (all([ x in tool['meta'].keys() for x in ['Tool_Name','tool_homepage_url'] ])):
+    if int(tool['meta']['Year']) >= 2020:
+      if 'Tweeted' not in tool['meta'].keys():
+        tool = testURL(tool)
+        if (tool['meta']['url_status'] == '200') & (all([ x in tool['meta'].keys() for x in ['Tool_Name','tool_homepage_url'] ])):
+          print(tool['meta']['PMID'], tool['meta']['url_status'])
           message ="The #bioinformatics tool #{}, available at {} was published {}\n"
           message = message + "{} is listed here {}\n"
           message = message + "Similar tools can be found at https://maayanlab.cloud/biotoolstory\n"
@@ -177,7 +177,7 @@ if  __name__ == "__main__":
           url = tool['meta']['tool_homepage_url']
           screenshot = link_to_screenshot(link = url, output = output , browser=browser)
           # tweet
-          if dry_run == '1':
+          if dry_run == 1:
             file1 = open(os.path.join(PTH,"TwitterBot/tweet.txt"),"w")
             file1.write(message) 
             file1.close()
@@ -187,7 +187,7 @@ if  __name__ == "__main__":
               flg = True 
               stat = api.update_with_media(screenshot, message)
               os.remove(os.path.join(PTH,'TwitterBot/screenshots/',tool['id']+".png"))
-              tool['meta']['Tweeted'] = 'https://twitter.com/i/web/status/' + stat._json['data']['id_str']
+              tool['meta']['Tweeted'] = 'https://twitter.com/i/web/status/' + stat._json['id_str']
               update(tool)
               print("tweet was posted")
               time.sleep(1200) # tweet every 20 min
