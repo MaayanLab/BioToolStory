@@ -95,7 +95,7 @@ def is_pushed(pmid):
   tools_DB = res.json()
   for tool in tools_DB:
     if int(pmid) == tool['meta']['PMID'][0]:
-      print("tool exists in middleman")
+      print('PMID', pmid, 'exists in middleman')
       return(False)
   return(True)
 
@@ -439,7 +439,7 @@ def read_data(fpath):
       shutil.rmtree(os.path.join(PTH,'data/tools_'+s+'_'+en))
       shutil.rmtree(os.path.join(PTH,'data/jsons_'+s+'_'+en))
     except:
-      print("unable to delete folder or file line 477")
+      print("unable to delete folder or file line 422")
       print("No tools were detected for",start)
     sys.exit()
 
@@ -453,16 +453,21 @@ if __name__ == "__main__":
   df = df.replace(np.nan, '', regex=True)  
   push_tools(df)
   try:
-    os.remove(os.path.join(PTH,'data/tools_'+s+'_'+en+'.csv'))
-    os.remove(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv'))
+    if os.path.exists(os.path.join(PTH,'data/tools_'+s+'_'+en+'.csv')):
+      os.remove(os.path.join(PTH,'data/tools_'+s+'_'+en+'.csv'))
+    if os.path.exists(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv')):
+      os.remove(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv'))
     # remove folders
-    shutil.rmtree(os.path.join(PTH,'data/tools_'+s+'_'+en))
-    shutil.rmtree(os.path.join(PTH,'data/jsons_'+s+'_'+en))
+    if os.path.exists(os.path.join(PTH,'data/tools_'+s+'_'+en)):
+      shutil.rmtree(os.path.join(PTH,'data/tools_'+s+'_'+en))
+    if os.path.exists(os.path.join(PTH,'data/jsons_'+s+'_'+en)):
+      shutil.rmtree(os.path.join(PTH,'data/jsons_'+s+'_'+en))
     if dry_run:
       with open(os.path.join(PTH,schema + '.json'), 'w') as outfile:
         json.dump(all_tools, outfile)
-  except:
-    print("unable to delete folder or file line 500")
+  except Exception as e:
+    print(e)
   print("Done!",s,'_',en)
  
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
