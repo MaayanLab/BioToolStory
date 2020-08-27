@@ -48,6 +48,12 @@ username = os.getenv("USERNAME")
 password = os.getenv("PASSWORD")
 credentials = HTTPBasicAuth(username, password)
 
+
+# middleman credentials
+username_middle = os.getenv("USERNAME_middle")
+password_middle = os.getenv("PASSWORD_middle")
+auth_middle = HTTPBasicAuth(username_middle, password_middle)
+
 start = str(sys.argv[1])
 end = str(sys.argv[2])
 s = start.replace("/","")
@@ -83,6 +89,30 @@ def write_to_file(schema):
     json.dump(tools_DB, outfile)
 
 
+# check if the tool was already pushed to middleman website
+def is_pushed(pmid):
+  res = requests.get('https://maayanlab.cloud/biotoolstory/middleman/api/signatures?filter={"limit": 10000}', auth=auth_middle)
+  tools_DB = res.json()
+  for tool in tools_DB:
+    if int(pmid) == tool['meta']['PMID'][0]:
+      print("tool exists in middleman")
+      return(False)
+  return(True)
+
+
+# push daily data to the middleman service for manual approval
+def post_data_middleman(data):
+  if is_pushed(data['meta']['PMID'][0]):
+    API  = "https://maayanlab.cloud/biotoolstory/middleman/api"
+    res = requests.post(API+"/signatures/" + data["id"], json=data, auth=auth_middle)
+    try:
+      if not res.ok:
+        raise Exception(res.text)
+    except Exception as e:
+      print(e)
+
+
+# push data (tools or journals) directly to the biotoolstory server
 def post_data(data,model):
   time.sleep(0.5)
   res = requests.post(API_url%(model,""), auth=credentials, json=data)
@@ -101,10 +131,13 @@ def post_data(data,model):
 def refresh():
   res = requests.get("https://maayanlab.cloud/biotoolstory/metadata-api/optimize/refresh", auth=credentials)
   print(res.ok)
+  time.sleep(2)
   res = requests.get("https://maayanlab.cloud/biotoolstory/metadata-api/"+"optimize/status", auth=credentials)
+  time.sleep(2)
   while not res.text == "Ready":
-    time.sleep(1)
+    time.sleep(2)
     res = requests.get("https://maayanlab.cloud/biotoolstory/metadata-api"+"/optimize/status", auth=credentials)
+  time.sleep(2)
   res = requests.get("https://maayanlab.cloud/biotoolstory/metadata-api/"+"summary/refresh", auth=credentials)
   print(res.ok)
 
@@ -335,7 +368,8 @@ def final_test(data):
         if type(data['meta']['Author_Information'][x]['AffiliationInfo'][0]) == str:
           data['meta']['Author_Information'][x]['AffiliationInfo'] = [{ 'Affiliation' : y} for y in data['meta']['Author_Information'][x]['AffiliationInfo']]
   return(data)
-
+  
+  
 #================================================ Push data ============================================================================================
 
 def push_new_journal(ISSN):
@@ -397,7 +431,7 @@ def push_tools(df):
     else:
       data["library"]  = push_new_journal(ISSN)
     data["meta"] = { key: tool[key] for key in keep }
-    data["meta"]["PMID"] = [tool["PMID"]]
+    data["meta"]["PMID"] = [int(tool["PMID"])]
     data["meta"]["Abstract"] =  fix_dirty_json(tool['Abstract'],flg=True)
     if data["meta"]["Abstract"] == '': # this is a mandatory field
       print("missing abstract")
@@ -437,12 +471,14 @@ def push_tools(df):
       pass
     else:
       tools_pmids.append(data['meta']['PMID'])
-      post_data(data,"signatures")
+      post_data_middleman(data) # post tools to be manually validated before pushing them to biotoolstory
+      #post_data(data,"signatures") # enable to push each tool directly to the server
+      #refresh()  # enable to push each tool directly to the server
 
 
 def read_data(fpath):  
   try:
-     return(pd.read_csv(fpath, dtype=str))
+     return(pd.read_csv(fpath))
   except:
     try:
       os.remove(os.path.join(PTH,'data/tools_'+s+'_'+en+'.csv'))
@@ -450,7 +486,7 @@ def read_data(fpath):
       shutil.rmtree(os.path.join(PTH,'data/tools_'+s+'_'+en))
       shutil.rmtree(os.path.join(PTH,'data/jsons_'+s+'_'+en))
     except:
-      print("unable to delete folder or file")
+      print("unable to delete folder or file line 477")
       print("No tools were detected for",start)
     sys.exit()
 
@@ -463,9 +499,7 @@ if __name__ == "__main__":
   df = read_data(os.path.join(PTH,'data/classified_tools_'+(s)+'_'+(en)+'.csv'))
   df = df.replace(np.nan, '', regex=True)  
   push_tools(df)
-  combine_duplicates_tools()
-  if dry_run == 0:
-    refresh()
+  #combine_duplicates_tools()
   try:
     os.remove(os.path.join(PTH,'data/tools_'+s+'_'+en+'.csv'))
     # remove folders
@@ -475,12 +509,7 @@ if __name__ == "__main__":
       with open(os.path.join(PTH,schema + '.json'), 'w') as outfile:
         json.dump(all_tools, outfile)
   except:
-    print("unable to delete folder or file")
+    print("unable to delete folder or file line 500")
   print("Done!",s,'_',en)
-  
-# keep = []
-# for i in range(0,len(df)):
-#   if df.iloc[i]['PMID'] not in tools_pmids:
-#     print(df.iloc[i]['PMID'])
-#     keep.append(df.iloc[i])
-
+ 
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------
