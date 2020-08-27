@@ -128,6 +128,68 @@ def dropbox(tools_DB):
   os.remove(file_from)
 
 
+# push data (tools or journals) directly to the biotoolstory server
+def post_data(data,model):
+  time.sleep(0.5)
+  res = requests.post(API_url%(model,""), auth=credentials, json=data)
+  try:
+    if not res.ok:
+      raise Exception(res.text)
+  except Exception as e:
+    print(e)
+    if model == "signatures":
+      f = open(os.path.join(PTH,"data/fail_to_load.txt"), "a")
+      f.write(','.join(map(str, data['meta']['PMID'])) + "\n")
+      f.close()
+
+
+def combine_duplicates_tools():
+  print("delete duplicates")
+  # help function
+  def unlist(l):
+    for i in l: 
+      if type(i) == list: 
+        unlist(i) 
+      else: 
+        pmids.append(i) 
+  # end help funuctions
+  res = requests.get(API_url%("signatures",""))
+  tools_DB = res.json()
+  duplicate_urls = find_duplicates(tools_DB)
+  il = 0
+  kl = len(duplicate_urls)
+  for url in duplicate_urls:
+    print(il,"out of",kl)
+    il = il + 1
+    duplicates = [ x for x in tools_DB if x['meta']['tool_homepage_url']== url ]
+    dup_tool_names = [x['meta']['Tool_Name'] for x in duplicates]
+    # unique names of duplicate tools
+    dup_tool_names = [item for item, count in collections.Counter(dup_tool_names).items() if count > 1]
+    duplicates = [ x for x in duplicates if x['meta']['Tool_Name'] in dup_tool_names ]
+    if len(duplicates) > 1:
+      print(duplicates[0]['meta']['PMID'])
+      row = find_max(duplicates)
+      mn_date = row[1]
+      row = row[0]
+      citations = 0
+      pmids = []
+      for k in range(0,len(duplicates)):
+        if type(duplicates[k]['meta']['PMID']) != list: 
+          pmids.append(duplicates[k]['meta']['PMID'])
+        else:
+          unlist(duplicates[k]['meta']['PMID'])
+        if 'Citationsduin' not in duplicates[k]['meta']:
+          duplicates[k]['meta']['Citations'] = 0
+        if duplicates[k]['meta']==None:
+          duplicates[k]['meta']['Citations'] = 0
+        citations = citations + duplicates[k]['meta']['Citations']
+        delete_data(duplicates[k],"signatures") # delete from database
+      row['meta']['PMID'] = list(set(pmids))
+      row['meta']['Citations'] = citations
+      row['meta']['first_date'] = mn_date
+      post_data(row,"signatures")
+
+
 if __name__ == '__main__':
   res = requests.get(API_url%('signatures',""))
   tools_DB = res.json()
@@ -144,6 +206,7 @@ if __name__ == '__main__':
     f = update(tool)
     if f == "error":
       break
+  #combine_duplicates_tools()
   refresh()
   dropbox(tools_DB)
 
