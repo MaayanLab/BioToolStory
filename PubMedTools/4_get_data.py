@@ -164,8 +164,8 @@ def clean_tool_name(df):
       for w in ['.jsp','.php','.html','.css','.gz','.gzip','.git','.htm','.zip','.exe', '.js', '.asp','version','.pl','.aspx', '.xls', '.jar','.py']:
         name = name.replace(w,"")
       df.at[i,'Tool_Name'] = name
-      for w in ['supplement','english','resource','datalist','software','article']:
-        if w in name.lower():
+      for w in ['supplement','english','resource','datalist','software','article', 'index', 'india','softwar', 'algorithm', 'markov', 'RNA-Seq','pubmed','covid']:
+        if name.lower() in w:
           df.at[i,'Tool_Name'] = "NA"
     else:
       df.at[i,'Tool_Name'] = "NA"
@@ -271,9 +271,8 @@ if __name__=='__main__':
   tools1 = clean_tool_name(tools1)
   tools1["Country"] = get_country(tools1["Author_Information"])
   tools1["Article_Date"] =  start.replace("/","-")
-  tools1["Year"] = datetime.today().strftime('%Y')
+  tools1["Year"] = int(datetime.today().strftime('%Y'))
   tools1.rename(columns={'Tool_URL':'tool_homepage_url'}, inplace=True)
   # save tools
   tools1.to_csv(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv'),index=False)
   
-
