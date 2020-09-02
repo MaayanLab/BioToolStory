@@ -265,9 +265,8 @@ def empty_cleaner(obj):
     return obj
 
 #=================================================== Detect the topic of a tool ==================================================================
-def sent_to_words(sentences):
-    for sentence in sentences:
-        yield(gensim.utils.simple_preprocess(str(sentence), deacc=True))  # deacc=True removes punctuations
+def sent_to_words(text):
+  return(gensim.utils.simple_preprocess(str(text), deacc=True))  # deacc=True removes punctuations
 
 
 def lemmatization(texts, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV']):
@@ -284,7 +283,7 @@ def predict_topic(text, nlp=nlp):
     lda_model = pickle.load(open(os.path.join(PTH,'LDA/LDA_model.pk'), 'rb'))
     vectorizer = pickle.load(open(os.path.join(PTH,'LDA/vectorizer.pk'), 'rb'))
     # Clean with simple_preprocess
-    mytext_2 = list(sent_to_words(text))
+    mytext_2 = [sent_to_words(text)]
     # Lemmatize
     mytext_3 = lemmatization(mytext_2, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV'])
     # Vectorize transform
@@ -401,7 +400,7 @@ def push_tools(df):
       data['meta']['Institution'] = ''
     else:
       data['meta']['Institution'] = isnan(data["meta"]["Author_Information"][-1]['AffiliationInfo'][0])
-    data['meta']['Topic'] = predict_topic(text = data["meta"]["Abstract"])
+    data['meta']['Topic'] = predict_topic(data["meta"]["Abstract"])
     data["meta"]["Electronic_Location_Identifier"] =  str(fix_dirty_json(tool['DOI']))
     data["meta"]["Publication_Type"] =  fix_dirty_json(tool['Publication_Type'])
     data["meta"]["Grant_List"] =  fix_dirty_json(tool['Grant_List'])
