@@ -160,7 +160,8 @@ def query(table):
     filters=flask.request.args.get('filter',{})
   elif flask.request.method=='POST':
     filters=flask.request.form.get('filter', {})
-  filters = json.loads(filters)
+  if type(filters)==str:
+    filters = json.loads(filters)
   limit = filters.get("limit", 10)
   skip = filters.get("skip", 0)
   model = temp_model_maper[table]
