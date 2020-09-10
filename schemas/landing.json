@@ -153,6 +153,7 @@
         "text_3": "By",
         "ui_schema": "/dcic/signature-commons-schema/v5/meta/schema/ui-schema.json",
         "search_terms": [
+            "COVID-19",
             "visualization",
             "transcription factors",
             "differential gene expression",
@@ -163,6 +164,7 @@
             "term2": "epigenetics",
             "term3": "Journal: Bioinformatics",
             "term4": "Tool_Name: Enrichr"
-        }
+        },
+        "library_name": ""
     }
 }
