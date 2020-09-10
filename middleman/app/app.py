@@ -90,7 +90,9 @@ def get_landing_ui():
 def get_schemas():
   filter_json = json.dumps({
     "where": {
-        "meta.$validator": "/dcic/signature-commons-schema/v5/meta/schema/ui-schema.json"
+        'meta.$validator': {
+            "like": '%/meta/schema/ui-schema.json%'
+          }
     }
   })
   payload = { 
