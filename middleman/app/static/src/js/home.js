@@ -1,5 +1,5 @@
 import React from 'react'
-import { fetch_meta_post } from './util/fetch_meta'
+import { fetch_meta } from './util/fetch_meta'
 import { send_meta_post, send_meta_patch, delete_meta } from './util/send_meta'
 import { get_card_data } from './util/get_card_data'
 import Grid from '@material-ui/core/Grid'
@@ -33,7 +33,7 @@ export default class Home extends React.Component {
     }
 
     search = async (model, limit=10, skip=0) => {
-        const { response, contentRange } = await fetch_meta_post({
+        const { response, contentRange } = await fetch_meta({
             endpoint: `/${model}`,
             body: {
               filter: {
