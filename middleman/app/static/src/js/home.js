@@ -1,6 +1,6 @@
 import React from 'react'
 import { fetch_meta_post } from './util/fetch_meta'
-import { send_meta_post, send_meta_patch } from './util/send_meta'
+import { send_meta_post, send_meta_patch, delete_meta } from './util/send_meta'
 import { get_card_data } from './util/get_card_data'
 import Grid from '@material-ui/core/Grid'
 import Tabs from '@material-ui/core/Tabs'
@@ -133,6 +133,35 @@ export default class Home extends React.Component {
         })
     }
 
+    delete_entry = async (id) => {
+        const {response} = await delete_meta({
+            endpoint: `/approve/${this.state.model}/${id}`,
+        })
+        if (response.error){
+            this.setState({
+                alert: {
+                    severity: "error",
+                    message: response.error.error,
+                }
+            })
+            console.error(response.error)
+        }else {
+            const {search_results, model} = this.state
+            const {start, end} = search_results[model]
+            const perPage = end-start
+            search_results[model] = await this.search(model, perPage, 0)
+            const updates = this.updateCollection(model, search_results)
+            this.setState({
+                search_results,
+                ...updates,
+                alert: {
+                    severity: "success",
+                    message: "Deleted!",
+                },
+            })
+        }
+    }
+
     approve_edit = async (id) => {
         const {response} = await send_meta_post({
             endpoint: `/approve/${this.state.model}/${id}`,
@@ -263,6 +292,16 @@ export default class Home extends React.Component {
                         >
                             <span class="mdi mdi-square-edit-outline"></span>
                         </IconButton>
+                    ),
+                    props: {
+                        data: data
+                    }
+                },
+                {
+                    component: (props) => (
+                        <IconButton
+                            onClick={()=>this.approve_edit(data.id)}
+                        ><span class="mdi mdi-delete"></span></IconButton>
                     ),
                     props: {
                         data: data

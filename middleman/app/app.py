@@ -187,6 +187,22 @@ def get_entry(table, uid):
     return flask.jsonify({"error": "Not found"}), 404
 
 
+@app.route(ROOT_PATH + "api/<table>/<uid>", methods=['DELETE'])
+def delete_entry(table, uid):
+  session = db.create_scoped_session()
+  model = temp_model_maper[table]
+  db_entry = session.query(model).filter_by(id=uid).first()
+  if db_entry:
+    try:
+      session.delete(db_entry)
+      session.commit()
+      return ('', 200)
+    except Exception as e:
+      session.rollback()
+      session.close()
+      return flask.jsonify({"error": str(e)}), 400
+
+
 @app.route(ROOT_PATH + "api/<table>/<uid>", methods=['POST', 'PATCH'])
 @basic_auth.required
 def patch_or_create(table, uid):
