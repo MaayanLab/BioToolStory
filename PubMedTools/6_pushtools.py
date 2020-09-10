@@ -89,6 +89,16 @@ def write_to_file(schema):
     json.dump(tools_DB, outfile)
 
 
+# update tool in middleman
+def update_middleman(tool):
+  time.sleep(1)
+  res = requests.patch('https://maayanlab.cloud/biotoolstory/middleman/api/signatures/' + tool['id'], json=tool, auth=auth_middle)
+  if (not res.ok):
+    print(res.text)
+    time.sleep(60)
+    return ("error")
+
+
 # check if the tool was already pushed to middleman website
 def is_pushed(pmid):
   res = requests.get('https://maayanlab.cloud/biotoolstory/middleman/api/signatures?filter={"limit": 10000}', auth=auth_middle)
@@ -430,18 +440,24 @@ def push_tools(df):
 
 def read_data(fpath):  
   try:
-     return(pd.read_csv(fpath))
+    return(pd.read_csv(fpath))
   except:
-    try:
-      os.remove(os.path.join(PTH,'data/tools_'+s+'_'+en+'.csv'))
-      # remove folders
-      shutil.rmtree(os.path.join(PTH,'data/tools_'+s+'_'+en))
-      shutil.rmtree(os.path.join(PTH,'data/jsons_'+s+'_'+en))
-    except:
-      print("unable to delete folder or file line 422")
-      print("No tools were detected for",start)
+    print("No tools were detected for",start)
     sys.exit()
 
+
+def deletefeiles():
+  try:
+    if os.path.exists(os.path.join(PTH,'data/tools_'+s+'_'+en+'.csv')):
+      os.remove(os.path.join(PTH,'data/tools_'+s+'_'+en+'.csv'))
+    # remove folders
+    if os.path.exists(os.path.join(PTH,'data/tools_'+s+'_'+en)):
+      shutil.rmtree(os.path.join(PTH,'data/tools_'+s+'_'+en))
+    if os.path.exists(os.path.join(PTH,'data/jsons_'+s+'_'+en)):
+      shutil.rmtree(os.path.join(PTH,'data/jsons_'+s+'_'+en))
+  except Exception as e:
+    print(e)
+  
 
 #================================================== Main ===========================================================================================
 
@@ -449,18 +465,12 @@ if __name__ == "__main__":
   if os.path.exists(os.path.join(PTH,"data/fail_to_load.txt")):
     os.remove(os.path.join(PTH,"data/fail_to_load.txt")) # delete failure log file from last time
   df = read_data(os.path.join(PTH,'data/classified_tools_'+(s)+'_'+(en)+'.csv'))
-  df = df.replace(np.nan, '', regex=True)  
+  df = df.replace(np.nan, '', regex=True)
+  deletefeiles()
   push_tools(df)
   try:
-    if os.path.exists(os.path.join(PTH,'data/tools_'+s+'_'+en+'.csv')):
-      os.remove(os.path.join(PTH,'data/tools_'+s+'_'+en+'.csv'))
     if os.path.exists(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv')):
       os.remove(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv'))
-    # remove folders
-    if os.path.exists(os.path.join(PTH,'data/tools_'+s+'_'+en)):
-      shutil.rmtree(os.path.join(PTH,'data/tools_'+s+'_'+en))
-    if os.path.exists(os.path.join(PTH,'data/jsons_'+s+'_'+en)):
-      shutil.rmtree(os.path.join(PTH,'data/jsons_'+s+'_'+en))
     if dry_run:
       with open(os.path.join(PTH,schema + '.json'), 'w') as outfile:
         json.dump(all_tools, outfile)
@@ -469,4 +479,9 @@ if __name__ == "__main__":
   print("Done!",s,'_',en)
  
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+# Example of how to update data on middlemane
+# for i in range(0,len(tools_DB)):
+#   print(i)
+#   tools_DB[i]['meta']['Topic'] = predict_topic(tools_DB[i]["meta"]["Abstract"])
+#   print(tools_DB[i]['meta']['Topic'])
+#   update_middleman(tools_DB[i])
