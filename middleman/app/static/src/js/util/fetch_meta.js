@@ -33,7 +33,7 @@ export async function fetch_meta({ endpoint, body, signal, headers }) {
         }
     )
     if (request.ok !== true) {
-      throw new Error(`Error communicating with API at ${await base_url()}${endpoint}`)
+      throw new Error(`Error communicating with API at ${base_url}${endpoint}`)
     }
   
     const response = await request.json()
@@ -78,7 +78,7 @@ export async function fetch_meta({ endpoint, body, signal, headers }) {
         }
     )
     if (request.ok !== true) {
-      throw new Error(`Error communicating with API at ${await base_url()}${endpoint}`)
+      throw new Error(`Error communicating with API at ${base_url}${endpoint}`)
     }
   
     const response = await request.json()
