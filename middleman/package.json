@@ -1,13 +1,16 @@
 {
   "name": "biotools-middleman",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Middleman for biotools",
   "author": "John Erol Evangelista <JohnErol.Evangelista@mssm.edu>",
   "license": "Apache-2.0",
   "scripts": {
     "start": "npm run build",
     "build": "parcel build app/static/src/index.js -d app/static/dist",
-    "watch": "parcel watch app/static/src/index.js -d app/static/dist"
+    "watch": "parcel watch app/static/src/index.js -d app/static/dist",
+    "version:major": "npm version --no-git-tag-version major",
+    "version:minor": "npm version --no-git-tag-version minor",
+    "version:patch": "npm version --no-git-tag-version patch"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
