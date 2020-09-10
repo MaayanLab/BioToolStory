@@ -48,7 +48,7 @@ app.config.from_mapping(config)
 cache = Cache(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URI', '')
-db = SQLAlchemy(app)
+db = SQLAlchemy(app, engine_options={"pool_pre_ping": True})
 
 basic_auth = BasicAuth(app)
 
