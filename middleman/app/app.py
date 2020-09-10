@@ -197,18 +197,16 @@ def patch_or_create(table, uid):
   error = validate_entry(entry, resolver)
   if not error:
     try:
-      if not db_entry == None:
-        db_entry.update(entry)
-        session.commit()
-      else:
+      if db_entry == None:
         db_entry = model(entry)
         session.add(db_entry)
         session.commit()
-        session.close()
+      else:
+        db_entry.update(entry)
+        session.commit()
       return ('', 200)
     except Exception as e:
       session.rollback()
-      session.close()
       return flask.jsonify({"error": str(e)}), 400
   else:
     return flask.jsonify(json.loads(error)), 406
