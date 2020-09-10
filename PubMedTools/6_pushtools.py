@@ -378,7 +378,10 @@ def push_tools(df):
     for y in x['meta']['PMID']:
       tools_pmids.append(y)
   tools_pmids = list(set(tools_pmids))
-  keep = df.columns.drop(['Author_Information'])
+  if 'Author_Information' in df.columns:
+    keep = df.columns.drop(['Author_Information'])
+  else:
+    keep = df.columns
   for tool in df.to_dict(orient='records')[0:]:
     print('Uploaded',i,'tools out of',k)
     i = i + 1
@@ -469,10 +472,13 @@ if __name__ == "__main__":
   mypath = os.path.join(PTH,'data')
   new_tools = [f for f in listdir(mypath) if ( isfile(join(mypath, f)) ) and (f.startswith('classified_tools') ) ]
   for file in new_tools:
-    df = read_data(os.path.join(PTH,'data/'+file))
-    df = df.replace(np.nan, '', regex=True)
-    deletefeiles()
-    push_tools(df)
+    try:
+      df = read_data(os.path.join(PTH,'data/'+file))
+      df = df.replace(np.nan, '', regex=True)
+      deletefeiles()
+      push_tools(df)
+    except Exception as er:
+      print(er,'line 481')
     try:
       if os.path.exists(os.path.join(PTH,'data/'+file)):
         os.remove(os.path.join(PTH,'data/'+file))
@@ -480,7 +486,7 @@ if __name__ == "__main__":
         with open(os.path.join(PTH,schema + '.json'), 'w') as outfile:
           json.dump(all_tools, outfile)
     except Exception as e:
-      print(e)
+      print(e, 'line 489')
     print("Done!",file)
  
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------
