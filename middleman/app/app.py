@@ -132,11 +132,14 @@ def index():
 @app.route(ROOT_PATH + "api/get_validator", methods=['GET', 'POST'])
 def get_validator():
   if flask.request.method == 'GET':
-    validator=flask.request.args.get('validator')
+    v=flask.request.args.get('validator',{})
   elif flask.request.method=='POST':
-    validator=flask.request.form.get('validator')
-  res = requests.get(validator)
+    v=flask.request.form.get('validator', {})
   try:
+    if type(v) == str:
+      v = json.loads(v)
+    validator = v.get('url')
+    res = requests.get(validator)
     if res.ok:
       return flask.jsonify(res.json())
     else:
