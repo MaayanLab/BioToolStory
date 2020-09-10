@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Form from '@rjsf/material-ui';
 import fetch from 'node-fetch'
+import { fetch_meta } from './util/fetch_meta'
+
 
 const cache = {}
 
@@ -19,7 +21,15 @@ export const fetch_cached_validator = async (url) => {
           url = `https://raw.githubusercontent.com/dcic/signature-commons-schema${m[1]}${m[2]}`
         }
       }
-    cache[url] = await (await fetch(`${base_url}/get_validator?validator=${url}`)).json() 
+    const { response } = await fetch_meta({
+    endpoint: '/get_validator',
+    body: {
+        validator: {
+        url,
+        },
+    },
+    })
+    cache[url] = response
     return cache[url]
 }
 
@@ -40,7 +50,7 @@ export const resolveFormSchema = (validator) => {
                 ...allOf[0],
             }
         }
-    }else if (val.properties){
+    }else if (validator.properties){
         formSchema = {...formSchema, ...val}
     } else {
         throw "Invalid Validator"
