@@ -37,6 +37,8 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.decomposition import LatentDirichletAllocation, TruncatedSVD
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.model_selection import GridSearchCV
+from os import listdir
+from os.path import isfile, join
 
 nlp = spacy.load('en', disable=['parser', 'ner'])
 
@@ -464,19 +466,22 @@ def deletefeiles():
 if __name__ == "__main__":
   if os.path.exists(os.path.join(PTH,"data/fail_to_load.txt")):
     os.remove(os.path.join(PTH,"data/fail_to_load.txt")) # delete failure log file from last time
-  df = read_data(os.path.join(PTH,'data/classified_tools_'+(s)+'_'+(en)+'.csv'))
-  df = df.replace(np.nan, '', regex=True)
-  deletefeiles()
-  push_tools(df)
-  try:
-    if os.path.exists(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv')):
-      os.remove(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv'))
-    if dry_run:
-      with open(os.path.join(PTH,schema + '.json'), 'w') as outfile:
-        json.dump(all_tools, outfile)
-  except Exception as e:
-    print(e)
-  print("Done!",s,'_',en)
+  mypath = os.path.join(PTH,'data')
+  new_tools = [f for f in listdir(mypath) if ( isfile(join(mypath, f)) ) and (f.startswith('classified_tools') ) ]
+  for file in new_tools:
+    df = read_data(os.path.join(PTH,'data/'+file))
+    df = df.replace(np.nan, '', regex=True)
+    deletefeiles()
+    push_tools(df)
+    try:
+      if os.path.exists(os.path.join(PTH,'data/'+file)):
+        os.remove(os.path.join(PTH,'data/'+file))
+      if dry_run:
+        with open(os.path.join(PTH,schema + '.json'), 'w') as outfile:
+          json.dump(all_tools, outfile)
+    except Exception as e:
+      print(e)
+    print("Done!",file)
  
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Example of how to update data on middlemane
