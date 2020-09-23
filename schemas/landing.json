@@ -46,7 +46,7 @@
                 "active": false
             },
             "Resources": {
-                "active": true,
+                "active": false,
                 "endpoint": "/Journals",
                 "navName": "Journals"
             },
