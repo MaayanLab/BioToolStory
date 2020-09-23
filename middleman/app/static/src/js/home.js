@@ -345,7 +345,7 @@ export default class Home extends React.Component {
                     alignItems="center"
                 >
                     <Grid item xs style={{textAlign: "center", paddingTop: 100}}>
-                        <Typography>You have no pending tools</Typography>
+                        <Typography>You have no tools pending for approval</Typography>
                     </Grid>
                 </Grid>
             )
