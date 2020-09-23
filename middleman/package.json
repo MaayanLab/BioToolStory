@@ -1,6 +1,6 @@
 {
   "name": "biotools-middleman",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Middleman for biotools",
   "author": "John Erol Evangelista <JohnErol.Evangelista@mssm.edu>",
   "license": "Apache-2.0",
