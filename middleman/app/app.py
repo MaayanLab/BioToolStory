@@ -205,6 +205,8 @@ def delete_entry(table, uid):
       session.rollback()
       session.close()
       return flask.jsonify({"error": str(e)}), 400
+  else:
+    session.close()
 
 
 @app.route(ROOT_PATH + "api/<table>/<uid>", methods=['POST', 'PATCH'])
@@ -232,6 +234,7 @@ def patch_or_create(table, uid):
       session.close()
       return flask.jsonify({"error": str(e)}), 400
   else:
+    session.close()
     return flask.jsonify(json.loads(error)), 406
 
 
