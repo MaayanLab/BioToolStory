@@ -135,7 +135,7 @@ export default class Home extends React.Component {
 
     delete_entry = async (id) => {
         const {response} = await delete_meta({
-            endpoint: `/approve/${this.state.model}/${id}`,
+            endpoint: `/${this.state.model}/${id}`,
         })
         if (response.error){
             this.setState({
@@ -300,7 +300,7 @@ export default class Home extends React.Component {
                 {
                     component: (props) => (
                         <IconButton
-                            onClick={()=>this.approve_edit(data.id)}
+                            onClick={()=>this.delete_entry(data.id)}
                         ><span class="mdi mdi-delete"></span></IconButton>
                     ),
                     props: {
