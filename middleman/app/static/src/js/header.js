@@ -23,7 +23,7 @@ export function Nav(props) {
             style={{color: "inherit"}}
             href={"#/"}
         >
-            {"Pending"}
+            {"Tools"}
         </ListItemLink>
         {/* <ListItemLink
           selected={location.pathname === '/API'}

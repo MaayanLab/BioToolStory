@@ -199,11 +199,14 @@ def delete_entry(table, uid):
     try:
       session.delete(db_entry)
       session.commit()
+      session.close()
       return ('', 200)
     except Exception as e:
       session.rollback()
       session.close()
       return flask.jsonify({"error": str(e)}), 400
+  else:
+    session.close()
 
 
 @app.route(ROOT_PATH + "api/<table>/<uid>", methods=['POST', 'PATCH'])
@@ -220,14 +223,18 @@ def patch_or_create(table, uid):
         db_entry = model(entry)
         session.add(db_entry)
         session.commit()
+        session.close()
       else:
         db_entry.update(entry)
         session.commit()
+        session.close()
       return ('', 200)
     except Exception as e:
       session.rollback()
+      session.close()
       return flask.jsonify({"error": str(e)}), 400
   else:
+    session.close()
     return flask.jsonify(json.loads(error)), 406
 
 
@@ -253,7 +260,9 @@ def approve_tool(table, uid):
       session.add(db_entry)
     session.delete(temp_entry)
     session.commit()
+    session.close()
     return ('', 200)
   except Exception as e:
     session.rollback()
+    session.close()
     return flask.jsonify({"error": str(e)}), 400
