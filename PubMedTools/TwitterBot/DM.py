@@ -22,8 +22,9 @@ import re
 import en_core_web_sm
 from itertools import groupby
 import csv
+import numpy as np
 from bs4 import BeautifulSoup
-
+import subprocess
 nltk.download('stopwords')
 nlp = en_core_web_sm.load()
 
@@ -33,7 +34,7 @@ Entrez.email = os.environ.get('EMAIL')
 API_KEY = os.environ.get('API_KEY')
 
 # get environment vars from .env
-PTH = os.environ.get('PTH_A')
+PTH = os.environ.get('PTH_A') # PTH="/home/maayanlab/enrichrbot/DM/"
 
 # enrichr credentials
 CONSUMER_KEY=os.environ.get('CONSUMER_KEY')
@@ -329,14 +330,17 @@ def reorder_colmns(df):
   return(df[columns])
   
 
-if "__name__" == "__main__":
-  x= api.list_direct_messages()
+if __name__ == '__main__':
+  x = api.list_direct_messages()
   # reply to the three latest Directed Messages
+  if len(x) == 0 :
+    print('No direct messages')
   for message in x:
+    print(message)
     # allow only enrichrbot or Avi Maayan to control the bot
     if message.message_create['sender_id'] in ['1146058388452888577','365549634']:
       PMID = message.message_create['message_data']['text']
-      #api.destroy_direct_message(message.id)
+      api.destroy_direct_message(message.id)
       # collect data
       tool = collect_data(PMID)
       tool = json.dumps(tool)
@@ -384,8 +388,8 @@ if "__name__" == "__main__":
       s = '1'
       en = '1'
       df.to_csv(os.path.join(PTH,'data/classified_tools_'+s+'_'+en +'.csv'),index=False)
-      import subprocess
-      bashCommand = "python3 6_pushtools.py 1 1 0"
+      bashCommand = "python3 /home/maayanlab/Tools/6_pushtools.py 1 1 0"
       process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
       output, error = process.communicate()
       
+  
