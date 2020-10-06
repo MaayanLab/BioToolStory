@@ -141,7 +141,10 @@ def fix_tool_name(df):
       URL = [j for j in URL if j] # remove empty strings
       if len(URL)>0:
         x = URL[len(URL)-1]
-        df['tool_name'].iloc[i] = x[:x.find(".htm")]
+        if 'htm' in x:
+          df['tool_name'].iloc[i] = x[:x.find(".htm")]
+        else:
+          df['tool_name'].iloc[i] = x
   df['tool_name'] = df['tool_name'].str.replace("[", "")
   df['tool_name'] = df['tool_name'].str.replace("]", "")
   df['tool_name'] = df['tool_name'].str.strip("'")
@@ -243,4 +246,3 @@ if __name__=='__main__':
   df = df.dropna(subset=['tool_URL'])
   df = fix_tool_name(df)
   df.to_csv(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv'),index=False)
-
