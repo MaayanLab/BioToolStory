@@ -89,8 +89,16 @@ def parsejsons(articles,s,en):
     except Exception as ex:
       print(ex,'at line 89')
 
+
+def backup():
+  res = requests.get(API_url%("signatures",""))
+  tools_DB = res.json()
+  df = pd.json_normalize(tools_DB)
+  df.to_csv(os.path.join(PTH,'data/toolstory/tools_dump.csv'))
   
+
 if __name__ == '__main__':
+  backup()
   if not os.path.isdir(os.path.join(os.path.join(PTH,'data/jsons_'+s+'_'+en))):
     os.mkdir(os.path.join(PTH,'data/jsons_'+s+'_'+en))
   if not os.path.isdir(os.path.join(os.path.join(PTH,'data/tools_'+s+'_'+en))):
@@ -110,3 +118,7 @@ if __name__ == '__main__':
     i = i + 1
     articles = os.path.join(PTH,'data/jsons_'+s+'_'+en,file)
     parsejsons(articles,s,en)
+
+
+
+
