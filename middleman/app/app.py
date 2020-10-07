@@ -219,15 +219,18 @@ def patch_or_create(table, uid):
   error = validate_entry(entry, resolver)
   if not error:
     try:
-      if db_entry == None:
+      if db_entry == None and flask.request.method=='POST':
         db_entry = model(entry)
         session.add(db_entry)
         session.commit()
         session.close()
-      else:
+      elif not db_entry == None and flask.request.method=='PATCH':
         db_entry.update(entry)
         session.commit()
         session.close()
+      else:
+        session.close()
+        return flask.jsonify({"error": "Invalid method %s, check if entry exists. Use POST for new entries and PATCH for existing ones"%flask.request.method}), 400
       return ('', 200)
     except Exception as e:
       session.rollback()
