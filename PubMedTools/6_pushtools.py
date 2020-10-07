@@ -9,6 +9,7 @@ import requests
 import urllib.request
 import json
 import datetime
+import http.client
 import sys
 import shutil
 import os
@@ -333,6 +334,16 @@ def final_test(data):
           data['meta']['Author_Information'][x]['AffiliationInfo'] = [{ 'Affiliation' : y} for y in data['meta']['Author_Information'][x]['AffiliationInfo']]
   return(data)
   
+
+def testURL(data):
+  url = data['meta']['tool_homepage_url']
+  try:
+    request = requests.head(url,allow_redirects=False, timeout=5)
+    status = request.status_code
+  except:
+    status = 408
+  return(status)
+  
   
 #================================================ Push data ============================================================================================
 
@@ -430,6 +441,8 @@ def push_tools(df):
     data['meta']['Published_On'] =''
     data['meta']['Added_On']=''
     data['meta']['Last_Updated']=''
+    code= testURL(tool)
+    data['meta']['url_status']= { 'code': code, 'label': http.client.responses[code] }
     data["meta"] = empty_cleaner(data['meta']) # delete empty fields
     data = final_test(data)
     # check that the pmid does not exist in the dataset
@@ -463,7 +476,6 @@ def deletefeiles():
   except Exception as e:
     print(e)
   
-
 #================================================== Main ===========================================================================================
 
 if __name__ == "__main__":
