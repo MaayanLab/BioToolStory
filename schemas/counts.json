@@ -28,6 +28,16 @@
         "Priority": 1
     },
     {
+        "Field_Name": "meta.Journal_Title",
+        "Order_By": "meta.tool_count",
+        "Preferred_Name": "Journals",
+        "Type": "text",
+        "Preferred_Name_Singular": "Journal",
+        "Table": "libraries",
+        "Bar_Score": true,
+        "Priority": 1
+    },
+    {
         "Field_Name": "meta.Country",
         "Preferred_Name": "Countries",
         "Type": "text",
