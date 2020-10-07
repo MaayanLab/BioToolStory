@@ -5,7 +5,6 @@ import os
 import json
 import datetime
 import sys
-import time
 from datetime import datetime
 import re
 from dotenv import load_dotenv
@@ -33,6 +32,7 @@ DROPBOX_ACCESS_TOKEN = os.environ.get('DROPBOX_ACCESS_TOKEN')
 # Articles that cite a given article ONLY covers journals indexed for PubMed Central
 def who_cited(pmid):
   # get pmc_ids
+  time.sleep(0.5)
   results = Entrez.read(Entrez.elink(dbfrom="pubmed", db="pmc",
                                   api_key = API_KEY,
                                   usehistory ='y',
@@ -47,9 +47,11 @@ def who_cited(pmid):
 
 # update tool data
 def update(tool):
+  time.sleep(1)
   res = requests.patch('https://maayanlab.cloud/biotoolstory/metadata-api/' +"signatures/" + tool['id'], json=tool, auth=credentials)
-  if not res.ok:
+  if (not res.ok):
     print(res.text)
+    time.sleep(2)
     return ("error")
   
 
@@ -90,8 +92,8 @@ def testURL(tool):
     request = requests.head(url,allow_redirects=False, timeout=10)
     status = request.status_code
   except:
-    status = "error"
-  tool['meta']['url_status'] = str(status)
+    status = 408
+  tool['meta']['url_status'] = {'code': status, 'label': http.client.responses[status]}
   return(tool)
   
 
@@ -193,9 +195,13 @@ def combine_duplicates_tools():
 if __name__ == '__main__':
   res = requests.get(API_url%('signatures',""))
   tools_DB = res.json()
+  counter = 0
   for tool in progressbar.progressbar(tools_DB[0:]):
     # update citations
     citations = 0
+    counter = counter +1
+    if counter % 4000 == 0:
+      time.sleep(60*60*1) # sleep for 1hr
     for pmid in tool['meta']['PMID']:
       citations = citations + len(who_cited(pmid))
     tool['meta']['Citations'] = citations
@@ -205,6 +211,7 @@ if __name__ == '__main__':
     tool = testURL(tool)
     f = update(tool)
     if f == "error":
+      print(str(datetime.now()))
       break
   #combine_duplicates_tools()
   refresh()
@@ -222,3 +229,61 @@ if __name__ == '__main__':
 #         print(jour)
 #         print(res.text)
 #         break
+
+
+
+# for i in range(0,len(tools_DB)):
+#   if tools_DB[i]['meta']['PMID'][0]==22495750:
+#     break
+#     tools_DB[i]['meta']['Tool_Name'] = "ape 3.0"
+#     tools_DB[i]['meta']['tool_homepage_url'] = 'http://cran.r-project.org/web/packages/ape/index.html'
+
+#     
+#     
+#     
+# import re
+# res = requests.get(API_url%("signatures",""))
+# tools_DB = res.json()
+# 
+# 
+# data = []
+# keys=['University', 'Institute of', 'School of', 'Center for','Department of']
+# 
+# for i in range(0,len(tools_DB)):
+#   if 'Institution' in tools_DB[i]['meta']:
+#     if len(tools_DB[i]['meta']['Institution']) > 23:
+#       inst = tools_DB[3]['meta']['Institution'].split(',')
+#       print(i)
+#       matching = [s.strip() for s in inst if any(xs in s for xs in keys)]
+#       if len(matching)>0:
+#         tools_DB[i]['meta']['Institution_short'] = matching[0]
+#         update(tools_DB[i]) 
+
+
+
+# topic  change
+
+
+# 
+# 
+# 
+# for i in range(0,len(tools_DB)):
+#   if 32566803 in tools_DB[i]['meta']['PMID']:
+#     delete_data(tools_DB[i],'signatures'):
+#     #tools_DB[i]['meta']['Tool_Name'] = 'ncov'
+#     tools_DB[i]['meta']['KeywordList'].remove("Covid-19")
+#     update(tools_DB[i])
+#   
+#   
+#   
+#   
+#   
+#   if 'KeywordList' in tools_DB[i]['meta'].keys():
+#     if 'covid-19' in [x.lower() for x in tools_DB[i]['meta']['KeywordList'] ]:
+#       tools_DB[i]['meta']['KeywordList'].remove("Covid-19")
+#       update(tools_DB[i])
+#       print(i)
+
+
+
+
