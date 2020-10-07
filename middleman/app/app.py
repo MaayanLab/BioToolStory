@@ -172,29 +172,45 @@ def query(table):
   model = temp_model_maper[table]
   start = skip
   end = skip+limit
-  count = model.query.count()
-  query = model.query.order_by(model.id)
-  results = [i.serialize for i in query.offset(skip).limit(limit).all()]
-  contentRange = "%d-%d/%d"%(start,end,count)
-  resp = flask.jsonify(results)
-  resp.headers["Content-Range"] = contentRange
-  return resp
+  session = db.create_scoped_session()
+  try:
+    count = session.query(model).count()
+    query = session.query(model).order_by(model.id)
+    results = [i.serialize for i in query.offset(skip).limit(limit).all()]
+    contentRange = "%d-%d/%d"%(start,end,count)
+    resp = flask.jsonify(results)
+    resp.headers["Content-Range"] = contentRange
+    session.close()
+    return resp
+  except Exception as e:
+    return flask.jsonify({"error": str(e)}), 400
 
 @app.route(ROOT_PATH + "api/<table>/<uid>", methods=['GET'])
 def get_entry(table, uid):
-  model = temp_model_maper[table]
-  db_entry = model.query.filter_by(id=uid).first()
-  if db_entry:
-    return flask.jsonify(db_entry.serialize)
-  else:
-    return flask.jsonify({"error": "Not found"}), 404
+  session = db.create_scoped_session()
+  try:
+    model = temp_model_maper[table]
+    db_entry = session.query(model).filter_by(id=uid).first()
+    if db_entry:
+      session.close()
+      return flask.jsonify(db_entry.serialize)
+    else:
+      session.close()
+      return flask.jsonify({"error": "Not found"}), 404
+  except Exception as e:
+    session.close()
+    return flask.jsonify({"error": str(e)}), 400
 
 
 @app.route(ROOT_PATH + "api/<table>/<uid>", methods=['DELETE'])
 def delete_entry(table, uid):
   session = db.create_scoped_session()
   model = temp_model_maper[table]
-  db_entry = session.query(model).filter_by(id=uid).first()
+  try:
+    db_entry = session.query(model).filter_by(id=uid).first()
+  except Exception as e:
+    session.close()
+    return flask.jsonify({"error": str(e)}), 400
   if db_entry:
     try:
       session.delete(db_entry)
@@ -207,6 +223,7 @@ def delete_entry(table, uid):
       return flask.jsonify({"error": str(e)}), 400
   else:
     session.close()
+    return flask.jsonify({"error": "Not Found"}), 404
 
 
 @app.route(ROOT_PATH + "api/<table>/<uid>", methods=['POST', 'PATCH'])
@@ -214,6 +231,11 @@ def delete_entry(table, uid):
 def patch_or_create(table, uid):
   session = db.create_scoped_session()
   model = temp_model_maper[table]
+  try:
+    db_entry = session.query(model).filter_by(id=uid).first()
+  except Exception as e:
+    session.close()
+    return flask.jsonify({"error": str(e)}), 400
   db_entry = session.query(model).filter_by(id=uid).first()
   entry=flask.request.json
   error = validate_entry(entry, resolver)
