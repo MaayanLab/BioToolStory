@@ -36,7 +36,7 @@ PTH = os.environ.get('PTH_A') # PTH = "/home/maayanlab/Tools/"
 Entrez.email = os.environ.get('EMAIL')
 API_KEY = os.environ.get('API_KEY')
 
-keeplist = "=./" #characters to keep in url
+keeplist = '=./_:-' #characters to keep in url
 
 # read a list of keywords to ignore
 f = open(os.path.join(PTH,'RemoveKeyWords.txt'), 'r')
@@ -51,7 +51,7 @@ def remove_stop_words(text_list):
 
 
 def getEntity(title,abstract):
-  URL = re.findall("(?P<url>https?://[^\s]+)", abstract) # need to also cathe the sequence 'www'!!!
+  URL = re.findall("(?P<url>https?://[^\s]+)", abstract)
   # deal with cases where no http is in the url
   ht = abstract[abstract.find("www"):]
   ht = ht[0:ht.find(" ")]
