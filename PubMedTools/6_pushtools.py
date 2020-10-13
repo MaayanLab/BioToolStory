@@ -333,18 +333,16 @@ def final_test(data):
         if type(data['meta']['Author_Information'][x]['AffiliationInfo'][0]) == str:
           data['meta']['Author_Information'][x]['AffiliationInfo'] = [{ 'Affiliation' : y} for y in data['meta']['Author_Information'][x]['AffiliationInfo']]
   return(data)
-  
+
 
 def testURL(data):
   url = data['meta']['tool_homepage_url']
   try:
     request = requests.head(url,allow_redirects=False, timeout=5)
     status = request.status_code
-  except:
-    status = 408
+  except Exception as e:
+    status = e
   return(status)
-  
-  
 #================================================ Push data ============================================================================================
 
 def push_new_journal(ISSN):
@@ -442,7 +440,7 @@ def push_tools(df):
     data['meta']['Added_On']=''
     data['meta']['Last_Updated']=''
     code= testURL(tool)
-    data['meta']['url_status']= { 'code': code, 'label': http.client.responses[code] }
+    data['meta']['url_status']= str(code) +":"+str(http.client.responses[code])
     data["meta"] = empty_cleaner(data['meta']) # delete empty fields
     data = final_test(data)
     # check that the pmid does not exist in the dataset
