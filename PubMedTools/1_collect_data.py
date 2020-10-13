@@ -8,6 +8,8 @@ from os import path
 import pandas as pd
 import datetime
 import gzip
+import requests
+from requests.auth import HTTPBasicAuth
 import json
 import time
 import re
@@ -15,6 +17,11 @@ import sys
 from dotenv import load_dotenv
 
 load_dotenv(verbose=True)
+
+API_url = os.environ.get('API_URL')
+username = os.getenv("USERNAME")
+password = os.getenv("PASSWORD")
+credentials = HTTPBasicAuth(username, password)
 
 start = str(sys.argv[1])
 end = str(sys.argv[2])
@@ -94,7 +101,7 @@ def backup():
   res = requests.get(API_url%("signatures",""))
   tools_DB = res.json()
   df = pd.json_normalize(tools_DB)
-  df.to_csv(os.path.join(PTH,'data/toolstory/tools_dump.csv'))
+  df.to_csv(os.path.join(PTH,'data/toolstory/tools_dump.csv'),index=False)
   
 
 if __name__ == '__main__':
@@ -118,7 +125,3 @@ if __name__ == '__main__':
     i = i + 1
     articles = os.path.join(PTH,'data/jsons_'+s+'_'+en,file)
     parsejsons(articles,s,en)
-
-
-
-
