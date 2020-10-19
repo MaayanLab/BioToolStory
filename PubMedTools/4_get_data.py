@@ -56,6 +56,8 @@ def pritify(df):
 
 
 def Altmetric(pmids):
+  if len(pmids) == 0:
+    return(pd.DataFrame())
   Frame = pd.DataFrame()
   i=0
   for pmid in pmids:
@@ -69,6 +71,8 @@ def Altmetric(pmids):
       Frame = Frame.append(f, ignore_index=True)
     except:
       print("no results")
+  if len(Frame) == 0:
+    Frame.at[0,'pmid'] = pmid
   return(Frame)
 
 
@@ -276,3 +280,4 @@ if __name__=='__main__':
   # save tools
   tools1.to_csv(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv'),index=False)
   
+
