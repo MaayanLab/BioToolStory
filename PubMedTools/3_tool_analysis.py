@@ -56,7 +56,7 @@ def testURL(df):
       request = requests.head(url,allow_redirects=False, timeout=5)
       status = request.status_code
     except:
-      status = "error"
+      status = 'error'
     df.at[i,'status'] = str(status)
   return(df)
 
@@ -172,13 +172,14 @@ def pritify(df):
 
 def clean(df):
   df['Article.Abstract.AbstractText'] = [ BeautifulSoup(str(x), "lxml").text for x in df['Article.Abstract.AbstractText'] ]
-  df['Article.Abstract.CopyrightInformation'] = [ BeautifulSoup(str(x), "lxml").text for x in df['Article.Abstract.CopyrightInformation'] ]
+  if 'Article.Abstract.CopyrightInformation' in df.columns:
+    df['Article.Abstract.CopyrightInformation'] = [ BeautifulSoup(str(x), "lxml").text for x in df['Article.Abstract.CopyrightInformation'] ]
+    df['Article.Abstract.CopyrightInformation'] =[ re.sub(r'[^\w'+keeplist+']', '',x) for x in df['Article.Abstract.CopyrightInformation'] ]
   df['Article.ArticleTitle'] = [ BeautifulSoup(str(x), "lxml").text for x in df['Article.ArticleTitle'] ]
   df['tool_description'] = [ BeautifulSoup(str(x), "lxml").text for x in df['tool_description'] ]
   # delete non alphanomeric characters but keep those in the keeplist
   keeplist = " =./" #characters to keep in url
   df['Article.Abstract.AbstractText'] =[ re.sub(r'[^\w'+keeplist+']', '',x) for x in df['Article.Abstract.AbstractText'] ]
-  df['Article.Abstract.CopyrightInformation'] =[ re.sub(r'[^\w'+keeplist+']', '',x) for x in df['Article.Abstract.CopyrightInformation'] ]
   df['Article.ArticleTitle'] =[ re.sub(r'[^\w'+keeplist+']', '',x) for x in df['Article.ArticleTitle'] ]
   df['tool_description'] =[ re.sub(r'[^\w'+keeplist+']', '',x) for x in df['tool_description'] ]
   return(df)
@@ -246,3 +247,4 @@ if __name__=='__main__':
   df = df.dropna(subset=['tool_URL'])
   df = fix_tool_name(df)
   df.to_csv(os.path.join(PTH,'data/classified_tools_'+s+'_'+en+'.csv'),index=False)
+
