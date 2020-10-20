@@ -28,6 +28,8 @@ from bs4 import BeautifulSoup
 
 maxInt = sys.maxsize
 
+keeplist = '=./_:-' #characters to keep in url
+
 while True:
   # decrease the maxInt value by factor 10 
   # as long as the OverflowError occurs.
@@ -171,6 +173,7 @@ def pritify(df):
 
 
 def clean(df):
+  keeplist = '=./_:-' 
   df['Article.Abstract.AbstractText'] = [ BeautifulSoup(str(x), "lxml").text for x in df['Article.Abstract.AbstractText'] ]
   if 'Article.Abstract.CopyrightInformation' in df.columns:
     df['Article.Abstract.CopyrightInformation'] = [ BeautifulSoup(str(x), "lxml").text for x in df['Article.Abstract.CopyrightInformation'] ]
