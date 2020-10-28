@@ -17,6 +17,7 @@ import time
 from datetime import datetime
 import re
 import pandas as pd
+from Bio import Entrez
 from requests.auth import HTTPBasicAuth
 from dotenv import load_dotenv
 import uuid
@@ -51,6 +52,8 @@ username = os.getenv("USERNAME")
 password = os.getenv("PASSWORD")
 credentials = HTTPBasicAuth(username, password)
 
+Entrez.email = os.environ.get('EMAIL')
+API_KEY = os.environ.get('API_KEY')
 
 # middleman credentials
 username_middle = os.getenv("USERNAME_middle")
@@ -343,6 +346,36 @@ def testURL(data):
   except Exception as e:
     status = e
   return(status)
+  
+  
+def get_inst(data):
+  handleS = Entrez.efetch(db="pubmed", id=id_,rettype="xml", api_key=API_KEY)
+  records = Entrez.read(handleS)
+  try:
+    x = records['PubmedArticle'][0]['MedlineCitation']['Article']['AuthorList'][-1]['AffiliationInfo'][0]['Affiliation'].split(",")
+    if len(x) >0:
+      x = x[0].strip()
+      x = re.sub("university", "Uni", x, flags=re.I)
+      x = re.sub("european", "EU", x, flags=re.I)
+      x = re.sub("institute", "Inst", x, flags=re.I)
+      x = re.sub("technology", "Tech", x, flags=re.I)
+      x = re.sub("technical", "Tech", x, flags=re.I)
+      x = re.sub("singapore", "SG", x, flags=re.I)
+      x = re.sub("california", "CA", x, flags=re.I)
+      x = re.sub("science", "Sci", x, flags=re.I)
+      x = re.sub("national", "Nat'l", x, flags=re.I)
+      x = re.sub("electronic", "Elec", x, flags=re.I)
+      x = re.sub("Denmark", "DK", x, flags=re.I)
+    else:
+      x = 'err'
+  except Exception as e:
+    x = 'err'
+  return(x)
+  
+  
+  
+  
+  
 #================================================ Push data ============================================================================================
 
 def push_new_journal(ISSN):
@@ -420,10 +453,9 @@ def push_tools(df):
       'Initials': isnan(data["meta"]["Author_Information"][-1]['Initials']),
       'LastName': isnan(data["meta"]["Author_Information"][-1]['LastName'])
       }
-    if len(data["meta"]["Author_Information"][-1]['AffiliationInfo']) == 0:
-      data['meta']['Institution'] = ''
-    else:
-      data['meta']['Institution'] = isnan(data["meta"]["Author_Information"][-1]['AffiliationInfo'][0])
+    inst = get_inst(data['meta']['PMID'])
+    if inst != 'err':
+      data['meta']['Institution'] = inst
     data['meta']['Topic'] = predict_topic(data["meta"]["Abstract"])
     data["meta"]["Electronic_Location_Identifier"] =  str(fix_dirty_json(tool['DOI']))
     data["meta"]["Publication_Type"] =  fix_dirty_json(tool['Publication_Type'])
