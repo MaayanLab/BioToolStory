@@ -348,7 +348,7 @@ def testURL(data):
   return(status)
   
   
-def get_inst(data):
+def get_inst(id_):
   handleS = Entrez.efetch(db="pubmed", id=id_,rettype="xml", api_key=API_KEY)
   records = Entrez.read(handleS)
   try:
@@ -453,7 +453,7 @@ def push_tools(df):
       'Initials': isnan(data["meta"]["Author_Information"][-1]['Initials']),
       'LastName': isnan(data["meta"]["Author_Information"][-1]['LastName'])
       }
-    inst = get_inst(data['meta']['PMID'])
+    inst = get_inst(data['meta']['PMID'][0])
     if inst != 'err':
       data['meta']['Institution'] = inst
     data['meta']['Topic'] = predict_topic(data["meta"]["Abstract"])
@@ -471,7 +471,7 @@ def push_tools(df):
     data['meta']['Published_On'] =''
     data['meta']['Added_On']=''
     data['meta']['Last_Updated']=''
-    code= testURL(tool)
+    code= testURL(data)
     data['meta']['url_status']= str(code) +":"+str(http.client.responses[code])
     data["meta"] = empty_cleaner(data['meta']) # delete empty fields
     data = final_test(data)
