@@ -58,7 +58,7 @@ def testURL(df):
       request = requests.head(url,allow_redirects=False, timeout=5)
       status = request.status_code
     except:
-      status = 'error'
+      status = 408
     df.at[i,'status'] = str(status)
   return(df)
 
@@ -181,7 +181,6 @@ def clean(df):
   df['Article.ArticleTitle'] = [ BeautifulSoup(str(x), "lxml").text for x in df['Article.ArticleTitle'] ]
   df['tool_description'] = [ BeautifulSoup(str(x), "lxml").text for x in df['tool_description'] ]
   # delete non alphanomeric characters but keep those in the keeplist
-  keeplist = " =./" #characters to keep in url
   df['Article.Abstract.AbstractText'] =[ re.sub(r'[^\w'+keeplist+']', '',x) for x in df['Article.Abstract.AbstractText'] ]
   df['Article.ArticleTitle'] =[ re.sub(r'[^\w'+keeplist+']', '',x) for x in df['Article.ArticleTitle'] ]
   df['tool_description'] =[ re.sub(r'[^\w'+keeplist+']', '',x) for x in df['tool_description'] ]
