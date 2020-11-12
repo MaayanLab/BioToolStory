@@ -181,9 +181,9 @@ def clean(df):
   df['Article.ArticleTitle'] = [ BeautifulSoup(str(x), "lxml").text for x in df['Article.ArticleTitle'] ]
   df['tool_description'] = [ BeautifulSoup(str(x), "lxml").text for x in df['tool_description'] ]
   # delete non alphanomeric characters but keep those in the keeplist
-  df['Article.Abstract.AbstractText'] =[ re.sub(r'[^\w'+keeplist+']', '',x) for x in df['Article.Abstract.AbstractText'] ]
-  df['Article.ArticleTitle'] =[ re.sub(r'[^\w'+keeplist+']', '',x) for x in df['Article.ArticleTitle'] ]
-  df['tool_description'] =[ re.sub(r'[^\w'+keeplist+']', '',x) for x in df['tool_description'] ]
+  df['Article.Abstract.AbstractText'] =[ re.sub(r'[^\w'+keeplist+']', ' ',x) for x in df['Article.Abstract.AbstractText'] ]
+  df['Article.ArticleTitle'] =[ re.sub(r'[^\w'+keeplist+']', ' ',x) for x in df['Article.ArticleTitle'] ]
+  df['tool_description'] =[ re.sub(r'[^\w'+keeplist+']', ' ',x) for x in df['tool_description'] ]
   return(df)
 
 
