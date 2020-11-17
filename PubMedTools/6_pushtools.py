@@ -120,6 +120,8 @@ def is_pushed(pmid):
 def post_data_middleman(data):
   if is_pushed(data['meta']['PMID'][0]):
     API  = "https://maayanlab.cloud/biotoolstory/middleman/api"
+    data['meta']['Year']=int(data['meta']['Year'])
+    data['meta']['Citations']=int(data['meta']['Citations'])
     res = requests.post(API+"/signatures/" + data["id"], json=data, auth=auth_middle)
     try:
       if not res.ok:
@@ -327,14 +329,18 @@ def predict_topic(text, nlp=nlp):
 
 
 def final_test(data):
-  if 'Last_Author' in data['meta'].keys():
-    if type(data['meta']['Last_Author'])==list:
-      data['meta']['Last_Author'] = data['meta']['Last_Author'][0]
-  if 'Author_Information' in data['meta'].keys():
-    for x in range(len(data['meta']['Author_Information'] ) ):
-      if 'AffiliationInfo' in data['meta']['Author_Information'][x]:
-        if type(data['meta']['Author_Information'][x]['AffiliationInfo'][0]) == str:
-          data['meta']['Author_Information'][x]['AffiliationInfo'] = [{ 'Affiliation' : y} for y in data['meta']['Author_Information'][x]['AffiliationInfo']]
+  try:
+    if 'Last_Author' in data['meta'].keys():
+      if type(data['meta']['Last_Author'])==list:
+        data['meta']['Last_Author'] = data['meta']['Last_Author'][0]
+    if 'Author_Information' in data['meta'].keys():
+      for x in range(len(data['meta']['Author_Information'] ) ):
+        if 'AffiliationInfo' in data['meta']['Author_Information'][x]:
+          if type(data['meta']['Author_Information'][x]['AffiliationInfo'][0]) == str:
+            data['meta']['Author_Information'][x]['AffiliationInfo'] = [{ 'Affiliation' : y} for y in data['meta']['Author_Information'][x]['AffiliationInfo']]
+  except Exception as e:
+    data['meta']['Author_Information'] = ""
+    print(e)
   return(data)
 
 
@@ -472,7 +478,10 @@ def push_tools(df):
     data['meta']['Added_On']=''
     data['meta']['Last_Updated']=''
     code= testURL(data)
-    data['meta']['url_status']= str(code) +":"+str(http.client.responses[code])
+    if len(str(code) )> 4:
+      data['meta']['url_status']= str(code)
+    else:
+      data['meta']['url_status']= str(code) +":"+str(http.client.responses[code])
     data["meta"] = empty_cleaner(data['meta']) # delete empty fields
     data = final_test(data)
     # check that the pmid does not exist in the dataset
@@ -528,7 +537,7 @@ if __name__ == "__main__":
         with open(os.path.join(PTH,schema + '.json'), 'w') as outfile:
           json.dump(all_tools, outfile)
     except Exception as e:
-      print(e, 'line 489')
+      print(e, 'line 533')
     print("Done!",file)
  
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------
