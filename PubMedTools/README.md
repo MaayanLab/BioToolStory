@@ -1,8 +1,21 @@
 # Pipeline to Detect Tools and Databases
 
+## Definitions
 <b>Tools:</b> Online biological tools/databased that are published in PubMed. </br>
-## Install packages
-`requirements.txt`
+
+## Update new tools and databases
+1. Login to the Middleman website at https://maayanlab.cloud/biotoolstory/middleman/#/
+
+   The Middleman website contains new tools and databases that were automatically detected by the BioToolStory pipeline as further described in this Readme file.
+
+2. Manually view and approve/delete tools.
+3. Approved tools will be pushed to the BioToolStory website.
+
+## Tweets
+Daily at 12 pm EST, a new tool is tweeted. 
+
+## How to install the BioToolStory pipeline
+Install the required packages `requirements.txt`
 
 ## Create a PubMed account 
 * Follow instructions: https://www.ncbi.nlm.nih.gov/books/NBK25497/#chapter2.Usage_Guidelines_and_Requiremen
