@@ -1,7 +1,7 @@
 # Pipeline to Detect Tools and Databases
 
 ## Definitions
-<b>Tools:</b> Online biological tools/databased that are published in PubMed. </br>
+<b>Tools:</b> Online biological tools/databased that the papers describing them are published on PubMed. </br>
 
 ## Update new tools and databases
 1. Login to the Middleman website at https://maayanlab.cloud/biotoolstory/middleman/#/
