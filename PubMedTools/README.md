@@ -17,15 +17,15 @@ Daily at 12 pm EST, a new tool is tweeted - see scripts in `/TwitterBot`
 ## How to install the BioToolStory pipeline
 Install the required packages `requirements.txt`
 
-## Create a PubMed account 
+### Create a PubMed account 
 * Follow instructions: https://www.ncbi.nlm.nih.gov/books/NBK25497/#chapter2.Usage_Guidelines_and_Requiremen
 * Save API Key and Email to the .env file.
 
-## Clone Github repositories
+### Clone Github repositories
 1. BERT - https://github.com/google-research/bert
 2. Signature-commons - https://github.com/MaayanLab/signature-commons
 
-## Fine-tune BERT
+### Fine-tune BERT
 1. Create a list of positive and negative examples and save them to `examples.csv` file with the following columns.
 * Article.Abstract.AbstractText    -  abstract of the paper
 * PMID    - Pubmed id of the paper
@@ -41,7 +41,7 @@ In the Colab notebook set hardware to GPU.
 
 * The trained weights of the model are saved to `/BERTTOOLS/bert_output` folder on Google Drive for later usage.
 
-## Collect Tools and Databases
+### Collect Tools and Databases
 Run ```0_main.sh``` file which runs the following scripts: </br>
 ```1_collect_data.py```
  </br> 
@@ -139,7 +139,7 @@ Run ```0_main.sh``` file which runs the following scripts: </br>
  </li>
  </ul>
  
- ## Tools similarity API
+ ### Tools similarity API
  <ul>
   <li>
  Given a text --> get a json of {pmid:cosine_similarity_score}
@@ -147,7 +147,7 @@ Run ```0_main.sh``` file which runs the following scripts: </br>
 </ul>
 
  
-# Details About The Collected Data
+### Details About The Collected Data
 Details on Altmetric data:
 https://docs.google.com/spreadsheets/d/1ndVY8Q2LOaZO_P_HDmSQulagjeUrS250mAL2N5V8GvY/edit#gid=0
 
