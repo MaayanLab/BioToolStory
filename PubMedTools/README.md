@@ -12,7 +12,7 @@
 3. Approved tools will be pushed to the BioToolStory website.
 
 ## Tweets
-Daily at 12 pm EST, a new tool is tweeted. 
+Daily at 12 pm EST, a new tool is tweeted - see scripts in `/TwitterBot`
 
 ## How to install the BioToolStory pipeline
 Install the required packages `requirements.txt`
