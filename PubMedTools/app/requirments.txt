@@ -11,7 +11,7 @@ tensorflow-serving-api==1.14.0
 bert-serving-client==1.10.0
 bert-serving-server==1.10.0
 Whoosh==2.7.4
-numpy==1.14.6
+numpy==1.22.0
 Cython==0.29.17
 scikit-learn
 gevent==1.4.0
