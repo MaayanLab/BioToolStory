@@ -18,7 +18,6 @@ PubMedTools/app/__pycache__/basic.cpython-37.pyc
 *.ts
 *.map
 *.md
-*.yml
 *.svg
 *.coffee
 *.opts
@@ -39,3 +38,4 @@ PubMedTools/Untitled.R
 PubMedTools/data/fail_to_load.txt
 PubMedTools/data/fail_to_load.txt
 PubMedTools/data/fail_to_load.txt
+venv

@@ -1,0 +1,19 @@
+version: '2'
+services:
+  dev:
+    image: maayanlab/biotoolstory-environment:0.0.1
+    platform: linux/x86_64
+    build:
+      context: .
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/app
+  dev-mac:
+    image: maayanlab/biotoolstory-environment:0.0.1.mac
+    build:
+      context: .
+    ports:
+      - 3001:3001
+    volumes:
+      - ./:/app
