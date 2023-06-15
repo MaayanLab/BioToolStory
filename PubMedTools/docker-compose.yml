@@ -9,6 +9,8 @@ services:
       - 3000:3000
     volumes:
       - ./:/app
+    env_file:
+      - .env
   dev-mac:
     image: maayanlab/biotoolstory-environment:0.0.1.mac
     build:
@@ -17,3 +19,5 @@ services:
       - 3001:3001
     volumes:
       - ./:/app
+    env_file:
+      - .env
