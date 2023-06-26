@@ -39,3 +39,5 @@ PubMedTools/data/fail_to_load.txt
 PubMedTools/data/fail_to_load.txt
 PubMedTools/data/fail_to_load.txt
 venv
+bert-classifier/bert
+bert-classifier/BERTTOOLS/biobert
