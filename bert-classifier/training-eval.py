@@ -1,4 +1,4 @@
-import pandas
+import pandas as pd
 
 df_results = pd.read_csv("/content/drive/My Drive/BERTTOOLS/bert_output/test_results.tsv",sep="\t",header=None)
 df_results

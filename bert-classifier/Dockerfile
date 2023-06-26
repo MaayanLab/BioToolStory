@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:1.15.0
+FROM python:3.7
 
 COPY requirements.txt .
 
