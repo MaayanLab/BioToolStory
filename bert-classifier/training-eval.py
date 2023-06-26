@@ -1,7 +1,8 @@
 import pandas as pd
 
-df_results = pd.read_csv("/content/drive/My Drive/BERTTOOLS/bert_output/test_results.tsv",sep="\t",header=None)
-df_results
+df_results = pd.read_csv("BERTTOOLS/bert_output/test_results.tsv",sep="\t",header=None)
+
+df_test = pd.read_csv('BERTTOOLS/data/test.tsv', sep='\t', index=False, header=True)
 
 df_results_csv = pd.DataFrame({'index_col':df_test['index_col'].tolist(),
                                'Is_Response':df_results.idxmax(axis=1)})
