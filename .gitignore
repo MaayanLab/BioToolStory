@@ -38,6 +38,7 @@ PubMedTools/Untitled.R
 PubMedTools/data/fail_to_load.txt
 PubMedTools/data/fail_to_load.txt
 PubMedTools/data/fail_to_load.txt
+PubMedTools/bert_output
 venv
 bert-classifier/bert
 bert-classifier/BERTTOOLS/biobert
